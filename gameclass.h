@@ -17,9 +17,18 @@ class GameClass {
 
     void Run ();
   private:
+    // Handlers
     void KeyboardEventHandler (unsigned int);
+
+    // Draw
+    void DrawPauseMenu () const;
+
     ALLEGRO_DISPLAY *display;
     ALLEGRO_EVENT_QUEUE *eventQueue;
     ALLEGRO_TIMER *timer;
+    ALLEGRO_FONT *smallFont;
+    ALLEGRO_FONT *normalFont;
+    ALLEGRO_FONT *bigFont;
+    
     bool done, paused;
 };
