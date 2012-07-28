@@ -69,7 +69,7 @@ void GameClass::Run () {
         while (iter != iterEnd) {
           (*iter)->Update();
           if ((*iter)->CollidesWith(hero)) {
-            std::cout << "Collides" << std::endl;
+            hero.Die();
           }
           iter++;
         }
@@ -196,16 +196,24 @@ void GameClass::ReadGameLevel(const char * lvl) {
     for (size_t j = 0; j < gridWidth; j++) {
       char aux;
       file >> aux;
-      if (aux == 'p') {
-        hero.SetPosition(j*cTileSize, i*cTileSize);
-        gameGrid[i][j] = '.';
-      } else if (aux == 'a') {
-        Ant *aux = new Ant(j*cTileSize, i*cTileSize);
-        aux->SetGameGrid(gameGrid, gridWidth, gridHeight);
-        enemies.push_back(aux);
-        gameGrid[i][j] = '.';
-      } else {
-        gameGrid[i][j] = aux;
+      switch (aux) {
+        case 'p':
+          hero.SetPosition(j*cTileSize, i*cTileSize);
+          gameGrid[i][j] = '.';
+          break;
+        case 'a':
+          enemies.push_back(new Ant(j*cTileSize, i*cTileSize));
+          enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          gameGrid[i][j] = '.';
+          break;
+        case 'f':
+          enemies.push_back(new Fly(j*cTileSize, i*cTileSize));
+          enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          gameGrid[i][j] = '.';
+          break;
+        default:
+          gameGrid[i][j] = aux;
+          break;
       }
     }
   }

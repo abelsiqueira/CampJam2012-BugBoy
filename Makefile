@@ -2,7 +2,7 @@ CXXFLAGS = -Wall -Wextra -ggdb
 LIB = -lallegro_ttf -lallegro_font -lallegro_primitives -lallegro \
 			-lallegro_audio -lallegro_acodec -lallegro_image
 
-OBJS = ant.o enemy.o hero.o entity.o gameclass.o main.o
+OBJS = fly.o ant.o enemy.o hero.o entity.o gameclass.o main.o
 
 all: clean $(OBJS)
 	g++ -o main $(OBJS) $(LIB) $(CXXFLAGS)

@@ -21,6 +21,9 @@ class Entity {
       posX = x; 
       posY = y - (boxHeight-1)*cTileSize - 2;
     }
+    void Die () {
+      dead = true;
+    }
 
     void Move (bool *);
     void Jump ();
