@@ -1,13 +1,21 @@
 #include "hero.h"
 
 Hero::Hero () : Entity(1, 2) {
-  lives = 3;
-  xSpeed = 2.0;
+  lives = 1;
+  xSpeed = 2.5;
   jumpSpeed = 6.0;
   shootCountdown = 0;
   upgradesJump = 0;
   upgradesSpeed = 0;
   upgradesLife = 0;
+}
+
+void Hero::Respawn (float x, float y) {
+  dead = false;
+  lives = 1 + upgradesLife;
+  posX = x;
+  posY = y - (boxHeight-1)*cTileSize - 2;
+  shootCountdown = 0;
 }
 
 Hero::~Hero () {

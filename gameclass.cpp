@@ -125,7 +125,9 @@ void GameClass::Run () {
         else if (VisibleY > (int)(cTileSize*gridHeight - cWindowHeight))
           VisibleY = cTileSize*gridHeight - cWindowHeight;
       }
-      if (hero.IsDead()) done = true;
+      if (hero.IsDead()) {
+        hero.Respawn(startX, startY);
+      }
       redraw = true;
     } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
       done = true;
@@ -282,43 +284,46 @@ void GameClass::ReadGameLevel(const char * lvl) {
   for (size_t i = 0; i < gridHeight; i++) {
     gameGrid[i] = new char[gridWidth];
     for (size_t j = 0; j < gridWidth; j++) {
+      float x = j*cTileSize, y = i*cTileSize;
       char aux;
       file >> aux;
       switch (aux) {
         case cPlayer:
-          hero.SetPosition(j*cTileSize, i*cTileSize);
+          hero.SetPosition(x, y);
+          startX = x;
+          startY = y;
           gameGrid[i][j] = cNone;
           break;
         case cAnt:
-          enemies.push_back(new Ant(j*cTileSize, i*cTileSize));
+          enemies.push_back(new Ant(x, y));
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
         case cFly:
-          enemies.push_back(new Fly(j*cTileSize, i*cTileSize));
+          enemies.push_back(new Fly(x, y));
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
         case cSpider:
-          enemies.push_back(new Spider(j*cTileSize, i*cTileSize));
+          enemies.push_back(new Spider(x, y));
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
         case cSpiderBoss:
-          enemies.push_back(new SpiderBoss(j*cTileSize, i*cTileSize));
+          enemies.push_back(new SpiderBoss(x, y));
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
         case cJump:
-          upgrades.push_back(new Upgrade(jumpUpgrade, j*cTileSize, i*cTileSize));
+          upgrades.push_back(new Upgrade(jumpUpgrade, x, y));
           gameGrid[i][j] = cNone;
           break;
         case cSpeed:
-          upgrades.push_back(new Upgrade(speedUpgrade, j*cTileSize, i*cTileSize));
+          upgrades.push_back(new Upgrade(speedUpgrade, x, y));
           gameGrid[i][j] = cNone;
           break;
         case cLife:
-          upgrades.push_back(new Upgrade(lifeUpgrade, j*cTileSize, i*cTileSize));
+          upgrades.push_back(new Upgrade(lifeUpgrade, x, y));
           gameGrid[i][j] = cNone;
           break;
         default:

@@ -25,6 +25,7 @@ class GameClass {
 
     // Game
     Hero hero;
+    float startX, startY;
     std::list <Enemy*> enemies;
     std::list <Seed*>  seeds;
     std::list <Upgrade*> upgrades;
