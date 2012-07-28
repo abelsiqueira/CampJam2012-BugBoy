@@ -1,6 +1,8 @@
 #include "ant.h"
 
-Ant::Ant () : Enemy(1, 1) {
+Ant::Ant (int x, int y) : Enemy(1, 1) {
+  posX = x;
+  posY = y;
 }
 
 Ant::~Ant () {

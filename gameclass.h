@@ -1,7 +1,9 @@
 #ifndef gameclass_h
 #define gameclass_h
 
+#include <list>
 #include "hero.h"
+#include "list_of_enemies.h"
 
 class GameClass {
   public:
@@ -20,10 +22,11 @@ class GameClass {
     int VisibleX, VisibleY;
 
     // Game
+    Hero hero;
+    std::list <Enemy> enemies;
     void ReadGameLevel(const char *);
     char **gameGrid;
     size_t gridWidth, gridHeight;
-    Hero hero;
     bool keyIsPressed[2];
 
     // Allegro

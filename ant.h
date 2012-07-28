@@ -5,7 +5,7 @@
 
 class Ant : public Enemy {
   public:
-    Ant ();
+    Ant (int, int);
     ~Ant ();
     
     void Update ();

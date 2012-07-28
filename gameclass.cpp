@@ -63,6 +63,12 @@ void GameClass::Run () {
       // Update
       if (!paused) {
         hero.Update();
+        std::list<Enemy>::iterator iter = enemies.begin(),
+          iterEnd = enemies.end();
+        while (iter != iterEnd) {
+          iter->Update();
+          iter++;
+        }
         VisibleX = hero.GetX() - cWindowWidth/2;
         VisibleY = hero.GetY() -  cWindowHeight/2;
         if (VisibleX < 0) 
@@ -141,6 +147,12 @@ void GameClass::DrawPauseMenu () const {
 void GameClass::DrawGame () const {
   DrawGameGrid();
   hero.Draw();
+  std::list<Enemy>::const_iterator iter = enemies.begin(),
+    iterEnd = enemies.end();
+  while (iter != iterEnd) {
+    iter->Draw();
+    iter++;
+  }
 }
 
 void GameClass::DrawGameGrid () const {
@@ -182,6 +194,10 @@ void GameClass::ReadGameLevel(const char * lvl) {
       file >> aux;
       if (aux == 'p') {
         hero.SetPosition(j*cTileSize, i*cTileSize);
+        gameGrid[i][j] = '.';
+      } else if (aux == 'a') {
+        enemies.push_back(Ant(j*cTileSize, i*cTileSize));
+        enemies.back().SetGameGrid(gameGrid, gridWidth, gridHeight);
         gameGrid[i][j] = '.';
       } else {
         gameGrid[i][j] = aux;
