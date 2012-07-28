@@ -3,6 +3,7 @@
 
 #include <list>
 #include "hero.h"
+#include "upgrade.h"
 #include "list_of_enemies.h"
 
 class GameClass {
@@ -26,6 +27,7 @@ class GameClass {
     Hero hero;
     std::list <Enemy*> enemies;
     std::list <Seed*>  seeds;
+    std::list <Upgrade*> upgrades;
     void ReadGameLevel(const char *);
     char **gameGrid;
     size_t gridWidth, gridHeight;

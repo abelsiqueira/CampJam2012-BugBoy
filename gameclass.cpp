@@ -106,6 +106,14 @@ void GameClass::Run () {
             iter++;
           }
         }
+        for (std::list<Upgrade*>::iterator iter = upgrades.begin();
+             iter != upgrades.end(); iter++) {
+          (*iter)->Update();
+          if ((*iter)->CollidesWith(hero)) {
+            (*iter)->Take();
+            hero.AddUpgrade((*iter)->GetType());
+          }
+        }
         VisibleX = hero.GetX() - cWindowWidth/2;
         VisibleY = hero.GetY() -  cWindowHeight/2;
         if (VisibleX < 0) 
@@ -225,6 +233,10 @@ void GameClass::DrawGame () const {
       iter++;
     }
   }
+  for (std::list<Upgrade*>::const_iterator iter = upgrades.begin();
+       iter != upgrades.end(); iter++) {
+    (*iter)->Draw();
+  }
   DrawHud();
 }
 
@@ -295,6 +307,10 @@ void GameClass::ReadGameLevel(const char * lvl) {
         case cSpiderBoss:
           enemies.push_back(new SpiderBoss(j*cTileSize, i*cTileSize));
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          gameGrid[i][j] = cNone;
+          break;
+        case cJump:
+          upgrades.push_back(new Upgrade(jumpUpgrade, j*cTileSize, i*cTileSize));
           gameGrid[i][j] = cNone;
           break;
         default:
