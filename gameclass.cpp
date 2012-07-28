@@ -1,5 +1,6 @@
 #include "gameclass.h"
 #include <fstream>
+#include <iostream>
 
 GameClass::GameClass () {
   al_init();
@@ -67,6 +68,9 @@ void GameClass::Run () {
           iterEnd = enemies.end();
         while (iter != iterEnd) {
           (*iter)->Update();
+          if ((*iter)->CollidesWith(hero)) {
+            std::cout << "Collides" << std::endl;
+          }
           iter++;
         }
         VisibleX = hero.GetX() - cWindowWidth/2;

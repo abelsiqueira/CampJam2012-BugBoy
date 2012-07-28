@@ -17,7 +17,7 @@ class Entity {
       gridWidth = w;
       gridHeight = h;
     }
-    void SetPosition (int x, int y) {
+    void SetPosition (float x, float y) {
       posX = x; 
       posY = y - (boxHeight-1)*cTileSize - 2;
     }
@@ -26,8 +26,12 @@ class Entity {
     void Jump ();
 
     bool IsDead () const { return dead; }
-    int GetX () const { return posX; }
-    int GetY () const { return posY; }
+    float GetX () const { return posX; }
+    float GetY () const { return posY; }
+    float GetBoxW () const { return boxWidth; }
+    float GetBoxH () const { return boxHeight; }
+
+    bool CollidesWith (const Entity &) const;
   protected:
     Entity ();
     float posX, posY;

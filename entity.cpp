@@ -1,4 +1,5 @@
 #include "entity.h"
+#include <iostream>
 
 Entity::Entity (float w, float h) {
   boxWidth = w;
@@ -153,3 +154,21 @@ void Entity::Jump () {
     ySpeed = -5.0;
 }
 
+bool Entity::CollidesWith (const Entity & entity) const {
+  float thisTop    = posY,
+        thisBottom = posY + boxHeight*cTileSize,
+        thisLeft   = posX,
+        thisRight  = posX + boxWidth*cTileSize,
+        otherTop    = entity.GetY(),
+        otherBottom = otherTop + entity.GetBoxH()*cTileSize,
+        otherLeft   = entity.GetX(),
+        otherRight  = otherLeft + entity.GetBoxW()*cTileSize;
+    
+  if (thisTop > otherBottom ||
+      otherTop > thisBottom ||
+      thisLeft > otherRight ||
+      otherLeft > thisRight)
+    return false;
+
+  return true;
+}
