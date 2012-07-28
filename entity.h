@@ -52,7 +52,7 @@ class Entity {
     float ySpeed, xSpeed, jumpSpeed;
     float boxWidth, boxHeight;
 
-    bool dead, grounded, invulnerable;
+    bool dead, grounded, invulnerable, isAffectedByGravity;
     int lives;
     int invCountdown;
     int facing;

@@ -17,6 +17,7 @@ Entity::Entity (float w, float h) {
   lives = 1;
   invulnerable = false;
   facing = 1;
+  isAffectedByGravity = true;
 }
 
 Entity::~Entity () {
@@ -99,7 +100,7 @@ void Entity::Update () {
         dead = true;
     }
   }
-  int nextY = posY + ySpeed;
+  float nextY = posY + ySpeed;
   
   if (nextY < 0 || nextY + boxHeight*cTileSize > (int)(cTileSize*gridHeight)) {
     dead = true;
@@ -141,13 +142,20 @@ void Entity::Update () {
     }
   }
   if (hitWall && ySpeed > 0) {
-    ySpeed = 1.0;
+    if (isAffectedByGravity)
+      ySpeed = 1.0;
+    else
+      ySpeed = -ySpeed;
     grounded = true;
   } else if (hitWall && ySpeed < 0) {
-    ySpeed = 0.0;
+    if (isAffectedByGravity)
+      ySpeed = 0.0;
+    else
+      ySpeed = -ySpeed;
   } else {
     posY = nextY;
-    ySpeed += cGravity;
+    if (isAffectedByGravity)
+      ySpeed += cGravity;
     grounded = false;
   }
   if (!safe)

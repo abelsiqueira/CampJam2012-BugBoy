@@ -5,6 +5,7 @@
 #include <iostream>
 
 GameClass::GameClass () {
+  srand(time(0));
   al_init();
   display = al_create_display(cWindowWidth, cWindowHeight);
   al_set_window_title(display, "Campjam");

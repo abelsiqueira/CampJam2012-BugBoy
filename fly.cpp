@@ -1,14 +1,17 @@
 #include "fly.h"
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 Fly::Fly (float x, float y) : Enemy(0.5, 0.4) {
   posX = x;
   posY = y - 2;
   keyIsPressed[key_left] = false;
   keyIsPressed[key_right] = true;
-  xSpeed = 2.0;
+  xSpeed = 2.5;
   ySpeed = 0.0;
+  isAffectedByGravity = false;
 }
 
 Fly::~Fly () {
@@ -16,7 +19,13 @@ Fly::~Fly () {
 }
 
 void Fly::Update () {
-  ySpeed = 0;
+  static float count = 0;
+  ySpeed = ((rand()%101)/100.0)*5*sin(count);
+  count += 0.01*M_PI;
+  xSpeed += (2*(rand()%101/100.0) - 1)*0.2;
+  if (xSpeed > 3.5) xSpeed = 3.5;
+  else if (xSpeed < 0) xSpeed = 0;
+
   Enemy::Update();
 
   // If hit a wall, go back
