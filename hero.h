@@ -15,9 +15,12 @@ class Hero : public Entity {
 
     Seed * Shoot ();
     void AddUpgrade (UpgradeType);
+    void Jump ();
   protected:
     int shootCountdown;
     int upgradesJump, upgradesSpeed, upgradesLife;
+    bool hasDoubleJump;
+    int consecJumps;
 };
 
 #endif

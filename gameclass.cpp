@@ -77,6 +77,11 @@ void GameClass::Run () {
     if (ev.type == ALLEGRO_EVENT_TIMER) {
       // Update
       if (!paused) {
+        if (pSpiderBoss && pSpiderBoss->IsDead()) {
+          float x = pSpiderBoss->GetX(), y = pSpiderBoss->GetY();
+          upgrades.push_back(new Upgrade(doubleJumpUpgrade, x, y));
+          pSpiderBoss = 0;
+        }
         hero.Update();
         // Update enemies
         {
@@ -310,8 +315,9 @@ void GameClass::ReadGameLevel(const char * lvl) {
           gameGrid[i][j] = cNone;
           break;
         case cSpiderBoss:
-          enemies.push_back(new SpiderBoss(x, y));
-          enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          pSpiderBoss = new SpiderBoss(x, y);
+          pSpiderBoss->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          enemies.push_back(pSpiderBoss);
           gameGrid[i][j] = cNone;
           break;
         case cJump:
@@ -324,6 +330,10 @@ void GameClass::ReadGameLevel(const char * lvl) {
           break;
         case cLife:
           upgrades.push_back(new Upgrade(lifeUpgrade, x, y));
+          gameGrid[i][j] = cNone;
+          break;
+        case cDoubleJump:
+          upgrades.push_back(new Upgrade(doubleJumpUpgrade, x, y));
           gameGrid[i][j] = cNone;
           break;
         default:

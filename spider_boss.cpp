@@ -12,7 +12,7 @@ SpiderBoss::SpiderBoss (float x, float y) : Enemy(2, 2) {
   xSpeed = 2.5;
   ySpeed = 1.0;
   isAffectedByGravity = false;
-  lives = 10;
+  lives = 4;
 
   image = al_load_bitmap("Images/white-spider.png");
 }

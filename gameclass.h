@@ -33,6 +33,7 @@ class GameClass {
     char **gameGrid;
     size_t gridWidth, gridHeight;
     bool keyIsPressed[2];
+    SpiderBoss * pSpiderBoss;
 
     // Allegro
     ALLEGRO_DISPLAY *display;

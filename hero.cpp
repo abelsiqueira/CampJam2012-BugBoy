@@ -1,4 +1,5 @@
 #include "hero.h"
+#include <iostream>
 
 Hero::Hero () : Entity(1, 2) {
   lives = 1;
@@ -8,6 +9,8 @@ Hero::Hero () : Entity(1, 2) {
   upgradesJump = 0;
   upgradesSpeed = 0;
   upgradesLife = 0;
+  hasDoubleJump = false;
+  consecJumps = 0;
 }
 
 void Hero::Respawn (float x, float y) {
@@ -22,7 +25,16 @@ Hero::~Hero () {
 
 }
 
+void Hero::Jump () {
+  if (grounded || (hasDoubleJump && (consecJumps < 1)) ) {
+    consecJumps++;
+    ySpeed = -jumpSpeed;
+  }
+}
+
 void Hero::Update () {
+  if (grounded)
+    consecJumps = 0;
   if (shootCountdown > 0)
     shootCountdown--;
   Entity::Update();
@@ -70,6 +82,9 @@ void Hero::AddUpgrade (UpgradeType ut) {
     case lifeUpgrade:
       upgradesLife++;
       lives++;
+      break;
+    case doubleJumpUpgrade:
+      hasDoubleJump = true;
       break;
     default:
       break;
