@@ -16,21 +16,21 @@ Ant::~Ant () {
 void Ant::Update () {
   Enemy::Update();
   if (keyIsPressed[key_left] && 
-      gameGrid[posY/cTileSize + boxHeight + 1][posX/cTileSize] == '.') {
+      gameGrid[(posY-1)/cTileSize + boxHeight + 1][posX/cTileSize] == '.') {
     keyIsPressed[key_left]  = false;
     keyIsPressed[key_right] = true;
   } else if (keyIsPressed[key_right] && 
-      gameGrid[posY/cTileSize + boxHeight + 1][posX/cTileSize + 1] == '.') {
+      gameGrid[(posY-1)/cTileSize + boxHeight + 1][posX/cTileSize + 1] == '.') {
     keyIsPressed[key_left]  = true;
     keyIsPressed[key_right] = false;
   }
 
   if (keyIsPressed[key_left] &&
-      gameGrid[posY/cTileSize][(int)(posX-2*xSpeed)/cTileSize] == 'x') {
+      gameGrid[posY/cTileSize][(int)(posX-xSpeed)/cTileSize] == 'x') {
     keyIsPressed[key_left]  = false;
     keyIsPressed[key_right] = true;
   } else if (keyIsPressed[key_right] &&
-      gameGrid[posY/cTileSize][(int)(posX+2*xSpeed)/cTileSize] == 'x') {
+      gameGrid[posY/cTileSize][(int)(posX+xSpeed)/cTileSize+boxWidth] == 'x') {
     keyIsPressed[key_left]  = true;
     keyIsPressed[key_right] = false;
   }
