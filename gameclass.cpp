@@ -172,8 +172,11 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
       keyIsPressed[key_right] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
       break;
     case ALLEGRO_KEY_SPACE:
-      if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
+      if (ev_type == ALLEGRO_EVENT_KEY_DOWN) {
         seeds.push_back(hero.Shoot());
+        if (seeds.back() == 0)
+          seeds.pop_back();
+      }
       break;
     default:
       break;

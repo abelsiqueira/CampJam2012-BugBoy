@@ -14,6 +14,7 @@ class Hero : public Entity {
 
     Seed * Shoot ();
   protected:
+    int shootCountdown;
 };
 
 #endif

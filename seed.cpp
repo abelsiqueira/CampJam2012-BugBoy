@@ -47,6 +47,11 @@ void Seed::Update () {
     xSpeed *= 0.5;
   }
 
+  if (gameGrid[static_cast<int>((posY+boxHeight*cTileSize-1+ySpeed)/cTileSize)]
+              [static_cast<int>(posX/cTileSize)] == cBlock) {
+    xSpeed *= 0.8;
+  }
+
 }
 
 void Seed::Draw () const {

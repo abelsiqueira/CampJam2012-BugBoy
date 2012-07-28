@@ -9,6 +9,7 @@ const int cFps = 60;
 const int cTileSize = 40;
 const float cGravity = 0.25;
 const int cInvulnerableCountdown = 2*cFps;
+const int cShootCooldown = cFps*2/3;
 
 const char cNone       = '.';
 const char cBlock      = 'x';

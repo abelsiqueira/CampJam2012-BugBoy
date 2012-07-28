@@ -4,6 +4,7 @@ Hero::Hero () : Entity(1, 2) {
   lives = 3;
   xSpeed = 3.0;
   jumpSpeed = 7.0;
+  shootCountdown = 0;
 }
 
 Hero::~Hero () {
@@ -11,6 +12,8 @@ Hero::~Hero () {
 }
 
 void Hero::Update () {
+  if (shootCountdown > 0)
+    shootCountdown--;
   Entity::Update();
 }
 
@@ -31,6 +34,9 @@ void Hero::Draw () const {
 }
 
 Seed * Hero::Shoot () {
+  if (shootCountdown > 0)
+    return 0;
+  shootCountdown = cShootCooldown;
   float x = posX, y = posY;
   if (facing > 0)
     x += boxWidth*cTileSize;
