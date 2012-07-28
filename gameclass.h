@@ -11,7 +11,7 @@ class GameClass {
     void Run ();
   private:
     // Handlers
-    void KeyboardEventHandler (unsigned int);
+    void KeyboardEventHandler (unsigned int, int);
 
     // Draw
     void DrawPauseMenu () const;
@@ -23,7 +23,7 @@ class GameClass {
     char **gameGrid;
     size_t gridWidth, gridHeight;
     Hero hero;
-
+    bool keyIsPressed[2];
 
     // Allegro
     ALLEGRO_DISPLAY *display;

@@ -27,6 +27,9 @@ GameClass::GameClass () {
   normalFont = al_load_font("DejaVuSans.ttf", 20, 0);
   smallFont = al_load_font("DejaVuSans.ttf", 10, 0);
 
+  keyIsPressed[0] = false;
+  keyIsPressed[1] = false;
+
   ReadGameLevel("level1.map");
 }
 
@@ -57,7 +60,7 @@ void GameClass::Run () {
     if (ev.type == ALLEGRO_EVENT_TIMER) {
       // Update
       if (!paused) {
-
+        hero.Update();
       }
       redraw = true;
     } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -67,31 +70,39 @@ void GameClass::Run () {
 
     } else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 
-    } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-      KeyboardEventHandler(ev.keyboard.keycode);
+    } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN ||
+               ev.type == ALLEGRO_EVENT_KEY_UP) {
+      KeyboardEventHandler(ev.keyboard.keycode, ev.type);
+        hero.Move(keyIsPressed);
     }
 
     if (redraw && al_is_event_queue_empty(eventQueue)) {
       redraw = false;
       al_clear_to_color(al_map_rgb(0,0,0));
 
+      DrawGame();
       if (paused)
         DrawPauseMenu();
-      else
-        DrawGame();
 
       al_flip_display();
     }
   }
 }
 
-void GameClass::KeyboardEventHandler (unsigned int keycode) {
+void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
   switch (keycode) {
     case ALLEGRO_KEY_ESCAPE:
       done = true;
       break;
     case ALLEGRO_KEY_P:
-      paused = (paused ? false : true);
+      if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
+        paused = (paused ? false : true);
+      break;
+    case ALLEGRO_KEY_LEFT:
+      keyIsPressed[key_left] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
+      break;
+    case ALLEGRO_KEY_RIGHT:
+      keyIsPressed[key_right] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
       break;
     default:
       break;
@@ -101,6 +112,7 @@ void GameClass::KeyboardEventHandler (unsigned int keycode) {
 void GameClass::DrawPauseMenu () const {
   ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
 
+  al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0,0,0,200));
   al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Pause Menu");
 }
 
@@ -138,4 +150,6 @@ void GameClass::ReadGameLevel(const char * lvl) {
     for (size_t j = 0; j < gridWidth; j++)
       file >> gameGrid[i][j];
   }
+
+  hero.SetGameGrid(gameGrid);
 }
