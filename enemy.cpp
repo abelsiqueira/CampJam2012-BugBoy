@@ -1,7 +1,7 @@
 #include "enemy.h"
 #include <iostream>
 
-Enemy::Enemy (int w, int h) : Entity(w, h) {
+Enemy::Enemy (float w, float h) : Entity(w, h) {
 
 }
 

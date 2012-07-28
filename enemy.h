@@ -5,7 +5,7 @@
 
 class Enemy : public Entity {
   public:
-    Enemy (int, int);
+    Enemy (float, float);
     virtual ~Enemy ();
     
     virtual void Update ();

@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity::Entity (int w, int h) {
+Entity::Entity (float w, float h) {
   boxWidth = w;
   boxHeight = h;
   posX = 0;
@@ -25,14 +25,12 @@ void Entity::Update () {
 
   if (keyIsPressed[0] != keyIsPressed[1]) {
     if (keyIsPressed[key_left]) {
-      int nextX = posX - xSpeed;
+      float nextX = posX - xSpeed;
       bool hitWall = false, safe = true;
-      for (int i = 0; i <= boxHeight; i++) {
+      for (int i = 0; i < boxHeight; i++) {
         char aux;
-        if (i == boxHeight)
-          aux = gameGrid[(posY-1)/cTileSize+boxHeight][nextX/cTileSize];
-        else
-          aux = gameGrid[posY/cTileSize+i][nextX/cTileSize];
+        aux = gameGrid[static_cast<int>(posY/cTileSize+i)]
+                      [static_cast<int>(nextX/cTileSize)];
 
         if (aux == 'x') {
           hitWall = true;
@@ -42,23 +40,44 @@ void Entity::Update () {
           safe = false;
         }
       }
+      {
+        char aux;
+        aux = gameGrid[static_cast<int>((posY - 1 + boxHeight*cTileSize)/cTileSize)]
+                      [static_cast<int>(nextX/cTileSize)];
+
+        if (aux == 'x') {
+          hitWall = true;
+          safe = true;
+        } else if (aux == 's') {
+          safe = false;
+        }
+      }
       if (!hitWall)
         posX = nextX;
       if (!safe)
         dead = true;
     } else {
-      int nextX = posX + xSpeed;
+      float nextX = posX + xSpeed;
       bool hitWall = false, safe = true;
-      for (int i = 0; i <= boxHeight; i++) {
+      for (int i = 0; i < boxHeight; i++) {
         char aux;
-        if (i == boxHeight)
-          aux = gameGrid[(posY-1)/cTileSize+i][(nextX-1)/cTileSize+boxWidth];
-        else
-          aux = gameGrid[posY/cTileSize+i][(nextX-1)/cTileSize+boxWidth];
+        aux = gameGrid[static_cast<int>(posY/cTileSize+i)]
+                      [static_cast<int>((nextX+boxWidth*cTileSize-1)/cTileSize)];
         if (aux == 'x') {
           hitWall = true;
           safe = true;
           break;
+        } else if (aux == 's') {
+          safe = false;
+        }
+      }
+      {
+        char aux;
+        aux = gameGrid[static_cast<int>((posY -1 + boxHeight*cTileSize)/cTileSize)]
+                      [static_cast<int>((nextX+boxWidth*cTileSize-1)/cTileSize)];
+        if (aux == 'x') {
+          hitWall = true;
+          safe = true;
         } else if (aux == 's') {
           safe = false;
         }
@@ -77,23 +96,35 @@ void Entity::Update () {
   }
 
   bool hitWall = false, safe = true;
-  for (int i = 0; i <= boxWidth; i++) {
+  for (int i = 0; i < boxWidth; i++) {
     char aux;
     if (ySpeed > 0) {
-      if (i == boxWidth)
-        aux = gameGrid[(nextY-1)/cTileSize + boxHeight][(posX-1)/cTileSize+i];
-      else
-        aux = gameGrid[(nextY-1)/cTileSize + boxHeight][posX/cTileSize+i];
+      aux = gameGrid[static_cast<int>((nextY+boxHeight*cTileSize-1)/cTileSize)]
+                    [static_cast<int>(posX/cTileSize+i)];
     } else {
-      if (i == boxWidth)
-        aux = gameGrid[(nextY-1)/cTileSize][(posX-1)/cTileSize+i];
-      else
-        aux = gameGrid[(nextY-1)/cTileSize][posX/cTileSize+i];
+      aux = gameGrid[static_cast<int>((nextY-1)/cTileSize)]
+                    [static_cast<int>(posX/cTileSize+i)];
     }
     if (aux == 'x') {
       hitWall = true;
       safe = true;
       break;
+    } else if (aux == 's') {
+      safe = false;
+    }
+  }
+  {
+    char aux;
+    if (ySpeed > 0) {
+      aux = gameGrid[static_cast<int>((nextY+boxHeight*cTileSize-1)/cTileSize)]
+                    [static_cast<int>((posX-1+boxWidth*cTileSize)/cTileSize)];
+    } else {
+      aux = gameGrid[static_cast<int>((nextY-1)/cTileSize)]
+                    [static_cast<int>((posX-1+boxWidth*cTileSize)/cTileSize)];
+    }
+    if (aux == 'x') {
+      hitWall = true;
+      safe = true;
     } else if (aux == 's') {
       safe = false;
     }

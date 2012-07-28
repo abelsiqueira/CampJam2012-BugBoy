@@ -1,12 +1,12 @@
 #include "ant.h"
 #include <iostream>
 
-Ant::Ant (int x, int y) : Enemy(1, 1) {
+Ant::Ant (int x, int y) : Enemy(0.5, 0.5) {
   posX = x;
   posY = y - 2;
   keyIsPressed[key_left] = true;
   keyIsPressed[key_right] = false;
-  xSpeed = 1;
+  xSpeed = 0.5;
 }
 
 Ant::~Ant () {
@@ -15,22 +15,28 @@ Ant::~Ant () {
 
 void Ant::Update () {
   Enemy::Update();
+  // Dont Fall
   if (keyIsPressed[key_left] && 
-      gameGrid[(posY-1)/cTileSize + boxHeight + 1][posX/cTileSize] == '.') {
+      gameGrid[static_cast<int>((posY-1)/cTileSize + boxHeight + 1)]
+              [static_cast<int>(posX/cTileSize)] == '.') {
     keyIsPressed[key_left]  = false;
     keyIsPressed[key_right] = true;
   } else if (keyIsPressed[key_right] && 
-      gameGrid[(posY-1)/cTileSize + boxHeight + 1][posX/cTileSize + 1] == '.') {
+      gameGrid[static_cast<int>((posY-1)/cTileSize + boxHeight + 1)]
+              [static_cast<int>(posX/cTileSize + boxWidth)] == '.') {
     keyIsPressed[key_left]  = true;
     keyIsPressed[key_right] = false;
   }
 
+  // If hit a wall, go back
   if (keyIsPressed[key_left] &&
-      gameGrid[posY/cTileSize][(int)(posX-xSpeed)/cTileSize] == 'x') {
+      gameGrid[static_cast<int>(posY/cTileSize)]
+              [static_cast<int>((posX-xSpeed)/cTileSize)] == 'x') {
     keyIsPressed[key_left]  = false;
     keyIsPressed[key_right] = true;
   } else if (keyIsPressed[key_right] &&
-      gameGrid[posY/cTileSize][(int)(posX+xSpeed)/cTileSize+boxWidth] == 'x') {
+      gameGrid[static_cast<int>(posY/cTileSize)]
+              [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == 'x') {
     keyIsPressed[key_left]  = true;
     keyIsPressed[key_right] = false;
   }
@@ -39,4 +45,9 @@ void Ant::Update () {
 
 void Ant::Draw () const {
   Enemy::Draw();
+  return;
+  if (dead)
+    return;
+  al_draw_circle(posX + cTileSize/2, posY + cTileSize/2,
+      cTileSize/3-1, al_map_rgb(255,255,255), 3);
 }

@@ -6,7 +6,7 @@
 
 class Entity {
   public:
-    Entity (int, int);
+    Entity (float, float);
     virtual ~Entity ();
 
     virtual void Update ();
@@ -30,13 +30,13 @@ class Entity {
     int GetY () const { return posY; }
   protected:
     Entity ();
-    int posX, posY;
+    float posX, posY;
     bool keyIsPressed[2];
     float fallingMultiplier;
     char **gameGrid;
-    size_t gridWidth, gridHeight;
+    int gridWidth, gridHeight;
     float ySpeed, xSpeed, jumpSpeed;
-    int boxWidth, boxHeight;
+    float boxWidth, boxHeight;
 
     bool dead, grounded;
 };
