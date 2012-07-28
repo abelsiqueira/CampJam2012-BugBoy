@@ -6,10 +6,10 @@
 class Enemy : public Entity {
   public:
     Enemy (int, int);
-    ~Enemy ();
+    virtual ~Enemy ();
     
-    void Update ();
-    void Draw () const;
+    virtual void Update ();
+    virtual void Draw () const;
   protected:
     
 };

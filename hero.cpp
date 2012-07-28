@@ -15,6 +15,6 @@ void Hero::Draw () const {
   if (dead)
     return;
   al_draw_rectangle(posX, posY, 
-      posX + boxWidth*cTileSize, posY + boxHeight*cTileSize,
+      posX + boxWidth*cTileSize-1, posY + boxHeight*cTileSize-1,
       al_map_rgb(255,255,255), 1);
 }

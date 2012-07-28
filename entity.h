@@ -35,7 +35,7 @@ class Entity {
     float fallingMultiplier;
     char **gameGrid;
     size_t gridWidth, gridHeight;
-    float ySpeed;
+    float ySpeed, xSpeed, jumpSpeed;
     int boxWidth, boxHeight;
 
     bool dead, grounded;

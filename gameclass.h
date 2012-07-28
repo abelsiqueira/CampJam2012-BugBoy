@@ -23,7 +23,7 @@ class GameClass {
 
     // Game
     Hero hero;
-    std::list <Enemy> enemies;
+    std::list <Enemy*> enemies;
     void ReadGameLevel(const char *);
     char **gameGrid;
     size_t gridWidth, gridHeight;

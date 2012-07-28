@@ -63,21 +63,21 @@ void GameClass::Run () {
       // Update
       if (!paused) {
         hero.Update();
-        std::list<Enemy>::iterator iter = enemies.begin(),
+        std::list<Enemy*>::iterator iter = enemies.begin(),
           iterEnd = enemies.end();
         while (iter != iterEnd) {
-          iter->Update();
+          (*iter)->Update();
           iter++;
         }
         VisibleX = hero.GetX() - cWindowWidth/2;
         VisibleY = hero.GetY() -  cWindowHeight/2;
         if (VisibleX < 0) 
           VisibleX = 0;
-        else if (VisibleX > cTileSize*gridWidth - cWindowWidth)
+        else if (VisibleX > (int)(cTileSize*gridWidth - cWindowWidth))
           VisibleX = cTileSize*gridWidth - cWindowWidth;
         if (VisibleY < 0) 
           VisibleY = 0;
-        else if (VisibleY > cTileSize*gridHeight - cWindowHeight)
+        else if (VisibleY > (int)(cTileSize*gridHeight - cWindowHeight))
           VisibleY = cTileSize*gridHeight - cWindowHeight;
       }
       if (hero.IsDead()) done = true;
@@ -147,10 +147,10 @@ void GameClass::DrawPauseMenu () const {
 void GameClass::DrawGame () const {
   DrawGameGrid();
   hero.Draw();
-  std::list<Enemy>::const_iterator iter = enemies.begin(),
+  std::list<Enemy*>::const_iterator iter = enemies.begin(),
     iterEnd = enemies.end();
   while (iter != iterEnd) {
-    iter->Draw();
+    (*iter)->Draw();
     iter++;
   }
 }
@@ -163,8 +163,8 @@ void GameClass::DrawGameGrid () const {
       switch (gameGrid[i][j]) {
         case 'x':
           //Block
-          al_draw_filled_rectangle(j*cTileSize+1, i*cTileSize+1,
-              (j+1)*cTileSize-1, (i+1)*cTileSize-1, color);
+          al_draw_filled_rectangle(j*cTileSize, i*cTileSize,
+              (j+1)*cTileSize, (i+1)*cTileSize, color);
           break;
         case 's':
           //Spike
@@ -196,8 +196,9 @@ void GameClass::ReadGameLevel(const char * lvl) {
         hero.SetPosition(j*cTileSize, i*cTileSize);
         gameGrid[i][j] = '.';
       } else if (aux == 'a') {
-        enemies.push_back(Ant(j*cTileSize, i*cTileSize));
-        enemies.back().SetGameGrid(gameGrid, gridWidth, gridHeight);
+        Ant *aux = new Ant(j*cTileSize, i*cTileSize);
+        aux->SetGameGrid(gameGrid, gridWidth, gridHeight);
+        enemies.push_back(aux);
         gameGrid[i][j] = '.';
       } else {
         gameGrid[i][j] = aux;

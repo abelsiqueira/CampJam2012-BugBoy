@@ -6,10 +6,10 @@
 class Ant : public Enemy {
   public:
     Ant (int, int);
-    ~Ant ();
+    virtual ~Ant ();
     
-    void Update ();
-    void Draw () const;
+    virtual void Update ();
+    virtual void Draw () const;
   protected:
     
 };

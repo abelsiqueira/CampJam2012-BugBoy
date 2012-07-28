@@ -11,6 +11,8 @@ Entity::Entity (int w, int h) {
   dead = false;
   grounded = false;
   ySpeed = 1.0;
+  xSpeed = 2.0;
+  jumpSpeed = 5.0;
 }
 
 Entity::~Entity () {
@@ -23,10 +25,15 @@ void Entity::Update () {
 
   if (keyIsPressed[0] != keyIsPressed[1]) {
     if (keyIsPressed[key_left]) {
-      int nextX = posX - 2;
+      int nextX = posX - xSpeed;
       bool hitWall = false, safe = true;
       for (int i = 0; i <= boxHeight; i++) {
-        char aux = gameGrid[posY/cTileSize+i][nextX/cTileSize];
+        char aux;
+        if (i == boxHeight)
+          aux = gameGrid[(posY-1)/cTileSize+boxHeight][nextX/cTileSize];
+        else
+          aux = gameGrid[posY/cTileSize+i][nextX/cTileSize];
+
         if (aux == 'x') {
           hitWall = true;
           safe = true;
@@ -40,10 +47,14 @@ void Entity::Update () {
       if (!safe)
         dead = true;
     } else {
-      int nextX = posX + 2;
+      int nextX = posX + xSpeed;
       bool hitWall = false, safe = true;
       for (int i = 0; i <= boxHeight; i++) {
-        char aux = gameGrid[posY/cTileSize+i][nextX/cTileSize+boxWidth];
+        char aux;
+        if (i == boxHeight)
+          aux = gameGrid[(posY-1)/cTileSize+i][(nextX-1)/cTileSize+boxWidth];
+        else
+          aux = gameGrid[posY/cTileSize+i][(nextX-1)/cTileSize+boxWidth];
         if (aux == 'x') {
           hitWall = true;
           safe = true;
@@ -60,7 +71,7 @@ void Entity::Update () {
   }
   int nextY = posY + ySpeed;
   
-  if (nextY < 0 || nextY + boxHeight*cTileSize > cTileSize*gridHeight) {
+  if (nextY < 0 || nextY + boxHeight*cTileSize > (int)(cTileSize*gridHeight)) {
     dead = true;
     return;
   }
@@ -68,10 +79,17 @@ void Entity::Update () {
   bool hitWall = false, safe = true;
   for (int i = 0; i <= boxWidth; i++) {
     char aux;
-    if (ySpeed > 0)
-      aux = gameGrid[nextY/cTileSize + boxHeight][posX/cTileSize+i];
-    else 
-      aux = gameGrid[nextY/cTileSize][posX/cTileSize+i];
+    if (ySpeed > 0) {
+      if (i == boxWidth)
+        aux = gameGrid[(nextY-1)/cTileSize + boxHeight][(posX-1)/cTileSize+i];
+      else
+        aux = gameGrid[(nextY-1)/cTileSize + boxHeight][posX/cTileSize+i];
+    } else {
+      if (i == boxWidth)
+        aux = gameGrid[(nextY-1)/cTileSize][(posX-1)/cTileSize+i];
+      else
+        aux = gameGrid[(nextY-1)/cTileSize][posX/cTileSize+i];
+    }
     if (aux == 'x') {
       hitWall = true;
       safe = true;

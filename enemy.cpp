@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include <iostream>
 
 Enemy::Enemy (int w, int h) : Entity(w, h) {
 
@@ -15,6 +16,8 @@ void Enemy::Update () {
 void Enemy::Draw () const {
   if (dead)
     return;
+  al_draw_rectangle(posX, posY, posX + boxWidth*cTileSize, posY + boxHeight*cTileSize,
+      al_map_rgb(255,255,255),1);
   al_draw_ellipse(posX + boxWidth*cTileSize/2, posY + boxHeight*cTileSize/2,
       boxWidth*cTileSize/4 - 1, boxHeight*cTileSize/4 - 1, al_map_rgb(255,255,255), 1);
   al_draw_ellipse(posX + boxWidth*cTileSize/2, posY + boxHeight*cTileSize/2,
