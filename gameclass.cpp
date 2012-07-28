@@ -142,6 +142,8 @@ void GameClass::Run () {
       al_use_transform(&T);
 
       DrawGame();
+      al_identity_transform(&T);
+      al_use_transform(&T);
       if (paused)
         DrawPauseMenu();
 
@@ -192,8 +194,12 @@ void GameClass::DrawHud () const {
 void GameClass::DrawPauseMenu () const {
   ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
 
-  al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0,0,0,200));
+  al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0,0,0,230));
   al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Pause Menu");
+
+  std::stringstream aux;
+  aux << "Lives: " << hero.GetLives();
+  al_draw_text(bigFont, fontColor, 50, 150, ALLEGRO_ALIGN_LEFT, aux.str().c_str());
 }
 
 void GameClass::DrawGame () const {
