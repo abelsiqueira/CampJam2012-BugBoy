@@ -39,6 +39,16 @@ GameClass::GameClass () {
 }
 
 GameClass::~GameClass () {
+  while (!enemies.empty()) {
+    Enemy *p = enemies.front();
+    delete p;
+    enemies.pop_front();
+  }
+  while (!seeds.empty()) {
+    Seed *p = seeds.front();
+    delete p;
+    seeds.pop_front();
+  }
   for (size_t i = 0; i < gridHeight; i++)
     delete []gameGrid[i];
   delete []gameGrid;
@@ -66,14 +76,33 @@ void GameClass::Run () {
       // Update
       if (!paused) {
         hero.Update();
-        std::list<Enemy*>::iterator iter = enemies.begin(),
-          iterEnd = enemies.end();
-        while (iter != iterEnd) {
-          (*iter)->Update();
-          if ((*iter)->CollidesWith(hero)) {
-            hero.Die();
+        // Update enemies
+        {
+          std::list<Enemy*>::iterator iter = enemies.begin(),
+            iterEnd = enemies.end();
+          while (iter != iterEnd) {
+            (*iter)->Update();
+            if ((*iter)->CollidesWith(hero)) {
+              hero.Die();
+            }
+            iter++;
           }
-          iter++;
+        }
+        // Update seeds
+        {
+          std::list<Seed*>::iterator iter = seeds.begin(),
+            iterEnd = seeds.end();
+          while (iter != iterEnd) {
+            (*iter)->Update();
+            for (std::list<Enemy*>::iterator i = enemies.begin();
+                 i != enemies.end(); i++) {
+              if ((*iter)->CollidesWith(*(*i))) {
+                (*i)->Die();
+                (*iter)->Die();
+              }
+            }
+            iter++;
+          }
         }
         VisibleX = hero.GetX() - cWindowWidth/2;
         VisibleY = hero.GetY() -  cWindowHeight/2;
@@ -138,6 +167,10 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
     case ALLEGRO_KEY_RIGHT:
       keyIsPressed[key_right] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
       break;
+    case ALLEGRO_KEY_SPACE:
+      if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
+        seeds.push_back(hero.Shoot());
+      break;
     default:
       break;
   }
@@ -149,7 +182,7 @@ void GameClass::DrawHud () const {
   al_draw_filled_rectangle(VisibleX + 2, VisibleY + 2, 
       VisibleX + 50, VisibleY + 15, al_map_rgb(0,0,0));
   al_draw_rectangle(VisibleX + 2, VisibleY + 2, 
-      VisibleX + 50, VisibleY + 15, al_map_rgb(255,255,255),1);
+      VisibleX + 50, VisibleY + 15, al_map_rgb(255,255,255), 1);
   al_draw_text(smallFont, al_map_rgb(255,255,255), VisibleX + 4, VisibleY + 2, 
       ALLEGRO_ALIGN_LEFT, aux.str().c_str());
 }
@@ -164,11 +197,21 @@ void GameClass::DrawPauseMenu () const {
 void GameClass::DrawGame () const {
   DrawGameGrid();
   hero.Draw();
-  std::list<Enemy*>::const_iterator iter = enemies.begin(),
-    iterEnd = enemies.end();
-  while (iter != iterEnd) {
-    (*iter)->Draw();
-    iter++;
+  {
+    std::list<Enemy*>::const_iterator iter = enemies.begin(),
+      iterEnd = enemies.end();
+    while (iter != iterEnd) {
+      (*iter)->Draw();
+      iter++;
+    }
+  }
+  {
+    std::list<Seed*>::const_iterator iter = seeds.begin(),
+      iterEnd = seeds.end();
+    while (iter != iterEnd) {
+      (*iter)->Draw();
+      iter++;
+    }
   }
   DrawHud();
 }

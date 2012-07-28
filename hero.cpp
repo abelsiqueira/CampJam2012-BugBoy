@@ -2,6 +2,7 @@
 
 Hero::Hero () : Entity(1, 3) {
   lives = 3;
+  xSpeed = 3.0;
 }
 
 Hero::~Hero () {
@@ -20,4 +21,14 @@ void Hero::Draw () const {
         posX + boxWidth*cTileSize-1, posY + boxHeight*cTileSize-1,
         al_map_rgb(255,255,255), 1);
   }
+}
+
+Seed * Hero::Shoot () {
+  float x = posX, y = posY;
+  if (facing > 0)
+    x += boxWidth*cTileSize;
+  y += boxHeight*cTileSize/4;
+  Seed * seed = new Seed(x, y, facing);
+  seed->SetGameGrid(gameGrid, gridWidth, gridHeight);
+  return seed;
 }

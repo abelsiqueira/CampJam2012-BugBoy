@@ -2,6 +2,7 @@
 #define hero_h
 
 #include "entity.h"
+#include "seed.h"
 
 class Hero : public Entity {
   public:
@@ -10,6 +11,8 @@ class Hero : public Entity {
 
     void Update ();
     void Draw () const;
+
+    Seed * Shoot ();
   protected:
 };
 

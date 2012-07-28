@@ -1,7 +1,7 @@
 #include "ant.h"
 #include <iostream>
 
-Ant::Ant (int x, int y) : Enemy(0.5, 0.5) {
+Ant::Ant (float x, float y) : Enemy(0.5, 0.5) {
   posX = x;
   posY = y - 2;
   keyIsPressed[key_left] = true;
@@ -44,10 +44,8 @@ void Ant::Update () {
 }
 
 void Ant::Draw () const {
-  Enemy::Draw();
-  return;
   if (dead)
     return;
-  al_draw_circle(posX + cTileSize/2, posY + cTileSize/2,
-      cTileSize/3-1, al_map_rgb(255,255,255), 3);
+  al_draw_circle(posX + boxWidth*cTileSize/2, posY + boxHeight*cTileSize/2,
+      boxWidth*cTileSize/2-1, al_map_rgb(255,255,255), 3);
 }

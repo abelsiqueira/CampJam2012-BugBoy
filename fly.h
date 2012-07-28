@@ -5,7 +5,7 @@
 
 class Fly : public Enemy {
   public:
-    Fly (int, int);
+    Fly (float, float);
     virtual ~Fly ();
     
     virtual void Update ();

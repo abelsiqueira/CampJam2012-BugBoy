@@ -25,6 +25,7 @@ class GameClass {
     // Game
     Hero hero;
     std::list <Enemy*> enemies;
+    std::list <Seed*>  seeds;
     void ReadGameLevel(const char *);
     char **gameGrid;
     size_t gridWidth, gridHeight;

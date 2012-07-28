@@ -16,6 +16,7 @@ Entity::Entity (float w, float h) {
   jumpSpeed = 5.0;
   lives = 1;
   invulnerable = false;
+  facing = 1;
 }
 
 Entity::~Entity () {
@@ -33,6 +34,7 @@ void Entity::Update () {
 
   if (keyIsPressed[0] != keyIsPressed[1]) {
     if (keyIsPressed[key_left]) {
+      facing = -1;
       float nextX = posX - xSpeed;
       bool hitWall = false, safe = true;
       for (int i = 0; i < boxHeight; i++) {
@@ -65,6 +67,7 @@ void Entity::Update () {
       if (!safe)
         dead = true;
     } else {
+      facing = 1;
       float nextX = posX + xSpeed;
       bool hitWall = false, safe = true;
       for (int i = 0; i < boxHeight; i++) {
@@ -162,6 +165,8 @@ void Entity::Jump () {
 }
 
 bool Entity::CollidesWith (const Entity & entity) const {
+  if (dead || entity.IsDead())
+    return false;
   float thisTop    = posY,
         thisBottom = posY + boxHeight*cTileSize,
         thisLeft   = posX,

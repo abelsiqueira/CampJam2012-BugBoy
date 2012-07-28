@@ -55,6 +55,7 @@ class Entity {
     bool dead, grounded, invulnerable;
     int lives;
     int invCountdown;
+    int facing;
 
 };
 

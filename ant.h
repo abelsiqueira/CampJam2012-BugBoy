@@ -5,7 +5,7 @@
 
 class Ant : public Enemy {
   public:
-    Ant (int, int);
+    Ant (float, float);
     virtual ~Ant ();
     
     virtual void Update ();
