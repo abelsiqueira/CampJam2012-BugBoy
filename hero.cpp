@@ -2,9 +2,12 @@
 
 Hero::Hero () : Entity(1, 2) {
   lives = 3;
-  xSpeed = 3.0;
-  jumpSpeed = 7.0;
+  xSpeed = 2.0;
+  jumpSpeed = 6.0;
   shootCountdown = 0;
+  upgradesJump = 0;
+  upgradesSpeed = 0;
+  upgradesLife = 0;
 }
 
 Hero::~Hero () {
@@ -44,4 +47,23 @@ Seed * Hero::Shoot () {
   Seed * seed = new Seed(x, y, facing);
   seed->SetGameGrid(gameGrid, gridWidth, gridHeight);
   return seed;
+}
+
+void Hero::AddUpgrade (UpgradeType ut) {
+  switch (ut) {
+    case jumpUpgrade:
+      upgradesJump++;
+      jumpSpeed += 1.0;
+      break;
+    case speedUpgrade:
+      upgradesSpeed++;
+      xSpeed += 1.0;
+      break;
+    case lifeUpgrade:
+      upgradesLife++;
+      lives++;
+      break;
+    default:
+      break;
+  }
 }

@@ -313,6 +313,14 @@ void GameClass::ReadGameLevel(const char * lvl) {
           upgrades.push_back(new Upgrade(jumpUpgrade, j*cTileSize, i*cTileSize));
           gameGrid[i][j] = cNone;
           break;
+        case cSpeed:
+          upgrades.push_back(new Upgrade(speedUpgrade, j*cTileSize, i*cTileSize));
+          gameGrid[i][j] = cNone;
+          break;
+        case cLife:
+          upgrades.push_back(new Upgrade(lifeUpgrade, j*cTileSize, i*cTileSize));
+          gameGrid[i][j] = cNone;
+          break;
         default:
           gameGrid[i][j] = aux;
           break;

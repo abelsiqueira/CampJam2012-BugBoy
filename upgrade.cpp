@@ -36,6 +36,9 @@ void Upgrade::Draw () const {
       al_draw_line(x, (y+ym)/2, xf, (y+ym)/2, al_map_rgb(255,255,255), 0);
       al_draw_line(x, (yf+ym)/2, xf, (yf+ym)/2, al_map_rgb(255,255,255), 0);
       break;
+    case lifeUpgrade:
+      al_draw_filled_rectangle(x, y, xm, ym, al_map_rgb(255,255,255));
+      al_draw_filled_rectangle(xm, ym, xf, yf, al_map_rgb(255,255,255));
     default:
       break;
   }

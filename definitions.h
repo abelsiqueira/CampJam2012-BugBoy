@@ -2,7 +2,7 @@
 #define definitions_h
 
 enum Keys { key_left = 0, key_right = 1 };
-enum UpgradeType { jumpUpgrade, speedUpgrade };
+enum UpgradeType { jumpUpgrade, speedUpgrade, lifeUpgrade };
 
 const int cWindowWidth = 1280;
 const int cWindowHeight = 720;
@@ -22,5 +22,6 @@ const char cSpider     = 's';
 const char cSpiderBoss = 'B';
 const char cJump       = 'j';
 const char cSpeed      = 'e';
+const char cLife       = 'v';
 
 #endif

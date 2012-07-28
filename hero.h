@@ -13,10 +13,10 @@ class Hero : public Entity {
     void Draw () const;
 
     Seed * Shoot ();
-    void AddUpgrade (UpgradeType) {
-    }
+    void AddUpgrade (UpgradeType);
   protected:
     int shootCountdown;
+    int upgradesJump, upgradesSpeed, upgradesLife;
 };
 
 #endif
