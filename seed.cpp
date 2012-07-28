@@ -36,7 +36,7 @@ void Seed::Update () {
                [static_cast<int>((posX-xSpeed)/cTileSize)] == 'x') ) {
     keyIsPressed[key_left]  = false;
     keyIsPressed[key_right] = true;
-    xSpeed *= 0.5;
+    xSpeed *= 0.25;
   } else if (keyIsPressed[key_right] &&
       (gameGrid[static_cast<int>(posY/cTileSize)]
                [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == 'x' ||

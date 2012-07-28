@@ -221,11 +221,18 @@ void GameClass::DrawGameGrid () const {
 
   for (size_t i = 0; i < gridHeight; i++) {
     for (size_t j = 0; j < gridWidth; j++) {
+      int x = j*cTileSize, y = i*cTileSize,
+          xf = (j+1)*cTileSize, yf = (i+1)*cTileSize;
       switch (gameGrid[i][j]) {
         case 'x':
           //Block
-          al_draw_filled_rectangle(j*cTileSize, i*cTileSize,
-              (j+1)*cTileSize, (i+1)*cTileSize, color);
+          al_draw_filled_rectangle(x, y, xf, yf, color);
+          al_draw_line(x, y, xf, yf, al_map_rgb(0,0,0),0);
+          al_draw_line(x, yf, xf, y, al_map_rgb(0,0,0),0);
+          al_draw_line(x, (y+yf)/2, (x+xf)/2, y, al_map_rgb(0,0,0),0);
+          al_draw_line(x, (y+yf)/2, (x+xf)/2, yf, al_map_rgb(0,0,0),0);
+          al_draw_line(xf, (y+yf)/2, (x+xf)/2, y, al_map_rgb(0,0,0),0);
+          al_draw_line(xf, (y+yf)/2, (x+xf)/2, yf, al_map_rgb(0,0,0),0);
           break;
         case 's':
           //Spike
