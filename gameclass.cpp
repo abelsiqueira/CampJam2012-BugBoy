@@ -181,7 +181,7 @@ void GameClass::ReadGameLevel(const char * lvl) {
       char aux;
       file >> aux;
       if (aux == 'p') {
-        hero.SetPosition(j*cTileSize, (i-1)*cTileSize-2);
+        hero.SetPosition(j*cTileSize, i*cTileSize);
         gameGrid[i][j] = '.';
       } else {
         gameGrid[i][j] = aux;

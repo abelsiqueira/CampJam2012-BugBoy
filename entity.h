@@ -6,7 +6,7 @@
 
 class Entity {
   public:
-    Entity ();
+    Entity (int, int);
     virtual ~Entity ();
 
     virtual void Update ();
@@ -18,7 +18,8 @@ class Entity {
       gridHeight = h;
     }
     void SetPosition (int x, int y) {
-      posX = x; posY = y;
+      posX = x; 
+      posY = y - (boxHeight-1)*cTileSize - 2;
     }
 
     void Move (bool *);
@@ -28,12 +29,14 @@ class Entity {
     int GetX () const { return posX; }
     int GetY () const { return posY; }
   protected:
+    Entity ();
     int posX, posY;
     bool keyIsPressed[2];
     float fallingMultiplier;
     char **gameGrid;
     size_t gridWidth, gridHeight;
     float ySpeed;
+    int boxWidth, boxHeight;
 
     bool dead, grounded;
 };
