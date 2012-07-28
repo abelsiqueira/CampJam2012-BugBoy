@@ -19,6 +19,7 @@ class GameClass {
     void DrawPauseMenu () const;
     void DrawGame () const;
     void DrawGameGrid () const;
+    void DrawHud () const;
     int VisibleX, VisibleY;
 
     // Game

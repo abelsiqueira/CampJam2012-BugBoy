@@ -39,6 +39,7 @@ class Entity {
     float GetY () const { return posY; }
     float GetBoxW () const { return boxWidth; }
     float GetBoxH () const { return boxHeight; }
+    int GetLives () const { return lives; }
 
     bool CollidesWith (const Entity &) const;
   protected:

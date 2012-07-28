@@ -1,4 +1,6 @@
 #include "gameclass.h"
+#include <string>
+#include <sstream>
 #include <fstream>
 #include <iostream>
 
@@ -141,6 +143,17 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
   }
 }
 
+void GameClass::DrawHud () const {
+  std::stringstream aux;
+  aux << "Lives: " << hero.GetLives();
+  al_draw_filled_rectangle(VisibleX + 2, VisibleY + 2, 
+      VisibleX + 50, VisibleY + 15, al_map_rgb(0,0,0));
+  al_draw_rectangle(VisibleX + 2, VisibleY + 2, 
+      VisibleX + 50, VisibleY + 15, al_map_rgb(255,255,255),1);
+  al_draw_text(smallFont, al_map_rgb(255,255,255), VisibleX + 4, VisibleY + 2, 
+      ALLEGRO_ALIGN_LEFT, aux.str().c_str());
+}
+
 void GameClass::DrawPauseMenu () const {
   ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
 
@@ -157,6 +170,7 @@ void GameClass::DrawGame () const {
     (*iter)->Draw();
     iter++;
   }
+  DrawHud();
 }
 
 void GameClass::DrawGameGrid () const {
