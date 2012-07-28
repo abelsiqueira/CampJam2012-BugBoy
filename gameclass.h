@@ -1,14 +1,7 @@
-#include <allegro5/allegro.h> 
-#include <allegro5/allegro_image.h> 
-#include <allegro5/allegro_primitives.h> 
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
-#include <allegro5/allegro_font.h> 
-#include <allegro5/allegro_ttf.h> 
+#ifndef gameclass_h
+#define gameclass_h
 
-const int cWindowWidth = 1280;
-const int cWindowHeight = 720;
-const int cFps = 60;
+#include "hero.h"
 
 class GameClass {
   public:
@@ -22,7 +15,17 @@ class GameClass {
 
     // Draw
     void DrawPauseMenu () const;
+    void DrawGame () const;
+    void DrawGameGrid () const;
 
+    // Game
+    void ReadGameLevel(const char *);
+    char **gameGrid;
+    size_t gridWidth, gridHeight;
+    Hero hero;
+
+
+    // Allegro
     ALLEGRO_DISPLAY *display;
     ALLEGRO_EVENT_QUEUE *eventQueue;
     ALLEGRO_TIMER *timer;
@@ -32,3 +35,5 @@ class GameClass {
     
     bool done, paused;
 };
+
+#endif

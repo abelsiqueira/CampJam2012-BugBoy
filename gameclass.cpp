@@ -1,4 +1,5 @@
 #include "gameclass.h"
+#include <fstream>
 
 GameClass::GameClass () {
   al_init();
@@ -25,9 +26,15 @@ GameClass::GameClass () {
   bigFont = al_load_font("DejaVuSans.ttf", 40, 0);
   normalFont = al_load_font("DejaVuSans.ttf", 20, 0);
   smallFont = al_load_font("DejaVuSans.ttf", 10, 0);
+
+  ReadGameLevel("level1.map");
 }
 
 GameClass::~GameClass () {
+  for (size_t i = 0; i < gridHeight; i++)
+    delete []gameGrid[i];
+  delete []gameGrid;
+
   al_destroy_font(bigFont);
   al_destroy_font(normalFont);
   al_destroy_font(smallFont);
@@ -50,6 +57,7 @@ void GameClass::Run () {
     if (ev.type == ALLEGRO_EVENT_TIMER) {
       // Update
       if (!paused) {
+
       }
       redraw = true;
     } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -68,7 +76,9 @@ void GameClass::Run () {
       al_clear_to_color(al_map_rgb(0,0,0));
 
       if (paused)
-        DrawPauseMenu ();
+        DrawPauseMenu();
+      else
+        DrawGame();
 
       al_flip_display();
     }
@@ -89,9 +99,43 @@ void GameClass::KeyboardEventHandler (unsigned int keycode) {
 }
 
 void GameClass::DrawPauseMenu () const {
-  ALLEGRO_COLOR fontColor = al_map_rgb(255, 255, 255),
-                menuColor = al_map_rgba( 20, 100, 120, 100);
+  ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
 
-  al_draw_filled_rectangle(10, 10, cWindowWidth - 10, cWindowHeight - 10, menuColor);
   al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Pause Menu");
+}
+
+void GameClass::DrawGame () const {
+  DrawGameGrid();
+  hero.Draw();
+}
+
+void GameClass::DrawGameGrid () const {
+  ALLEGRO_COLOR color(al_map_rgb(255,255,255));
+
+  for (size_t i = 0; i < gridHeight; i++) {
+    for (size_t j = 0; j < gridWidth; j++) {
+      switch (gameGrid[i][j]) {
+        case 'x':
+          al_draw_filled_rectangle(j*cTileSize, i*cTileSize,
+              (j+1)*cTileSize, (i+1)*cTileSize, color);
+          break;
+        case '.':
+        default:
+          break;
+      }
+    }
+  }
+}
+
+void GameClass::ReadGameLevel(const char * lvl) {
+  std::ifstream file(lvl);
+  assert (!file.fail());
+  file >> gridWidth >> gridHeight;
+
+  gameGrid = new char*[gridHeight];
+  for (size_t i = 0; i < gridHeight; i++) {
+    gameGrid[i] = new char[gridWidth];
+    for (size_t j = 0; j < gridWidth; j++)
+      file >> gameGrid[i][j];
+  }
 }
