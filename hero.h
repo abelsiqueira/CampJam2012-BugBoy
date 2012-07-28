@@ -18,6 +18,8 @@ class Hero : public Entity {
     bool keyIsPressed[2];
     float fallingMultiplier;
     char **gameGrid;
+
+    bool dead;
 };
 
 #endif
