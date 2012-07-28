@@ -31,17 +31,17 @@ void Seed::Update () {
   // If hit a wall, go back
   if (keyIsPressed[key_left] &&
       (gameGrid[static_cast<int>(posY/cTileSize)]
-               [static_cast<int>((posX-xSpeed)/cTileSize)] == 'x' ||
+               [static_cast<int>((posX-xSpeed)/cTileSize)] == cBlock ||
        gameGrid[static_cast<int>((posY-1+boxHeight*cTileSize)/cTileSize)]
-               [static_cast<int>((posX-xSpeed)/cTileSize)] == 'x') ) {
+               [static_cast<int>((posX-xSpeed)/cTileSize)] == cBlock) ) {
     keyIsPressed[key_left]  = false;
     keyIsPressed[key_right] = true;
     xSpeed *= 0.25;
   } else if (keyIsPressed[key_right] &&
       (gameGrid[static_cast<int>(posY/cTileSize)]
-               [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == 'x' ||
+               [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == cBlock ||
        gameGrid[static_cast<int>((posY-1+boxHeight*cTileSize)/cTileSize)]
-               [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == 'x') ) {
+               [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == cBlock) ) {
     keyIsPressed[key_left]  = true;
     keyIsPressed[key_right] = false;
     xSpeed *= 0.5;

@@ -57,6 +57,7 @@ class Entity {
     int invCountdown;
     int facing;
 
+    ALLEGRO_BITMAP *image;
 };
 
 #endif

@@ -1,31 +1,38 @@
-#include "fly.h"
+#include "spider.h"
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
 
-Fly::Fly (float x, float y) : Enemy(0.5, 0.4) {
+Spider::Spider (float x, float y) : Enemy(0.5, 0.5) {
   posX = x;
   posY = y - 2;
   keyIsPressed[key_left] = false;
   keyIsPressed[key_right] = true;
   xSpeed = 2.5;
-  ySpeed = 0.0;
+  ySpeed = 1.0;
   isAffectedByGravity = false;
+  
+  image = al_load_bitmap("Images/white-spider-small.png");
 }
 
-Fly::~Fly () {
+Spider::~Spider () {
 
 }
 
-void Fly::Update () {
+void Spider::Update () {
   static float count = 0;
-  ySpeed = ((rand()%101)/100.0)*5*sin(count);
-  count += 0.01*M_PI;
-  xSpeed += (2*(rand()%101/100.0) - 1)*0.4;
-  float maxSpeed = 4.0;
-  if (xSpeed > maxSpeed) xSpeed = maxSpeed;
-  else if (xSpeed < 0) xSpeed = 0;
+  count++;
+  if (rand()%2000 < count) {
+    count = 0;
+    if (xSpeed != 0) {
+      xSpeed = 0;
+      ySpeed = 0;
+    } else {
+      xSpeed = rand()%301/100.0;
+      ySpeed = 2*(rand()%101/100.0) - 1;
+    }
+  }
 
   Enemy::Update();
 
@@ -48,23 +55,12 @@ void Fly::Update () {
 
 }
 
-void Fly::Draw () const {
+void Spider::Draw () const {
   if (dead)
     return;
-  al_draw_line(posX, posY + boxHeight*cTileSize/2,
-               posX + boxWidth*cTileSize/2, posY, 
-               al_map_rgb(255,255,255),1);
-
-  al_draw_line(posX, posY + boxHeight*cTileSize/2,
-               posX + boxWidth*cTileSize/2, posY + boxHeight*cTileSize, 
-               al_map_rgb(255,255,255),1);
-
-  al_draw_line(posX + boxWidth*cTileSize, posY + boxHeight*cTileSize/2,
-               posX + boxWidth*cTileSize/2, posY, 
-               al_map_rgb(255,255,255),1);
-
-  al_draw_line(posX + boxWidth*cTileSize, posY + boxHeight*cTileSize/2,
-               posX + boxWidth*cTileSize/2, posY + boxHeight*cTileSize,
-               al_map_rgb(255,255,255),1);
-
+  if (!invulnerable || (invulnerable && invCountdown%3 == 0) ) {
+    int x = posX + boxWidth*cTileSize/2 - al_get_bitmap_width(image)/2,
+        y = posY + boxHeight*cTileSize/2 - al_get_bitmap_height(image)/2;
+    al_draw_bitmap(image, x, y, 0);
+  }
 }

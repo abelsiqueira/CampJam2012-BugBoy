@@ -18,10 +18,12 @@ Entity::Entity (float w, float h) {
   invulnerable = false;
   facing = 1;
   isAffectedByGravity = true;
+  image = 0;
 }
 
 Entity::~Entity () {
-  
+  if (image)
+    al_destroy_bitmap(image);
 }
 
 void Entity::Update () {
@@ -43,11 +45,11 @@ void Entity::Update () {
         aux = gameGrid[static_cast<int>(posY/cTileSize+i)]
                       [static_cast<int>(nextX/cTileSize)];
 
-        if (aux == 'x') {
+        if (aux == cBlock) {
           hitWall = true;
           safe = true;
           break;
-        } else if (aux == 's') {
+        } else if (aux == cSpike) {
           safe = false;
         }
       }
@@ -56,10 +58,10 @@ void Entity::Update () {
         aux = gameGrid[static_cast<int>((posY - 1 + boxHeight*cTileSize)/cTileSize)]
                       [static_cast<int>(nextX/cTileSize)];
 
-        if (aux == 'x') {
+        if (aux == cBlock) {
           hitWall = true;
           safe = true;
-        } else if (aux == 's') {
+        } else if (aux == cSpike) {
           safe = false;
         }
       }
@@ -75,11 +77,11 @@ void Entity::Update () {
         char aux;
         aux = gameGrid[static_cast<int>(posY/cTileSize+i)]
                       [static_cast<int>((nextX+boxWidth*cTileSize-1)/cTileSize)];
-        if (aux == 'x') {
+        if (aux == cBlock) {
           hitWall = true;
           safe = true;
           break;
-        } else if (aux == 's') {
+        } else if (aux == cSpike) {
           safe = false;
         }
       }
@@ -87,10 +89,10 @@ void Entity::Update () {
         char aux;
         aux = gameGrid[static_cast<int>((posY -1 + boxHeight*cTileSize)/cTileSize)]
                       [static_cast<int>((nextX+boxWidth*cTileSize-1)/cTileSize)];
-        if (aux == 'x') {
+        if (aux == cBlock) {
           hitWall = true;
           safe = true;
-        } else if (aux == 's') {
+        } else if (aux == cSpike) {
           safe = false;
         }
       }
@@ -117,11 +119,11 @@ void Entity::Update () {
       aux = gameGrid[static_cast<int>((nextY-1)/cTileSize)]
                     [static_cast<int>(posX/cTileSize+i)];
     }
-    if (aux == 'x') {
+    if (aux == cBlock) {
       hitWall = true;
       safe = true;
       break;
-    } else if (aux == 's') {
+    } else if (aux == cSpike) {
       safe = false;
     }
   }
@@ -134,10 +136,10 @@ void Entity::Update () {
       aux = gameGrid[static_cast<int>((nextY-1)/cTileSize)]
                     [static_cast<int>((posX-1+boxWidth*cTileSize)/cTileSize)];
     }
-    if (aux == 'x') {
+    if (aux == cBlock) {
       hitWall = true;
       safe = true;
-    } else if (aux == 's') {
+    } else if (aux == cSpike) {
       safe = false;
     }
   }

@@ -227,7 +227,7 @@ void GameClass::DrawGameGrid () const {
       int x = j*cTileSize, y = i*cTileSize,
           xf = (j+1)*cTileSize, yf = (i+1)*cTileSize;
       switch (gameGrid[i][j]) {
-        case 'x':
+        case cBlock:
           //Block
           al_draw_filled_rectangle(x, y, xf, yf, color);
           al_draw_line(x, y, xf, yf, al_map_rgb(0,0,0),0);
@@ -237,13 +237,13 @@ void GameClass::DrawGameGrid () const {
           al_draw_line(xf, (y+yf)/2, (x+xf)/2, y, al_map_rgb(0,0,0),0);
           al_draw_line(xf, (y+yf)/2, (x+xf)/2, yf, al_map_rgb(0,0,0),0);
           break;
-        case 's':
+        case cSpike:
           //Spike
           al_draw_filled_triangle((j+0.5)*cTileSize, i*cTileSize+1,
               (j+1)*cTileSize-1, (i+1)*cTileSize-1, 
               j*cTileSize+1, (i+1)*cTileSize-1, al_map_rgb(255,255,255));
           break;
-        case '.':
+        case cNone:
           //Nothing
         default:
           break;
@@ -264,24 +264,30 @@ void GameClass::ReadGameLevel(const char * lvl) {
       char aux;
       file >> aux;
       switch (aux) {
-        case 'p':
+        case cPlayer:
           hero.SetPosition(j*cTileSize, i*cTileSize);
-          gameGrid[i][j] = '.';
+          gameGrid[i][j] = cNone;
           break;
-        case 'a':
+        case cAnt:
           enemies.push_back(new Ant(j*cTileSize, i*cTileSize));
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
-          gameGrid[i][j] = '.';
+          gameGrid[i][j] = cNone;
           break;
-        case 'f':
+        case cFly:
           enemies.push_back(new Fly(j*cTileSize, i*cTileSize));
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
-          gameGrid[i][j] = '.';
+          gameGrid[i][j] = cNone;
           break;
-        case 'B':
+        case cSpider:
+          enemies.push_back(new Spider(j*cTileSize, i*cTileSize));
+          enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          gameGrid[i][j] = cNone;
+          break;
+        case cSpiderBoss:
           enemies.push_back(new SpiderBoss(j*cTileSize, i*cTileSize));
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
-          gameGrid[i][j] = '.';
+          gameGrid[i][j] = cNone;
+          break;
         default:
           gameGrid[i][j] = aux;
           break;

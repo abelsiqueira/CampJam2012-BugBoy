@@ -18,12 +18,12 @@ void Ant::Update () {
   // Dont Fall
   if (keyIsPressed[key_left] && 
       gameGrid[static_cast<int>((posY-1)/cTileSize + boxHeight + 1)]
-              [static_cast<int>(posX/cTileSize)] == '.') {
+              [static_cast<int>(posX/cTileSize)] == cNone) {
     keyIsPressed[key_left]  = false;
     keyIsPressed[key_right] = true;
   } else if (keyIsPressed[key_right] && 
       gameGrid[static_cast<int>((posY-1)/cTileSize + boxHeight + 1)]
-              [static_cast<int>(posX/cTileSize + boxWidth)] == '.') {
+              [static_cast<int>(posX/cTileSize + boxWidth)] == cNone) {
     keyIsPressed[key_left]  = true;
     keyIsPressed[key_right] = false;
   }
@@ -31,12 +31,12 @@ void Ant::Update () {
   // If hit a wall, go back
   if (keyIsPressed[key_left] &&
       gameGrid[static_cast<int>(posY/cTileSize)]
-              [static_cast<int>((posX-xSpeed)/cTileSize)] == 'x') {
+              [static_cast<int>((posX-xSpeed)/cTileSize)] == cBlock) {
     keyIsPressed[key_left]  = false;
     keyIsPressed[key_right] = true;
   } else if (keyIsPressed[key_right] &&
       gameGrid[static_cast<int>(posY/cTileSize)]
-              [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == 'x') {
+              [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == cBlock) {
     keyIsPressed[key_left]  = true;
     keyIsPressed[key_right] = false;
   }
