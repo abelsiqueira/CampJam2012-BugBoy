@@ -1,6 +1,6 @@
 #include "hero.h"
 
-Hero::Hero () : Entity (1, 3) {
+Hero::Hero () : Entity(1, 3) {
 }
 
 Hero::~Hero () {
