@@ -16,12 +16,15 @@ class Hero : public Entity {
     void SetPosition (int x, int y) {
       posX = x; posY = y;
     }
+
     void Update ();
     void Move (bool *);
     void Draw () const;
     void Jump ();
 
-    bool IsDead () { return dead; }
+    bool IsDead () const { return dead; }
+    int GetX () const { return posX; }
+    int GetY () const { return posY; }
   protected:
     bool keyIsPressed[2];
     float fallingMultiplier;

@@ -31,6 +31,8 @@ GameClass::GameClass () {
   keyIsPressed[1] = false;
 
   ReadGameLevel("level1.map");
+  VisibleX = 0; 
+  VisibleY = 0;
 }
 
 GameClass::~GameClass () {
@@ -61,6 +63,16 @@ void GameClass::Run () {
       // Update
       if (!paused) {
         hero.Update();
+        VisibleX = hero.GetX() - cWindowWidth/2;
+        VisibleY = hero.GetY() -  cWindowHeight/2;
+        if (VisibleX < 0) 
+          VisibleX = 0;
+        else if (VisibleX > cTileSize*gridWidth - cWindowWidth)
+          VisibleX = cTileSize*gridWidth - cWindowWidth;
+        if (VisibleY < 0) 
+          VisibleY = 0;
+        else if (VisibleY > cTileSize*gridHeight - cWindowHeight)
+          VisibleY = cTileSize*gridHeight - cWindowHeight;
       }
       if (hero.IsDead()) done = true;
       redraw = true;
@@ -80,6 +92,11 @@ void GameClass::Run () {
     if (redraw && al_is_event_queue_empty(eventQueue)) {
       redraw = false;
       al_clear_to_color(al_map_rgb(0,0,0));
+
+      ALLEGRO_TRANSFORM T;
+      al_identity_transform(&T);
+      al_translate_transform(&T, -VisibleX, -VisibleY);
+      al_use_transform(&T);
 
       DrawGame();
       if (paused)

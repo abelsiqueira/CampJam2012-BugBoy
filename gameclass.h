@@ -17,6 +17,7 @@ class GameClass {
     void DrawPauseMenu () const;
     void DrawGame () const;
     void DrawGameGrid () const;
+    int VisibleX, VisibleY;
 
     // Game
     void ReadGameLevel(const char *);
