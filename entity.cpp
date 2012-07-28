@@ -13,7 +13,7 @@ Entity::Entity (float w, float h) {
   grounded = false;
   ySpeed = 1.0;
   xSpeed = 2.0;
-  jumpSpeed = 5.0;
+  jumpSpeed = 7.0;
   lives = 1;
   invulnerable = false;
   facing = 1;
@@ -161,7 +161,7 @@ void Entity::Move (bool *kip) {
 
 void Entity::Jump () {
   if (grounded)
-    ySpeed = -5.0;
+    ySpeed = -jumpSpeed;
 }
 
 bool Entity::CollidesWith (const Entity & entity) const {

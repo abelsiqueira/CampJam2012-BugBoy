@@ -38,6 +38,7 @@ class GameClass {
     ALLEGRO_FONT *smallFont;
     ALLEGRO_FONT *normalFont;
     ALLEGRO_FONT *bigFont;
+    ALLEGRO_BITMAP *level;
     
     bool done, paused;
 };

@@ -53,6 +53,7 @@ GameClass::~GameClass () {
     delete []gameGrid[i];
   delete []gameGrid;
 
+  al_destroy_bitmap(level);
   al_destroy_font(bigFont);
   al_destroy_font(normalFont);
   al_destroy_font(smallFont);
@@ -195,7 +196,8 @@ void GameClass::DrawPauseMenu () const {
 }
 
 void GameClass::DrawGame () const {
-  DrawGameGrid();
+//  DrawGameGrid();
+  al_draw_bitmap(level, 0, 0, 0);
   hero.Draw();
   {
     std::list<Enemy*>::const_iterator iter = enemies.begin(),
@@ -281,6 +283,11 @@ void GameClass::ReadGameLevel(const char * lvl) {
       }
     }
   }
+
+  level = al_create_bitmap(cTileSize*gridWidth, cTileSize*gridHeight);
+  al_set_target_bitmap(level);
+  DrawGameGrid();
+  al_set_target_bitmap(al_get_backbuffer(display));
 
   hero.SetGameGrid(gameGrid, gridWidth, gridHeight);
 }

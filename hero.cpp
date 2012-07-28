@@ -1,8 +1,9 @@
 #include "hero.h"
 
-Hero::Hero () : Entity(1, 3) {
+Hero::Hero () : Entity(1, 2) {
   lives = 3;
   xSpeed = 3.0;
+  jumpSpeed = 7.0;
 }
 
 Hero::~Hero () {
