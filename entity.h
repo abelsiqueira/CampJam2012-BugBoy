@@ -21,8 +21,14 @@ class Entity {
       posX = x; 
       posY = y - (boxHeight-1)*cTileSize - 2;
     }
-    void Die () {
-      dead = true;
+    virtual void Die () {
+      if (dead || invulnerable)
+        return;
+      lives--;
+      if (lives <= 0)
+        dead = true;
+      invulnerable = true;
+      invCountdown = cInvulnerableCountdown;
     }
 
     void Move (bool *);
@@ -45,7 +51,10 @@ class Entity {
     float ySpeed, xSpeed, jumpSpeed;
     float boxWidth, boxHeight;
 
-    bool dead, grounded;
+    bool dead, grounded, invulnerable;
+    int lives;
+    int invCountdown;
+
 };
 
 #endif

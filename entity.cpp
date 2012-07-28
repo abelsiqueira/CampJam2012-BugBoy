@@ -14,6 +14,8 @@ Entity::Entity (float w, float h) {
   ySpeed = 1.0;
   xSpeed = 2.0;
   jumpSpeed = 5.0;
+  lives = 1;
+  invulnerable = false;
 }
 
 Entity::~Entity () {
@@ -23,6 +25,11 @@ Entity::~Entity () {
 void Entity::Update () {
   if (dead)
     return;
+  if (invulnerable) {
+    invCountdown--;
+    if (invCountdown <= 0)
+      invulnerable = false;
+  }
 
   if (keyIsPressed[0] != keyIsPressed[1]) {
     if (keyIsPressed[key_left]) {
