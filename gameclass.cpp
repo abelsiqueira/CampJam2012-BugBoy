@@ -150,10 +150,18 @@ void GameClass::DrawGameGrid () const {
     for (size_t j = 0; j < gridWidth; j++) {
       switch (gameGrid[i][j]) {
         case 'x':
+          //Block
           al_draw_filled_rectangle(j*cTileSize+1, i*cTileSize+1,
               (j+1)*cTileSize-1, (i+1)*cTileSize-1, color);
           break;
+        case 's':
+          //Spike
+          al_draw_filled_triangle((j+0.5)*cTileSize, i*cTileSize+1,
+              (j+1)*cTileSize-1, (i+1)*cTileSize-1, 
+              j*cTileSize+1, (i+1)*cTileSize-1, al_map_rgb(255,255,255));
+          break;
         case '.':
+          //Nothing
         default:
           break;
       }
