@@ -13,7 +13,7 @@ Seed::Seed (float x, float y, int direction) : Entity(0.3, 0.2) {
     keyIsPressed[key_right] = false;
   }
   xSpeed = 10.0;
-  ySpeed = 0.0;
+  ySpeed = -4.0;
 }
 
 Seed::~Seed () {

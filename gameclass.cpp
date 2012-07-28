@@ -278,6 +278,10 @@ void GameClass::ReadGameLevel(const char * lvl) {
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = '.';
           break;
+        case 'B':
+          enemies.push_back(new SpiderBoss(j*cTileSize, i*cTileSize));
+          enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          gameGrid[i][j] = '.';
         default:
           gameGrid[i][j] = aux;
           break;
