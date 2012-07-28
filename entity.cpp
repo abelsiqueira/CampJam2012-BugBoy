@@ -66,7 +66,7 @@ void Entity::Update () {
       if (!hitWall)
         posX = nextX;
       if (!safe)
-        dead = true;
+        Die();
     } else {
       facing = 1;
       float nextX = posX + xSpeed;
@@ -97,13 +97,13 @@ void Entity::Update () {
       if (!hitWall)
         posX = nextX;
       if (!safe)
-        dead = true;
+        Die();
     }
   }
   float nextY = posY + ySpeed;
   
   if (nextY < 0 || nextY + boxHeight*cTileSize > (int)(cTileSize*gridHeight)) {
-    dead = true;
+    Die();
     return;
   }
 
@@ -159,7 +159,7 @@ void Entity::Update () {
     grounded = false;
   }
   if (!safe)
-    dead = true;
+    Die();
 }
 
 void Entity::Move (bool *kip) {

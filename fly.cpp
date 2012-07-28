@@ -22,8 +22,9 @@ void Fly::Update () {
   static float count = 0;
   ySpeed = ((rand()%101)/100.0)*5*sin(count);
   count += 0.01*M_PI;
-  xSpeed += (2*(rand()%101/100.0) - 1)*0.2;
-  if (xSpeed > 3.5) xSpeed = 3.5;
+  xSpeed += (2*(rand()%101/100.0) - 1)*0.4;
+  float maxSpeed = 4.0;
+  if (xSpeed > maxSpeed) xSpeed = maxSpeed;
   else if (xSpeed < 0) xSpeed = 0;
 
   Enemy::Update();
