@@ -5,6 +5,8 @@ Hero::Hero () : Entity () {
   keyIsPressed[1] = false;
   fallingMultiplier = 1.0;
   dead = false;
+  grounded = false;
+  ySpeed = 1.0;
 }
 
 Hero::~Hero () {
@@ -32,7 +34,7 @@ void Hero::Update () {
       }
     }
   }
-  int nextY = posY + 1*fallingMultiplier;
+  int nextY = posY + ySpeed;
   
   if (nextY + 2*cTileSize > cWindowHeight) {
     dead = true;
@@ -41,16 +43,23 @@ void Hero::Update () {
 
   if (gameGrid[nextY/cTileSize + 2][(posX)/cTileSize] == 'x' || 
       gameGrid[nextY/cTileSize + 2][(posX)/cTileSize+1] == 'x') {
-    fallingMultiplier = 1.0;
+    ySpeed = 1.0;
+    grounded = true;
   } else {
     posY = nextY;
-    fallingMultiplier += 0.10;
+    ySpeed += cGravity;
+    grounded = false;
   }
 }
 
 void Hero::Move (bool *kip) {
   keyIsPressed[0] = kip[0];
   keyIsPressed[1] = kip[1];
+}
+
+void Hero::Jump () {
+  if (grounded)
+    ySpeed = -5.0;
 }
 
 void Hero::Draw () const {

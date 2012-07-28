@@ -98,6 +98,10 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
       if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
         paused = (paused ? false : true);
       break;
+    case ALLEGRO_KEY_UP:
+      if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
+        hero.Jump();
+      break;
     case ALLEGRO_KEY_LEFT:
       keyIsPressed[key_left] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
       break;

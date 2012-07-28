@@ -14,12 +14,14 @@ class Hero : public Entity {
     void Update ();
     void Move (bool *);
     void Draw () const;
+    void Jump ();
   protected:
     bool keyIsPressed[2];
     float fallingMultiplier;
     char **gameGrid;
+    float ySpeed;
 
-    bool dead;
+    bool dead, grounded;
 };
 
 #endif
