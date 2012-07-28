@@ -8,17 +8,25 @@ class Hero : public Entity {
     Hero ();
     ~Hero ();
 
-    void SetGameGrid (char **gg) {
+    void SetGameGrid (char **gg, size_t w, size_t h) {
       gameGrid = gg;
+      gridWidth = w;
+      gridHeight = h;
+    }
+    void SetPosition (int x, int y) {
+      posX = x; posY = y;
     }
     void Update ();
     void Move (bool *);
     void Draw () const;
     void Jump ();
+
+    bool IsDead () { return dead; }
   protected:
     bool keyIsPressed[2];
     float fallingMultiplier;
     char **gameGrid;
+    size_t gridWidth, gridHeight; 
     float ySpeed;
 
     bool dead, grounded;

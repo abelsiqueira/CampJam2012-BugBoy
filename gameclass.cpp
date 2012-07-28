@@ -62,6 +62,7 @@ void GameClass::Run () {
       if (!paused) {
         hero.Update();
       }
+      if (hero.IsDead()) done = true;
       redraw = true;
     } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
       done = true;
@@ -132,8 +133,8 @@ void GameClass::DrawGameGrid () const {
     for (size_t j = 0; j < gridWidth; j++) {
       switch (gameGrid[i][j]) {
         case 'x':
-          al_draw_filled_rectangle(j*cTileSize, i*cTileSize,
-              (j+1)*cTileSize, (i+1)*cTileSize, color);
+          al_draw_filled_rectangle(j*cTileSize+1, i*cTileSize+1,
+              (j+1)*cTileSize-1, (i+1)*cTileSize-1, color);
           break;
         case '.':
         default:
@@ -151,9 +152,17 @@ void GameClass::ReadGameLevel(const char * lvl) {
   gameGrid = new char*[gridHeight];
   for (size_t i = 0; i < gridHeight; i++) {
     gameGrid[i] = new char[gridWidth];
-    for (size_t j = 0; j < gridWidth; j++)
-      file >> gameGrid[i][j];
+    for (size_t j = 0; j < gridWidth; j++) {
+      char aux;
+      file >> aux;
+      if (aux == 'p') {
+        hero.SetPosition(j*cTileSize, (i-1)*cTileSize-2);
+        gameGrid[i][j] = '.';
+      } else {
+        gameGrid[i][j] = aux;
+      }
+    }
   }
 
-  hero.SetGameGrid(gameGrid);
+  hero.SetGameGrid(gameGrid, gridWidth, gridHeight);
 }

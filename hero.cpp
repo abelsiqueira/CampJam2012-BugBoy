@@ -36,7 +36,7 @@ void Hero::Update () {
   }
   int nextY = posY + ySpeed;
   
-  if (nextY + 2*cTileSize > cWindowHeight) {
+  if (nextY + 2*cTileSize > cTileSize*gridHeight) {
     dead = true;
     return;
   }
