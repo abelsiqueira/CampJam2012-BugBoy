@@ -6,7 +6,7 @@
 
 class Hero : public Entity {
   public:
-    Hero ();
+    Hero (float, float);
     ~Hero ();
 
     void Update ();

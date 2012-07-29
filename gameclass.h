@@ -29,7 +29,7 @@ class GameClass {
     int VisibleX, VisibleY;
 
     // Game
-    Hero hero;
+    Hero *hero;
     float startX, startY;
     std::list <Enemy*> enemies;
     std::list <Seed*>  seeds;

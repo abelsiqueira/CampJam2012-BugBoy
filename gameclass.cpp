@@ -92,6 +92,7 @@ GameClass::~GameClass () {
     delete p;
     upgrades.pop_front();
   }
+  delete hero;
   if (doubleJump)
     delete doubleJump;
   for (size_t i = 0; i < gridHeight; i++)
@@ -123,7 +124,7 @@ void GameClass::Reset () {
   }
   if (doubleJump)
     delete doubleJump;
-  hero.Reset();
+  hero->Reset();
 }
 
 void GameClass::GameEnd () {
@@ -138,7 +139,7 @@ void GameClass::Run () {
   al_start_timer(timer);
 
   regions.push_back(Region(1*cTileSize, 49*cTileSize, 12, 6));
-  regions.back().SetTriggerEntity(&hero);
+  regions.back().SetTriggerEntity(hero);
 
   while (!done) {
     ALLEGRO_EVENT ev;
@@ -183,15 +184,15 @@ void GameClass::Run () {
           doubleJump = new Upgrade(doubleJumpUpgrade, x, y);
           doubleJump->SetGameGrid(gameGrid, gridWidth, gridHeight);
         }
-        hero.Update();
+        hero->Update();
         // Update enemies
         {
           std::list<Enemy*>::iterator iter = enemies.begin(),
             iterEnd = enemies.end();
           while (iter != iterEnd) {
             (*iter)->Update();
-            if ((*iter)->CollidesWith(hero)) {
-              hero.Die();
+            if ((*iter)->CollidesWith(*hero)) {
+              hero->Die();
             }
             iter++;
           }
@@ -216,16 +217,16 @@ void GameClass::Run () {
         for (std::list<Upgrade*>::iterator iter = upgrades.begin();
              iter != upgrades.end(); iter++) {
           (*iter)->Update();
-          if ((*iter)->CollidesWith(hero)) {
+          if ((*iter)->CollidesWith(*hero)) {
             (*iter)->Take();
-            hero.AddUpgrade((*iter)->GetType());
+            hero->AddUpgrade((*iter)->GetType());
           }
         }
         if (doubleJump) {
           doubleJump->Update();
-          if (doubleJump->CollidesWith(hero)) {
+          if (doubleJump->CollidesWith(*hero)) {
             doubleJump->Take();
-            hero.AddUpgrade(doubleJump->GetType());
+            hero->AddUpgrade(doubleJump->GetType());
           }
         }
         // Update regions
@@ -236,8 +237,8 @@ void GameClass::Run () {
             GameEnd();
           }
         }
-        VisibleX = hero.GetX() - cWindowWidth/2;
-        VisibleY = hero.GetY() -  cWindowHeight/2;
+        VisibleX = hero->GetX() - cWindowWidth/2;
+        VisibleY = hero->GetY() -  cWindowHeight/2;
         if (VisibleX < 0) 
           VisibleX = 0;
         else if (VisibleX > (int)(cTileSize*gridWidth - cWindowWidth))
@@ -247,8 +248,8 @@ void GameClass::Run () {
         else if (VisibleY > (int)(cTileSize*gridHeight - cWindowHeight))
           VisibleY = cTileSize*gridHeight - cWindowHeight;
       }
-      if (hero.IsDead()) {
-        hero.Respawn(startX, startY);
+      if (hero->IsDead()) {
+        hero->Respawn(startX, startY);
       }
       redraw = true;
     } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -261,7 +262,7 @@ void GameClass::Run () {
     } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN ||
                ev.type == ALLEGRO_EVENT_KEY_UP) {
       KeyboardEventHandler(ev.keyboard.keycode, ev.type);
-        hero.Move(keyIsPressed);
+        hero->Move(keyIsPressed);
     }
 
     if (redraw && al_is_event_queue_empty(eventQueue)) {
@@ -363,7 +364,7 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
         break;
       case ALLEGRO_KEY_UP:
         if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
-          hero.Jump();
+          hero->Jump();
         break;
       case ALLEGRO_KEY_LEFT:
         keyIsPressed[key_left] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
@@ -373,7 +374,7 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
         break;
       case ALLEGRO_KEY_SPACE:
         if (ev_type == ALLEGRO_EVENT_KEY_DOWN) {
-          seeds.push_back(hero.Shoot());
+          seeds.push_back(hero->Shoot());
           if (seeds.back() == 0)
             seeds.pop_back();
         }
@@ -387,9 +388,9 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
 void GameClass::DrawHud () const {
   std::stringstream aux;
   if (language == langEnglish)
-    aux << "Lives: " << hero.GetLives();
+    aux << "Lives: " << hero->GetLives();
   else
-    aux << "Vidas: " << hero.GetLives();
+    aux << "Vidas: " << hero->GetLives();
 
   al_draw_filled_rectangle(VisibleX + 2, VisibleY + 2, 
       VisibleX + 85, VisibleY + 28, al_map_rgb(0,0,0));
@@ -620,13 +621,13 @@ void GameClass::DrawPauseMenu () const {
 
   std::stringstream aux[8];
   aux[0] << lives[language];
-  aux[4] << hero.GetLives();
+  aux[4] << hero->GetLives();
   aux[1] << jump[language];
-  aux[5] << hero.GetJumpUpgrades();
+  aux[5] << hero->GetJumpUpgrades();
   aux[2] << speed[language];
-  aux[6] << hero.GetSpeedUpgrades();
+  aux[6] << hero->GetSpeedUpgrades();
   aux[3] << life[language];
-  aux[7] << hero.GetLifeUpgrades();
+  aux[7] << hero->GetLifeUpgrades();
 
 
   float xdif = 500, ydif = 50;
@@ -659,7 +660,7 @@ void GameClass::DrawPauseMenu () const {
 
 void GameClass::DrawGame () const {
   al_draw_bitmap(level, 0, 0, 0);
-  hero.Draw();
+  hero->Draw();
   {
     std::list<Enemy*>::const_iterator iter = enemies.begin(),
       iterEnd = enemies.end();
@@ -745,7 +746,7 @@ void GameClass::ReadGameLevel(const char * lvl) {
       file >> aux;
       switch (aux) {
         case cPlayer:
-          hero.SetPosition(x, y);
+          hero = new Hero(x, y);
           startX = x;
           startY = y;
           gameGrid[i][j] = cNone;
@@ -803,5 +804,5 @@ void GameClass::ReadGameLevel(const char * lvl) {
   DrawGameGrid();
   al_set_target_bitmap(al_get_backbuffer(display));
 
-  hero.SetGameGrid(gameGrid, gridWidth, gridHeight);
+  hero->SetGameGrid(gameGrid, gridWidth, gridHeight);
 }
