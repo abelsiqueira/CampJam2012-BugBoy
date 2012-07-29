@@ -8,6 +8,8 @@ class Upgrade : public Entity {
     Upgrade (UpgradeType, float, float);
     ~Upgrade ();
 
+    void Reset ();
+
     void Update ();
     void Draw () const;
 

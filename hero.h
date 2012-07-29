@@ -12,6 +12,7 @@ class Hero : public Entity {
     void Update ();
     void Draw () const;
     void Respawn (float, float);
+    void Reset ();
 
     Seed * Shoot ();
     void AddUpgrade (UpgradeType);

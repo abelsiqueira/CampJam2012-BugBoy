@@ -21,15 +21,14 @@
 #include <cstdlib>
 #include <ctime>
 
-SpiderBoss::SpiderBoss (float x, float y) : Enemy(2, 2) {
-  posX = x;
-  posY = y - 2;
+SpiderBoss::SpiderBoss (float x, float y) : Enemy(x, y, 2, 2) {
   keyIsPressed[key_left] = false;
   keyIsPressed[key_right] = true;
   xSpeed = 2.5;
   ySpeed = 1.0;
   isAffectedByGravity = false;
   lives = 4;
+  maxLives = 4;
 
   image = al_load_bitmap("Images/white-spider.png");
 }

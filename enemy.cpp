@@ -18,7 +18,7 @@
 #include "enemy.h"
 #include <iostream>
 
-Enemy::Enemy (float w, float h) : Entity(w, h) {
+Enemy::Enemy (float x, float y, float w, float h) : Entity(x, y, w, h) {
 
 }
 

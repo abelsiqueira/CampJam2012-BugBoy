@@ -21,9 +21,7 @@
 #include <cstdlib>
 #include <ctime>
 
-Spider::Spider (float x, float y) : Enemy(0.5, 0.5) {
-  posX = x;
-  posY = y - 2;
+Spider::Spider (float x, float y) : Enemy(x, y, 0.5, 0.5) {
   keyIsPressed[key_left] = false;
   keyIsPressed[key_right] = true;
   xSpeed = 2.5;

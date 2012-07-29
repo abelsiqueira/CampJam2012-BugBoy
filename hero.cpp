@@ -18,7 +18,7 @@
 #include "hero.h"
 #include <iostream>
 
-Hero::Hero () : Entity(1, 2) {
+Hero::Hero () : Entity(0, 0, 1, 2) {
   lives = 1;
   xSpeed = 2.7;
   jumpSpeed = 6.0;
@@ -35,6 +35,19 @@ void Hero::Respawn (float x, float y) {
   lives = 1 + upgradesLife;
   posX = x;
   posY = y - (boxHeight-1)*cTileSize - 2;
+  shootCountdown = 0;
+}
+
+void Hero::Reset () {
+  Entity::Reset();
+  lives = maxLives;
+  upgradesLife = 0;
+  upgradesSpeed = 0;
+  upgradesJump = 0;
+  hasDoubleJump = false;
+  consecJumps = 0;
+  xSpeed = 2.7;
+  jumpSpeed = 6.0;
   shootCountdown = 0;
 }
 

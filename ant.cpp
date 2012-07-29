@@ -18,9 +18,7 @@
 #include "ant.h"
 #include <iostream>
 
-Ant::Ant (float x, float y) : Enemy(0.5, 0.5) {
-  posX = x;
-  posY = y - 2;
+Ant::Ant (float x, float y) : Enemy(x, y, 0.5, 0.5) {
   keyIsPressed[key_left] = true;
   keyIsPressed[key_right] = false;
   xSpeed = 0.5;

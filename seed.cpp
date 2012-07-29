@@ -19,9 +19,7 @@
 #include <iostream>
 #include <cmath>
 
-Seed::Seed (float x, float y, int direction) : Entity(0.3, 0.2) {
-  posX = x;
-  posY = y - 2;
+Seed::Seed (float x, float y, int direction) : Entity(x, y, 0.3, 0.2) {
   if (direction > 0) {
     keyIsPressed[key_left] = false;
     keyIsPressed[key_right] = true;

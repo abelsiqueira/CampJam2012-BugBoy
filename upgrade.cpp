@@ -17,17 +17,21 @@
  */
 #include "upgrade.h"
 
-Upgrade::Upgrade (UpgradeType ut, float x, float y) : Entity (0.5, 0.5) {
-  posX = x;
-  posY = y;
+Upgrade::Upgrade (UpgradeType ut, float x, float y) : Entity (x, y, 0.5, 0.5) {
   upgradeType = ut;
   visible = true;
   xSpeed = 0;
+  image = 0;
 }
 
 Upgrade::~Upgrade () {
   if (image)
     al_destroy_bitmap(image);
+}
+
+void Upgrade::Reset () {
+  Entity::Reset ();
+  visible = true;
 }
 
 void Upgrade::Update () {

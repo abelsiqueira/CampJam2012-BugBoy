@@ -18,11 +18,10 @@
 #include "entity.h"
 #include <iostream>
 
-Entity::Entity (float w, float h) {
+Entity::Entity (float x, float y, float w, float h) {
   boxWidth = w;
   boxHeight = h;
-  posX = 0;
-  posY = 0;
+  SetPosition(x, y);
   keyIsPressed[0] = false;
   keyIsPressed[1] = false;
   fallingMultiplier = 1.0;
@@ -32,6 +31,7 @@ Entity::Entity (float w, float h) {
   xSpeed = 2.0;
   jumpSpeed = 7.0;
   lives = 1;
+  maxLives = 1;
   invulnerable = false;
   facing = 1;
   isAffectedByGravity = true;
@@ -41,6 +41,15 @@ Entity::Entity (float w, float h) {
 Entity::~Entity () {
   if (image)
     al_destroy_bitmap(image);
+}
+
+void Entity::Reset () {
+  lives = maxLives;
+  posX = startX;
+  posY = startY;
+  dead = false;
+  facing = 1;
+  invulnerable = false;
 }
 
 void Entity::Update () {

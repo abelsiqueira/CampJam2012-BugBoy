@@ -6,11 +6,13 @@
 
 class Entity {
   public:
-    Entity (float, float);
+    Entity (float, float, float, float);
     virtual ~Entity ();
 
     virtual void Update ();
     virtual void Draw () const = 0;
+
+    virtual void Reset ();
 
     void SetGameGrid (char **gg, size_t w, size_t h) {
       gameGrid = gg;
@@ -20,6 +22,8 @@ class Entity {
     void SetPosition (float x, float y) {
       posX = x; 
       posY = y - (boxHeight-1)*cTileSize - 2;
+      startX = posX;
+      startY = posY;
     }
     virtual void Die () {
       if (dead || invulnerable)
@@ -45,6 +49,7 @@ class Entity {
   protected:
     Entity ();
     float posX, posY;
+    float startX, startY;
     bool keyIsPressed[2];
     float fallingMultiplier;
     char **gameGrid;
@@ -53,7 +58,7 @@ class Entity {
     float boxWidth, boxHeight;
 
     bool dead, grounded, invulnerable, isAffectedByGravity;
-    int lives;
+    int lives, maxLives;
     int invCountdown;
     int facing;
 

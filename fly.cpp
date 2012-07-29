@@ -21,9 +21,7 @@
 #include <cstdlib>
 #include <ctime>
 
-Fly::Fly (float x, float y) : Enemy(0.5, 0.4) {
-  posX = x;
-  posY = y - 2;
+Fly::Fly (float x, float y) : Enemy(x, y, 0.5, 0.4) {
   keyIsPressed[key_left] = false;
   keyIsPressed[key_right] = true;
   xSpeed = 2.5;

@@ -62,6 +62,7 @@ GameClass::GameClass () {
   menuOption = menuStartGame;
   choseOption = false;
   introScreen = 0;
+  doubleJump = 0;
 }
 
 GameClass::~GameClass () {
@@ -75,6 +76,13 @@ GameClass::~GameClass () {
     delete p;
     seeds.pop_front();
   }
+  while (!upgrades.empty()) {
+    Upgrade *p = upgrades.front();
+    delete p;
+    upgrades.pop_front();
+  }
+  if (doubleJump)
+    delete doubleJump;
   for (size_t i = 0; i < gridHeight; i++)
     delete []gameGrid[i];
   delete []gameGrid;
@@ -86,6 +94,25 @@ GameClass::~GameClass () {
   al_destroy_timer(timer);
   al_destroy_event_queue(eventQueue);
   al_destroy_display(display);
+}
+
+void GameClass::Reset () {
+  while (!seeds.empty()) {
+    Seed *p = seeds.front();
+    delete p;
+    seeds.pop_front();
+  }
+  for (std::list<Enemy*>::iterator iter = enemies.begin();
+       iter != enemies.end(); iter++) {
+    (*iter)->Reset();
+  }
+  for (std::list<Upgrade*>::iterator iter = upgrades.begin();
+       iter != upgrades.end(); iter++) {
+    (*iter)->Reset();
+  }
+  if (doubleJump)
+    delete doubleJump;
+  hero.Reset();
 }
 
 void GameClass::GameEnd () {
@@ -114,6 +141,7 @@ void GameClass::Run () {
           choseOption = false;
           if (menuOption == menuStartGame) {
             inIntro = true;
+            Reset();
           } else if (menuOption == menuCredits) {
             inCredits = true;
           } else {
@@ -136,11 +164,10 @@ void GameClass::Run () {
           }
         }
       } else if (!paused) {
-        if (pSpiderBoss && pSpiderBoss->IsDead()) {
+        if (pSpiderBoss && pSpiderBoss->IsDead() && (doubleJump == 0) ) {
           float x = pSpiderBoss->GetX(), y = pSpiderBoss->GetY();
-          upgrades.push_back(new Upgrade(doubleJumpUpgrade, x, y));
-          upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
-          pSpiderBoss = 0;
+          doubleJump = new Upgrade(doubleJumpUpgrade, x, y);
+          doubleJump->SetGameGrid(gameGrid, gridWidth, gridHeight);
         }
         hero.Update();
         // Update enemies
@@ -180,6 +207,8 @@ void GameClass::Run () {
             hero.AddUpgrade((*iter)->GetType());
           }
         }
+        if (doubleJump)
+          doubleJump->Update();
         // Update regions
         for (std::list<Region>::iterator iter = regions.begin();
              iter != regions.end(); iter++) {
@@ -517,6 +546,8 @@ void GameClass::DrawGame () const {
        iter != upgrades.end(); iter++) {
     (*iter)->Draw();
   }
+  if (doubleJump)
+    doubleJump->Draw();
   for (std::list<Region>::const_iterator iter = regions.begin();
        iter != regions.end(); iter++) {
     iter->Draw();
