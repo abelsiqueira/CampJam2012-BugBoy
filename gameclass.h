@@ -17,6 +17,7 @@ class GameClass {
     void KeyboardEventHandler (unsigned int, int);
 
     // Draw
+    void DrawCredits () const;
     void DrawPauseMenu () const;
     void DrawGameIntro () const;
     void DrawGameMenu () const;

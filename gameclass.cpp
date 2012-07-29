@@ -85,14 +85,12 @@ void GameClass::Run () {
       // Update
       if (inMenu) {
         if (choseOption) {
-          if (menuOption == menuStartGame) {
             inMenu = false;
+          choseOption = false;
+          if (menuOption == menuStartGame) {
             inIntro = true;
-            choseOption = false;
           } else {
-            done = true;
             inCredits = true;
-            std::cout << "Credits" << std::endl;
           }
         }
       } else if (inIntro) {
@@ -177,6 +175,8 @@ void GameClass::Run () {
         DrawGameMenu();
       } else if (inIntro) {
         DrawGameIntro();
+      } else if (inCredits) {
+        DrawCredits();
       } else {
         ALLEGRO_TRANSFORM T;
         al_identity_transform(&T);
@@ -221,6 +221,13 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
         introScreen++;
         if (introScreen > 1)
           inIntro = false;
+        break;
+    }
+  } else if (inCredits && ev_type == ALLEGRO_EVENT_KEY_DOWN) {
+    switch(keycode) {
+      default:
+        inCredits = false;
+        inMenu = true;
         break;
     }
   } else if (!inMenu) {
@@ -320,9 +327,9 @@ void GameClass::DrawGameIntro () const {
     for (int i = 0; i < 8; i++)
       al_draw_text(normalFont, fontColor, 200, 200 + i*45, ALLEGRO_ALIGN_LEFT, text[i].c_str());
 
-    Upgrade jump      (jumpUpgrade, 200, 200 + 4*45), 
-            speed     (speedUpgrade, 200, 200 + 5*45), 
-            life      (lifeUpgrade, 200, 200 + 6*45),
+    Upgrade jump      (jumpUpgrade,       200, 200 + 4*45), 
+            speed     (speedUpgrade,      200, 200 + 5*45), 
+            life      (lifeUpgrade,       200, 200 + 6*45),
             doubleJump(doubleJumpUpgrade, 200, 200 + 7*45);
 
     jump.Draw();
@@ -337,6 +344,26 @@ void GameClass::DrawGameIntro () const {
   }
 }
 
+void GameClass::DrawCredits () const {
+  ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
+
+  al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Credits");
+
+  std::string text[9] = {
+    "Game Design: Abel Soares Siqueira",
+    "Game Programming: Abel Soares Siqueira",
+    "Game Art:",
+    "  Spider: http://openclipart.org/detail/73135/spider-by-redccshirt",
+    "",
+    "Game Developed for the CampJam'12",
+    "This game is distributed under the terms of the GNU GPL. See COPYING for details",
+    "You can download this game source at",
+    "        http://github.com/abelsiqueira/campjam12.git"
+  };
+  for (int i = 0; i < 9; i++)
+    al_draw_text(normalFont, fontColor, 100, 150 + i*50, ALLEGRO_ALIGN_LEFT, text[i].c_str());
+}
+
 void GameClass::DrawPauseMenu () const {
   ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
 
@@ -349,7 +376,6 @@ void GameClass::DrawPauseMenu () const {
 }
 
 void GameClass::DrawGame () const {
-//  DrawGameGrid();
   al_draw_bitmap(level, 0, 0, 0);
   hero.Draw();
   {
@@ -374,6 +400,7 @@ void GameClass::DrawGame () const {
   }
   DrawHud();
 }
+
 
 void GameClass::DrawGameGrid () const {
   ALLEGRO_COLOR color(al_map_rgb(255,255,255));

@@ -1,4 +1,4 @@
 Images
 ------
 
-spides: http://openclipart.org/detail/73135/spider-by-redccshirt
+spider: http://openclipart.org/detail/73135/spider-by-redccshirt
