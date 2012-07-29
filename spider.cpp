@@ -71,11 +71,5 @@ void Spider::Update () {
 }
 
 void Spider::Draw () const {
-  if (dead)
-    return;
-  if (!invulnerable || (invulnerable && invCountdown%3 == 0) ) {
-    int x = posX + boxWidth*cTileSize/2 - al_get_bitmap_width(image)/2,
-        y = posY + boxHeight*cTileSize/2 - al_get_bitmap_height(image)/2;
-    al_draw_bitmap(image, x, y, 0);
-  }
+  Entity::Draw();
 }

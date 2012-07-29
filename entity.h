@@ -10,7 +10,7 @@ class Entity {
     virtual ~Entity ();
 
     virtual void Update ();
-    virtual void Draw () const = 0;
+    virtual void Draw () const;
 
     virtual void Reset ();
 

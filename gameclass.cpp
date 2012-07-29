@@ -452,18 +452,19 @@ void GameClass::DrawCredits () const {
 
   al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Credits");
 
-  std::string text[9] = {
+  std::string text[10] = {
     "Game Design: Abel Soares Siqueira",
     "Game Programming: Abel Soares Siqueira",
     "Game Art:",
     "  Spider: http://openclipart.org/detail/73135/spider-by-redccshirt",
+    "  Fly: http://openclipart.org/detail/119407/fly-01-by-anonymous",
     "",
     "Game Developed for the CampJam'12",
     "This game is distributed under the terms of the GNU GPL. Read the README.md and COPYING",
     "You can download this game source at",
     "        https://github.com/abelsiqueira/CampJam2012-BugBoy.git"
   };
-  for (int i = 0; i < 9; i++)
+  for (int i = 0; i < 10; i++)
     al_draw_text(normalFont, fontColor, 100, 150 + i*50, ALLEGRO_ALIGN_LEFT, text[i].c_str());
 }
 

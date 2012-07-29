@@ -27,6 +27,8 @@ Fly::Fly (float x, float y) : Enemy(x, y, 0.5, 0.4) {
   xSpeed = 2.5;
   ySpeed = 0.0;
   isAffectedByGravity = false;
+
+  image = al_load_bitmap("Images/fly.png");
 }
 
 Fly::~Fly () {
@@ -64,22 +66,5 @@ void Fly::Update () {
 }
 
 void Fly::Draw () const {
-  if (dead)
-    return;
-  al_draw_line(posX, posY + boxHeight*cTileSize/2,
-               posX + boxWidth*cTileSize/2, posY, 
-               al_map_rgb(255,255,255),1);
-
-  al_draw_line(posX, posY + boxHeight*cTileSize/2,
-               posX + boxWidth*cTileSize/2, posY + boxHeight*cTileSize, 
-               al_map_rgb(255,255,255),1);
-
-  al_draw_line(posX + boxWidth*cTileSize, posY + boxHeight*cTileSize/2,
-               posX + boxWidth*cTileSize/2, posY, 
-               al_map_rgb(255,255,255),1);
-
-  al_draw_line(posX + boxWidth*cTileSize, posY + boxHeight*cTileSize/2,
-               posX + boxWidth*cTileSize/2, posY + boxHeight*cTileSize,
-               al_map_rgb(255,255,255),1);
-
+  Entity::Draw();
 }
