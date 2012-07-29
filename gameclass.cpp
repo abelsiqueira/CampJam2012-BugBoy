@@ -480,7 +480,7 @@ void GameClass::DrawGameIntro () const {
   } else {
     if (language == langEnglish) {
       std::string text[9] = {
-        "Move the boy with the arrow left and right",
+        "Move the boy with the arrows left and right",
         "Jump with the arrow up",
         "Throw your seeds at the bugs with the space bar",
         "Pause with ESC or P",
@@ -499,7 +499,7 @@ void GameClass::DrawGameIntro () const {
         "Pule com o direcional para cima",
         "Atire suas sementes nos insetos com a barra de espaço",
         "Pause com ESC ou P",
-        "Colecione upgrades para melhorar as habilidades do garoto",
+        "Colete upgrades para melhorar as habilidades do garoto",
         "      Aumenta a altura do pulo",
         "      Aumenta a velocidade de movimento",
         "      Aumenta a vida",
