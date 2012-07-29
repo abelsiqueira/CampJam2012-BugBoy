@@ -4,8 +4,9 @@
 enum Keys { key_left = 0, key_right = 1 };
 enum UpgradeType { jumpUpgrade, speedUpgrade, lifeUpgrade,
     doubleJumpUpgrade };
-enum MenuOption { menuStartGame = 0, menuCredits = 1, menuExit = 2 };
+enum MenuOption { menuStartGame = 0, menuCredits = 1, menuLanguage = 2, menuExit = 3 };
 enum PauseOption { pauseContinue = 0, pauseGoToMenu = 1, pauseExit = 2 };
+enum Language { langEnglish = 0, langPortuguese = 1 };
 
 const int cWindowWidth = 1280;
 const int cWindowHeight = 720;

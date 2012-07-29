@@ -58,6 +58,7 @@ class GameClass {
     
     bool done, paused, inMenu, inIntro, inCredits, inGameEnd, choseOption;
     int menuOption, pauseOption, introScreen;
+    int language;
 };
 
 #endif
