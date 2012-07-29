@@ -2,6 +2,7 @@
 #define gameclass_h
 
 #include <list>
+#include "region.h"
 #include "hero.h"
 #include "upgrade.h"
 #include "list_of_enemies.h"
