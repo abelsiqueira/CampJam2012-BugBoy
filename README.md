@@ -17,3 +17,4 @@ Images
 
 spider: http://openclipart.org/detail/73135/spider-by-redccshirt
 fly: http://openclipart.org/detail/119407/fly-01-by-anonymous
+ant: http://openclipart.org/detail/18532/formiga-by-guseinstein

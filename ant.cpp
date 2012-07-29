@@ -18,10 +18,12 @@
 #include "ant.h"
 #include <iostream>
 
-Ant::Ant (float x, float y) : Enemy(x, y, 0.5, 0.5) {
+Ant::Ant (float x, float y) : Enemy(x, y, 1.0, 0.5) {
   keyIsPressed[key_left] = true;
   keyIsPressed[key_right] = false;
   xSpeed = 0.5;
+
+  image = al_load_bitmap("Images/ant.png");
 }
 
 Ant::~Ant () {
@@ -59,8 +61,16 @@ void Ant::Update () {
 }
 
 void Ant::Draw () const {
-  if (dead)
-    return;
-  al_draw_circle(posX + boxWidth*cTileSize/2, posY + boxHeight*cTileSize/2,
-      boxWidth*cTileSize/2-1, al_map_rgb(255,255,255), 3);
+  if (dead) return;
+
+  if (!invulnerable || (invulnerable && invCountdown%3 == 0) ) {
+    if (image) {
+      int x = posX + boxWidth*cTileSize/2 - al_get_bitmap_width(image)/2,
+          y = posY + boxHeight*cTileSize/2 - al_get_bitmap_height(image)/2;
+      al_draw_bitmap(image, x, y, (facing > 0 ? 0 : ALLEGRO_FLIP_HORIZONTAL));
+    } else {
+      al_draw_rectangle(posX, posY, posX + cTileSize*boxWidth, 
+          posY + cTileSize*boxHeight, al_map_rgb(255,255,255), 0);
+    }
+  }
 }
