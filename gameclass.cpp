@@ -215,8 +215,13 @@ void GameClass::Run () {
             hero.AddUpgrade((*iter)->GetType());
           }
         }
-        if (doubleJump)
+        if (doubleJump) {
           doubleJump->Update();
+          if (doubleJump->CollidesWith(hero)) {
+            doubleJump->Take();
+            hero.AddUpgrade(doubleJump->GetType());
+          }
+        }
         // Update regions
         for (std::list<Region>::iterator iter = regions.begin();
              iter != regions.end(); iter++) {
