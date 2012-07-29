@@ -30,3 +30,5 @@ Sáb Jul 28 20:02:37 BRT 2012
 Agora os upgrades estão criados, mas falta colocar no cenário. Com o cenário curto, vai ser rápido, mas daí o jogo fica chato.
 Sáb Jul 28 21:16:21 BRT 2012
 O jogo está razoavelmente terminado. Falta colocar o começo e o fim pra dizer que é um jogo. Daí é aumentar a fase e colocar mais chefes e super-poderes.
+Sáb Jul 28 23:12:57 BRT 2012
+Acabei de fazer a Intro, e descobri que tenho um bug. Se a aranha morre no alto, o double jump fica lá em cima e não dá pra pegar. Vamos consertar agora
