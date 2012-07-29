@@ -17,6 +17,7 @@
  */
 #include "gameclass.h"
 #include <string>
+#include <cassert>
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -35,9 +36,9 @@ GameClass::GameClass () {
   al_install_keyboard();
   al_install_mouse();
   al_init_image_addon();
-  al_install_audio();
-  al_init_acodec_addon();
-  al_reserve_samples(1);
+  assert(al_install_audio());
+  assert(al_init_acodec_addon());
+  assert(al_reserve_samples(1));
 
   al_register_event_source(eventQueue, al_get_display_event_source(display));
   al_register_event_source(eventQueue, al_get_timer_event_source(timer));
@@ -63,6 +64,13 @@ GameClass::GameClass () {
   choseOption = false;
   introScreen = 0;
   doubleJump = 0;
+
+  music = 0;
+  music = al_load_audio_stream("Music/background.ogg", 4, 1024);
+  assert(music);
+  al_attach_audio_stream_to_mixer(music, al_get_default_mixer());
+  al_set_audio_stream_gain(music, 0.5);
+  al_set_audio_stream_playing(music, true);
 }
 
 GameClass::~GameClass () {
@@ -452,20 +460,21 @@ void GameClass::DrawCredits () const {
 
   al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Credits");
 
-  std::string text[11] = {
+  std::string text[12] = {
     "Game Design: Abel Soares Siqueira",
     "Game Programming: Abel Soares Siqueira",
     "Game Art:",
     "  Spider: http://openclipart.org/detail/73135/spider-by-redccshirt",
     "  Fly: http://openclipart.org/detail/119407/fly-01-by-anonymous",
     "  Ant: http://openclipart.org/detail/18532/formiga-by-guseinstein",
+    "  Music: Cave by Miguel Herrero: http://www.jamendo.com/en/track/224865/cave",
     "",
     "Game Developed for the CampJam'12",
     "This game is distributed under the terms of the GNU GPL. Read the README.md and COPYING",
     "You can download this game source at",
     "        https://github.com/abelsiqueira/CampJam2012-BugBoy.git"
   };
-  for (int i = 0; i < 11; i++)
+  for (int i = 0; i < 12; i++)
     al_draw_text(normalFont, fontColor, 100, 150 + i*50, ALLEGRO_ALIGN_LEFT, text[i].c_str());
 }
 

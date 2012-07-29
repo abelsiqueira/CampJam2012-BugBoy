@@ -18,3 +18,9 @@ Images
 spider: http://openclipart.org/detail/73135/spider-by-redccshirt
 fly: http://openclipart.org/detail/119407/fly-01-by-anonymous
 ant: http://openclipart.org/detail/18532/formiga-by-guseinstein
+
+Music
+-----
+
+* Cave by Miguel Herrero
+   http://www.jamendo.com/en/track/224865/cave

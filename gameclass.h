@@ -54,6 +54,7 @@ class GameClass {
     ALLEGRO_FONT *bigFont;
     ALLEGRO_FONT *hugeFont;
     ALLEGRO_BITMAP *level;
+    ALLEGRO_AUDIO_STREAM *music;
     
     bool done, paused, inMenu, inIntro, inCredits, inGameEnd, choseOption;
     int menuOption, pauseOption, introScreen;
