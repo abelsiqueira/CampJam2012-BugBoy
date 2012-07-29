@@ -36,9 +36,9 @@ GameClass::GameClass () {
   al_install_keyboard();
   al_install_mouse();
   al_init_image_addon();
-  assert(al_install_audio());
-  assert(al_init_acodec_addon());
-  assert(al_reserve_samples(1));
+  al_install_audio();
+  al_init_acodec_addon();
+  al_reserve_samples(1);
 
   al_register_event_source(eventQueue, al_get_display_event_source(display));
   al_register_event_source(eventQueue, al_get_timer_event_source(timer));
@@ -73,7 +73,20 @@ GameClass::GameClass () {
   al_set_audio_stream_playing(music, true);
   assert(al_set_audio_stream_playmode(music, ALLEGRO_PLAYMODE_LOOP));
 
+  regions.push_back(Region(1*cTileSize, 31*cTileSize, 12, 4));
+  regions.back().SetTriggerEntity(hero);
+
   language = langEnglish;
+
+#ifdef PRINT_LEVEL
+  ALLEGRO_BITMAP *outImage;
+  outImage = al_create_bitmap(cTileSize*gridWidth, cTileSize*gridHeight);
+  al_set_target_bitmap(outImage);
+  al_clear_to_color(al_map_rgb(0,0,0));
+  DrawGame();
+  al_save_bitmap("Images/level.png", outImage);
+  al_set_target_bitmap(al_get_backbuffer(display));
+#endif
 }
 
 GameClass::~GameClass () {
@@ -138,8 +151,6 @@ void GameClass::Run () {
   
   al_start_timer(timer);
 
-  regions.push_back(Region(1*cTileSize, 49*cTileSize, 12, 6));
-  regions.back().SetTriggerEntity(hero);
 
   while (!done) {
     ALLEGRO_EVENT ev;
@@ -725,10 +736,10 @@ void GameClass::DrawGameGrid () const {
 
   if (language == langEnglish) {
     al_draw_text(hugeFont, al_map_rgb(255,255,255), 
-        6*cTileSize, 51*cTileSize, ALLEGRO_ALIGN_CENTRE, "EXIT");
+        6*cTileSize, 31*cTileSize, ALLEGRO_ALIGN_CENTRE, "EXIT");
   } else {
     al_draw_text(hugeFont, al_map_rgb(255,255,255), 
-        6*cTileSize, 51*cTileSize, ALLEGRO_ALIGN_CENTRE, "SAÍDA");
+        6*cTileSize, 31*cTileSize, ALLEGRO_ALIGN_CENTRE, "SAÍDA");
   }
 }
 
