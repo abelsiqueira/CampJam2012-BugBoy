@@ -25,7 +25,7 @@ GameClass::GameClass () {
   srand(time(0));
   al_init();
   display = al_create_display(cWindowWidth, cWindowHeight);
-  al_set_window_title(display, "Campjam");
+  al_set_window_title(display, "CampJam 2012 - Bug Boy");
   eventQueue = al_create_event_queue();
   timer = al_create_timer(1.0/cFps);
 
@@ -337,8 +337,10 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
     switch (keycode) {
       case ALLEGRO_KEY_ESCAPE:
       case ALLEGRO_KEY_P:
-        if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
+        if (ev_type == ALLEGRO_EVENT_KEY_DOWN) {
           paused = true;
+          pauseOption = 0;
+        }
         break;
       case ALLEGRO_KEY_UP:
         if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
@@ -488,7 +490,7 @@ void GameClass::DrawGameEnd () const {
 void GameClass::DrawPauseMenu () const {
   ALLEGRO_COLOR fontColor = al_map_rgb(0,0,0);
 
-  al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgb(255,255,255));
+  al_draw_filled_rectangle(0, 0, cWindowWidth, cWindowHeight, al_map_rgb(255,255,255));
   al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Pause Menu");
 
   std::stringstream aux[8];
@@ -587,6 +589,9 @@ void GameClass::DrawGameGrid () const {
       }
     }
   }
+
+  al_draw_text(hugeFont, al_map_rgb(255,255,255), 
+      6*cTileSize, 51*cTileSize, ALLEGRO_ALIGN_CENTRE, "EXIT");
 }
 
 void GameClass::ReadGameLevel(const char * lvl) {

@@ -93,7 +93,6 @@ Seed * Hero::Shoot () {
   float x = posX, y = posY;
   if (facing > 0)
     x += boxWidth*cTileSize;
-  y += boxHeight*cTileSize/4;
   Seed * seed = new Seed(x, y, facing);
   seed->SetGameGrid(gameGrid, gridWidth, gridHeight);
   return seed;
