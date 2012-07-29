@@ -6,6 +6,8 @@ Source can be obtained from
 
    https://github.com/abelsiqueira/CampJam2012-BugBoy.git
 
+Special thanks to Kally Chung for the support and the gameplay
+
 License
 -------
 This game is distributed in the terms of the GNU GPL. See COPYING for a copy
