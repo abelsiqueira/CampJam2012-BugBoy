@@ -33,7 +33,7 @@ Hero::Hero () : Entity(0, 0, 1, 2) {
 
 void Hero::Respawn (float x, float y) {
   dead = false;
-  lives = 1 + upgradesLife;
+  lives = maxLives + upgradesLife;
   posX = x;
   posY = y - (boxHeight-1)*cTileSize - 2;
   shootCountdown = 0;

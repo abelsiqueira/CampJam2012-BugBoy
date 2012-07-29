@@ -498,10 +498,10 @@ void GameClass::DrawGameIntro () const {
         al_draw_text(normalFont, fontColor, 200, 200 + i*45, ALLEGRO_ALIGN_LEFT, text[i].c_str());
     }
 
-    Upgrade jump      (jumpUpgrade,       200, 200 + 5*45), 
-            speed     (speedUpgrade,      200, 200 + 6*45), 
-            life      (lifeUpgrade,       200, 200 + 7*45),
-            doubleJump(doubleJumpUpgrade, 200, 200 + 8*45);
+    Upgrade jump      (jumpUpgrade,       200, 180 + 5*45), 
+            speed     (speedUpgrade,      200, 180 + 6*45), 
+            life      (lifeUpgrade,       200, 180 + 7*45),
+            doubleJump(doubleJumpUpgrade, 200, 180 + 8*45);
 
     jump.Draw();
     speed.Draw();
