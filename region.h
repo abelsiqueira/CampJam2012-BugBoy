@@ -6,22 +6,14 @@
 
 #include "entity.h"
 
-typedef void (*voidFunction) ();
-
 class Region {
   public:
     Region (float, float, float, float);
     ~Region ();
 
-    void SetEventFunction (voidFunction p) {
-      eventFunction = p;
-      if (triggerEntity)
-        active = true;
-    }
     void SetTriggerEntity (Entity *e) {
       triggerEntity = e;
-      if (eventFunction)
-        active = true;
+      active = true;
     }
     void Activate () {
       active = true;
@@ -37,13 +29,13 @@ class Region {
     }
     void Update ();
     void Draw () const;
+    bool IsTriggered () const { return triggered; }
   private:
     Region();
     float posX, posY;
     float boxWidth, boxHeight;
-    voidFunction eventFunction;
     Entity *triggerEntity;
-    bool visible, active;
+    bool visible, active, triggered;
 };
 
 #endif

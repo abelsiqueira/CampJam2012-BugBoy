@@ -39,6 +39,7 @@ GameClass::GameClass () {
   VisibleX = 0; 
   VisibleY = 0;
   inMenu = true;
+  inGameEnd = false;
   inIntro = false;
   inCredits = false;
   menuOption = menuStartGame;
@@ -70,8 +71,8 @@ GameClass::~GameClass () {
   al_destroy_display(display);
 }
 
-void GameEnd () {
-  std::cout << "Game Over" << std::endl;
+void GameClass::GameEnd () {
+  inGameEnd = true;
 }
 
 void GameClass::Run () {
@@ -82,9 +83,7 @@ void GameClass::Run () {
   al_start_timer(timer);
 
   regions.push_back(Region(1*cTileSize, 49*cTileSize, 12, 6));
-  regions.back().SetEventFunction(GameEnd);
   regions.back().SetTriggerEntity(&hero);
-  regions.back().Show();
 
   while (!done) {
     ALLEGRO_EVENT ev;
@@ -153,6 +152,9 @@ void GameClass::Run () {
         for (std::list<Region>::iterator iter = regions.begin();
              iter != regions.end(); iter++) {
           iter->Update();
+          if (iter->IsTriggered()) {
+            GameEnd();
+          }
         }
         VisibleX = hero.GetX() - cWindowWidth/2;
         VisibleY = hero.GetY() -  cWindowHeight/2;
@@ -192,6 +194,8 @@ void GameClass::Run () {
         DrawGameIntro();
       } else if (inCredits) {
         DrawCredits();
+      } else if (inGameEnd) {
+        DrawGameEnd();
       } else {
         ALLEGRO_TRANSFORM T;
         al_identity_transform(&T);
@@ -239,12 +243,11 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
         break;
     }
   } else if (inCredits && ev_type == ALLEGRO_EVENT_KEY_DOWN) {
-    switch(keycode) {
-      default:
-        inCredits = false;
-        inMenu = true;
-        break;
-    }
+    inCredits = false;
+    inMenu = true;
+  } else if (inGameEnd && ev_type == ALLEGRO_EVENT_KEY_DOWN) {
+    inCredits = true;
+    inGameEnd = false;
   } else if (!inMenu) {
     switch (keycode) {
       case ALLEGRO_KEY_ESCAPE:
@@ -377,6 +380,25 @@ void GameClass::DrawCredits () const {
   };
   for (int i = 0; i < 9; i++)
     al_draw_text(normalFont, fontColor, 100, 150 + i*50, ALLEGRO_ALIGN_LEFT, text[i].c_str());
+}
+
+void GameClass::DrawGameEnd () const {
+  ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
+
+  std::string text[7] = {
+    "  With his new found powers, the boy finds the way he came from.",
+    "As he approaches the cave entrance, the fatigue kicks in. In his",
+    "tiny body, this was enough to make him feint...",
+    "",
+    "  When he woke up, he was a regular boy again, devoid of any special",
+    "powers, but with his usual size again.",
+    " - Could I've been dreaming? Is this the real life? Is this just fantasy?"
+  };
+  for (int i = 0; i < 7; i++)
+    al_draw_text(normalFont, fontColor, cWindowWidth/2, 70 + i*45, ALLEGRO_ALIGN_CENTRE, text[i].c_str());
+  al_draw_text(bigFont, fontColor, cWindowWidth/2, 500, ALLEGRO_ALIGN_CENTRE, "Thanks for playing");
+  al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30, ALLEGRO_ALIGN_RIGHT,
+      "Press any key");
 }
 
 void GameClass::DrawPauseMenu () const {
