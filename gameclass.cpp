@@ -551,7 +551,7 @@ void GameClass::DrawCredits () const {
       "This game is distributed under the terms of the GNU GPL. Read the README.md and COPYING",
       "You can download this game source at",
       "        https://github.com/abelsiqueira/CampJam2012-BugBoy.git",
-      "Special thanks to Kally Chung for all the support and gameplay"
+      "Special thanks to Kally Chung for all the support and for playing the game"
     };
     for (int i = 0; i < 13; i++)
       al_draw_text(normalFont, fontColor, 100, 50 + i*50, ALLEGRO_ALIGN_LEFT, text[i].c_str());
