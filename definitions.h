@@ -4,6 +4,7 @@
 enum Keys { key_left = 0, key_right = 1 };
 enum UpgradeType { jumpUpgrade, speedUpgrade, lifeUpgrade,
     doubleJumpUpgrade };
+enum MenuOption { menuStartGame, menuCredits };
 
 const int cWindowWidth = 1280;
 const int cWindowHeight = 720;

@@ -3,7 +3,7 @@
 
 Hero::Hero () : Entity(1, 2) {
   lives = 1;
-  xSpeed = 2.5;
+  xSpeed = 2.7;
   jumpSpeed = 6.0;
   shootCountdown = 0;
   upgradesJump = 0;

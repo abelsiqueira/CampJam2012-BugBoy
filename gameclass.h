@@ -18,6 +18,8 @@ class GameClass {
 
     // Draw
     void DrawPauseMenu () const;
+    void DrawGameIntro () const;
+    void DrawGameMenu () const;
     void DrawGame () const;
     void DrawGameGrid () const;
     void DrawHud () const;
@@ -34,6 +36,7 @@ class GameClass {
     size_t gridWidth, gridHeight;
     bool keyIsPressed[2];
     SpiderBoss * pSpiderBoss;
+    void IntroUpdate ();
 
     // Allegro
     ALLEGRO_DISPLAY *display;
@@ -42,9 +45,11 @@ class GameClass {
     ALLEGRO_FONT *smallFont;
     ALLEGRO_FONT *normalFont;
     ALLEGRO_FONT *bigFont;
+    ALLEGRO_FONT *hugeFont;
     ALLEGRO_BITMAP *level;
     
-    bool done, paused;
+    bool done, paused, inMenu, inIntro, inCredits, choseOption;
+    int menuOption, introScreen;
 };
 
 #endif

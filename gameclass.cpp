@@ -27,6 +27,7 @@ GameClass::GameClass () {
   al_register_event_source(eventQueue, al_get_keyboard_event_source());
   al_register_event_source(eventQueue, al_get_mouse_event_source());
 
+  hugeFont = al_load_font("DejaVuSans.ttf", 80, 0);
   bigFont = al_load_font("DejaVuSans.ttf", 40, 0);
   normalFont = al_load_font("DejaVuSans.ttf", 20, 0);
   smallFont = al_load_font("DejaVuSans.ttf", 10, 0);
@@ -37,6 +38,12 @@ GameClass::GameClass () {
   ReadGameLevel("level1.map");
   VisibleX = 0; 
   VisibleY = 0;
+  inMenu = true;
+  inIntro = false;
+  inCredits = false;
+  menuOption = menuStartGame;
+  choseOption = false;
+  introScreen = 0;
 }
 
 GameClass::~GameClass () {
@@ -76,7 +83,21 @@ void GameClass::Run () {
 
     if (ev.type == ALLEGRO_EVENT_TIMER) {
       // Update
-      if (!paused) {
+      if (inMenu) {
+        if (choseOption) {
+          if (menuOption == menuStartGame) {
+            inMenu = false;
+            inIntro = true;
+            choseOption = false;
+          } else {
+            done = true;
+            inCredits = true;
+            std::cout << "Credits" << std::endl;
+          }
+        }
+      } else if (inIntro) {
+        IntroUpdate();
+      } else if (!paused) {
         if (pSpiderBoss && pSpiderBoss->IsDead()) {
           float x = pSpiderBoss->GetX(), y = pSpiderBoss->GetY();
           upgrades.push_back(new Upgrade(doubleJumpUpgrade, x, y));
@@ -151,50 +172,85 @@ void GameClass::Run () {
       redraw = false;
       al_clear_to_color(al_map_rgb(0,0,0));
 
-      ALLEGRO_TRANSFORM T;
-      al_identity_transform(&T);
-      al_translate_transform(&T, -VisibleX, -VisibleY);
-      al_use_transform(&T);
+      if (inMenu) {
+        DrawGameMenu();
+      } else if (inIntro) {
+        DrawGameIntro();
+      } else {
+        ALLEGRO_TRANSFORM T;
+        al_identity_transform(&T);
+        al_translate_transform(&T, -VisibleX, -VisibleY);
+        al_use_transform(&T);
 
-      DrawGame();
-      al_identity_transform(&T);
-      al_use_transform(&T);
-      if (paused)
-        DrawPauseMenu();
+        DrawGame();
+        al_identity_transform(&T);
+        al_use_transform(&T);
+        if (paused)
+          DrawPauseMenu();
+      }
 
       al_flip_display();
     }
   }
 }
 
+void GameClass::IntroUpdate () {
+
+}
+
 void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
-  switch (keycode) {
-    case ALLEGRO_KEY_ESCAPE:
-      done = true;
-      break;
-    case ALLEGRO_KEY_P:
-      if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
-        paused = (paused ? false : true);
-      break;
-    case ALLEGRO_KEY_UP:
-      if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
-        hero.Jump();
-      break;
-    case ALLEGRO_KEY_LEFT:
-      keyIsPressed[key_left] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
-      break;
-    case ALLEGRO_KEY_RIGHT:
-      keyIsPressed[key_right] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
-      break;
-    case ALLEGRO_KEY_SPACE:
-      if (ev_type == ALLEGRO_EVENT_KEY_DOWN) {
-        seeds.push_back(hero.Shoot());
-        if (seeds.back() == 0)
-          seeds.pop_back();
-      }
-      break;
-    default:
-      break;
+  if (inMenu && ev_type == ALLEGRO_EVENT_KEY_DOWN) {
+    switch (keycode) {
+      case ALLEGRO_KEY_UP:
+      case ALLEGRO_KEY_DOWN:
+        menuOption = 1 - menuOption;
+        break;
+      case ALLEGRO_KEY_ESCAPE:
+        done = true;
+        break;
+      case ALLEGRO_KEY_ENTER:
+        choseOption = true;
+        break;
+      default:
+        break;
+    }
+  } else if (inIntro && ev_type == ALLEGRO_EVENT_KEY_DOWN) {
+    switch (keycode) {
+      default:
+        introScreen++;
+        if (introScreen > 1)
+          inIntro = false;
+        break;
+    }
+  } else if (!inMenu) {
+    switch (keycode) {
+      case ALLEGRO_KEY_ESCAPE:
+        done = true;
+        break;
+      case ALLEGRO_KEY_P:
+        if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
+          paused = (paused ? false : true);
+        break;
+      case ALLEGRO_KEY_UP:
+        if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
+          hero.Jump();
+        break;
+      case ALLEGRO_KEY_LEFT:
+        keyIsPressed[key_left] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
+        break;
+      case ALLEGRO_KEY_RIGHT:
+        keyIsPressed[key_right] = (ev_type == ALLEGRO_EVENT_KEY_DOWN ? true : false);
+        break;
+      case ALLEGRO_KEY_SPACE:
+        if (ev_type == ALLEGRO_EVENT_KEY_DOWN) {
+          seeds.push_back(hero.Shoot());
+          if (seeds.back() == 0)
+            seeds.pop_back();
+        }
+        break;
+      default:
+        break;
+    }
   }
 }
 
@@ -207,6 +263,77 @@ void GameClass::DrawHud () const {
       VisibleX + 50, VisibleY + 15, al_map_rgb(255,255,255), 1);
   al_draw_text(smallFont, al_map_rgb(255,255,255), VisibleX + 4, VisibleY + 2, 
       ALLEGRO_ALIGN_LEFT, aux.str().c_str());
+}
+
+void GameClass::DrawGameMenu () const {
+  ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
+
+  al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Bug Boy");
+  al_draw_text(bigFont, fontColor, cWindowWidth/2, 300, ALLEGRO_ALIGN_CENTRE, "Start Game");
+  al_draw_text(bigFont, fontColor, cWindowWidth/2, 450, ALLEGRO_ALIGN_CENTRE, "Credits");
+
+  float xdif = 160, ydif = 50;
+  float x = cWindowWidth/2 - xdif, y = 300,
+        xf = cWindowWidth/2 + xdif, yf = 300 + ydif;
+  if (menuOption == menuCredits) {
+    y += 150;
+    yf += 150;
+  }
+  al_draw_rectangle(x, y, xf, yf, al_map_rgb(255,255,255), 0);
+}
+
+void GameClass::DrawGameIntro () const {
+  ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
+
+  if (introScreen == 0) {
+    std::string text[12] = {
+        "  A boy is walking in a park chasing bugs.",
+        "He goes into a cave, while chasing a firefly, and runs inside it for some time.",
+        "He trips into a rock and falls in the ground.",
+        "When he get up, he realises that he can't see the entrance.",
+        "A little frightened, he walks around looking for an exit, when suddenly",
+        "he feels a pressure in his pocket. A bag of sunflower seeds, which he brought",
+        "along, was strangely getting bigger and bigger and bigger.",
+        "He looks around and suddenly realize that, actually, he was getting smaller and",
+        "smaller and smaller.",
+        " - Well, I better find myself an exit, before something worse happens - he says",
+        " - thankfully, this cave is naturally illuminated. Otherwise, I would be in",
+        " great trouble."
+    };
+    for (int i = 0; i < 12; i++)
+      al_draw_text(normalFont, fontColor, cWindowWidth/2, 70 + i*45, ALLEGRO_ALIGN_CENTRE, text[i].c_str());
+    al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30, ALLEGRO_ALIGN_RIGHT,
+        "Press any key");
+  } else {
+    std::string text[8] = {
+      "Move the boy with the arrow left and right",
+      "Jump with the arrow up",
+      "Throw your seeds at the bugs with the space bar",
+      "Collect upgrades to improve the boy's abilities",
+      "      Increase the jump height",
+      "      Increase the movement speed",
+      "      Increase the health",
+      "      Enables double jump"
+    };
+
+    for (int i = 0; i < 8; i++)
+      al_draw_text(normalFont, fontColor, 200, 200 + i*45, ALLEGRO_ALIGN_LEFT, text[i].c_str());
+
+    Upgrade jump      (jumpUpgrade, 200, 200 + 4*45), 
+            speed     (speedUpgrade, 200, 200 + 5*45), 
+            life      (lifeUpgrade, 200, 200 + 6*45),
+            doubleJump(doubleJumpUpgrade, 200, 200 + 7*45);
+
+    jump.Draw();
+    speed.Draw();
+    life.Draw();
+    doubleJump.Draw();
+
+    al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Instructions");
+
+    al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30, ALLEGRO_ALIGN_RIGHT,
+        "Press any key");
+  }
 }
 
 void GameClass::DrawPauseMenu () const {
