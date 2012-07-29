@@ -1,3 +1,20 @@
+/* Copyright 2012 - Abel Soares Siqueira
+ * 
+ * This file is part of CampJam2012-Bugboy.
+ * 
+ * CampJam2012-Bugboy is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CampJam2012-Bugboy is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CampJam2012-Bugboy.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "gameclass.h"
 #include <string>
 #include <sstream>
@@ -97,12 +114,27 @@ void GameClass::Run () {
           choseOption = false;
           if (menuOption == menuStartGame) {
             inIntro = true;
-          } else {
+          } else if (menuOption == menuCredits) {
             inCredits = true;
+          } else {
+            inMenu = true;
+            done = true;
           }
         }
       } else if (inIntro) {
         IntroUpdate();
+      } else if (paused) {
+        if (choseOption) {
+          choseOption = false;
+          if (pauseOption == pauseContinue) {
+             paused = false;
+          } else if (pauseOption == pauseGoToMenu) {
+            inMenu = true;
+            paused = false;
+          } else if (pauseOption == pauseExit) {
+            done = true;
+          }
+        }
       } else if (!paused) {
         if (pSpiderBoss && pSpiderBoss->IsDead()) {
           float x = pSpiderBoss->GetX(), y = pSpiderBoss->GetY();
@@ -222,8 +254,12 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
   if (inMenu && ev_type == ALLEGRO_EVENT_KEY_DOWN) {
     switch (keycode) {
       case ALLEGRO_KEY_UP:
+        menuOption--;
+        if (menuOption < 0) menuOption = 2;
+        break;
       case ALLEGRO_KEY_DOWN:
-        menuOption = 1 - menuOption;
+        menuOption++;
+        if (menuOption > 2) menuOption = 0;
         break;
       case ALLEGRO_KEY_ESCAPE:
         done = true;
@@ -248,14 +284,32 @@ void GameClass::KeyboardEventHandler (unsigned int keycode, int ev_type) {
   } else if (inGameEnd && ev_type == ALLEGRO_EVENT_KEY_DOWN) {
     inCredits = true;
     inGameEnd = false;
+  } else if (paused && ev_type == ALLEGRO_EVENT_KEY_DOWN) {
+    switch (keycode) {
+      case ALLEGRO_KEY_ESCAPE:
+      case ALLEGRO_KEY_P:
+        paused = false;
+        break;
+      case ALLEGRO_KEY_UP:
+        pauseOption--;
+        if (pauseOption < 0) pauseOption = 2;
+        break;
+      case ALLEGRO_KEY_DOWN:
+        pauseOption++;
+        if (pauseOption > 2) pauseOption = 0;
+        break;
+      case ALLEGRO_KEY_ENTER:
+        choseOption = true;
+        break;
+      default:
+        break;
+    }
   } else if (!inMenu) {
     switch (keycode) {
       case ALLEGRO_KEY_ESCAPE:
-        done = true;
-        break;
       case ALLEGRO_KEY_P:
         if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
-          paused = (paused ? false : true);
+          paused = true;
         break;
       case ALLEGRO_KEY_UP:
         if (ev_type == ALLEGRO_EVENT_KEY_DOWN)
@@ -294,17 +348,16 @@ void GameClass::DrawHud () const {
 void GameClass::DrawGameMenu () const {
   ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
 
-  al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Bug Boy");
+  al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, 
+      "CampJam2012 - Bug Boy");
   al_draw_text(bigFont, fontColor, cWindowWidth/2, 300, ALLEGRO_ALIGN_CENTRE, "Start Game");
-  al_draw_text(bigFont, fontColor, cWindowWidth/2, 450, ALLEGRO_ALIGN_CENTRE, "Credits");
+  al_draw_text(bigFont, fontColor, cWindowWidth/2, 400, ALLEGRO_ALIGN_CENTRE, "Credits");
+  al_draw_text(bigFont, fontColor, cWindowWidth/2, 500, ALLEGRO_ALIGN_CENTRE, "Exit");
 
   float xdif = 160, ydif = 50;
-  float x = cWindowWidth/2 - xdif, y = 300,
-        xf = cWindowWidth/2 + xdif, yf = 300 + ydif;
-  if (menuOption == menuCredits) {
-    y += 150;
-    yf += 150;
-  }
+  float x = cWindowWidth/2 - xdif, y = 300 + 100*menuOption,
+        xf = cWindowWidth/2 + xdif, yf = y + ydif;
+
   al_draw_rectangle(x, y, xf, yf, al_map_rgb(255,255,255), 0);
 }
 
@@ -331,10 +384,11 @@ void GameClass::DrawGameIntro () const {
     al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30, ALLEGRO_ALIGN_RIGHT,
         "Press any key");
   } else {
-    std::string text[8] = {
+    std::string text[9] = {
       "Move the boy with the arrow left and right",
       "Jump with the arrow up",
       "Throw your seeds at the bugs with the space bar",
+      "Pause with ESC or P",
       "Collect upgrades to improve the boy's abilities",
       "      Increase the jump height",
       "      Increase the movement speed",
@@ -342,13 +396,13 @@ void GameClass::DrawGameIntro () const {
       "      Enables double jump"
     };
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 9; i++)
       al_draw_text(normalFont, fontColor, 200, 200 + i*45, ALLEGRO_ALIGN_LEFT, text[i].c_str());
 
-    Upgrade jump      (jumpUpgrade,       200, 200 + 4*45), 
-            speed     (speedUpgrade,      200, 200 + 5*45), 
-            life      (lifeUpgrade,       200, 200 + 6*45),
-            doubleJump(doubleJumpUpgrade, 200, 200 + 7*45);
+    Upgrade jump      (jumpUpgrade,       200, 200 + 5*45), 
+            speed     (speedUpgrade,      200, 200 + 6*45), 
+            life      (lifeUpgrade,       200, 200 + 7*45),
+            doubleJump(doubleJumpUpgrade, 200, 200 + 8*45);
 
     jump.Draw();
     speed.Draw();
@@ -374,9 +428,9 @@ void GameClass::DrawCredits () const {
     "  Spider: http://openclipart.org/detail/73135/spider-by-redccshirt",
     "",
     "Game Developed for the CampJam'12",
-    "This game is distributed under the terms of the GNU GPL. See COPYING for details",
+    "This game is distributed under the terms of the GNU GPL. Read the README.md and COPYING",
     "You can download this game source at",
-    "        http://github.com/abelsiqueira/campjam12.git"
+    "        https://github.com/abelsiqueira/CampJam2012-BugBoy.git"
   };
   for (int i = 0; i < 9; i++)
     al_draw_text(normalFont, fontColor, 100, 150 + i*50, ALLEGRO_ALIGN_LEFT, text[i].c_str());
@@ -385,16 +439,17 @@ void GameClass::DrawCredits () const {
 void GameClass::DrawGameEnd () const {
   ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
 
-  std::string text[7] = {
+  std::string text[8] = {
     "  With his new found powers, the boy finds the way he came from.",
     "As he approaches the cave entrance, the fatigue kicks in. In his",
     "tiny body, this was enough to make him feint...",
     "",
     "  When he woke up, he was a regular boy again, devoid of any special",
     "powers, but with his usual size again.",
-    " - Could I've been dreaming? Is this the real life? Is this just fantasy?"
+    " - Could I've been dreaming? Is this the real life? Is this just fantasy?",
+    " Was my mind playing tr... Oh a dragonfly"
   };
-  for (int i = 0; i < 7; i++)
+  for (int i = 0; i < 8; i++)
     al_draw_text(normalFont, fontColor, cWindowWidth/2, 70 + i*45, ALLEGRO_ALIGN_CENTRE, text[i].c_str());
   al_draw_text(bigFont, fontColor, cWindowWidth/2, 500, ALLEGRO_ALIGN_CENTRE, "Thanks for playing");
   al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30, ALLEGRO_ALIGN_RIGHT,
@@ -402,14 +457,41 @@ void GameClass::DrawGameEnd () const {
 }
 
 void GameClass::DrawPauseMenu () const {
-  ALLEGRO_COLOR fontColor = al_map_rgb(255,255,255);
+  ALLEGRO_COLOR fontColor = al_map_rgb(0,0,0);
 
-  al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0,0,0,230));
-  al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Pause Menu");
+  al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgb(255,255,255));
+  al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, "Pause Menu");
 
-  std::stringstream aux;
-  aux << "Lives: " << hero.GetLives();
-  al_draw_text(bigFont, fontColor, 50, 150, ALLEGRO_ALIGN_LEFT, aux.str().c_str());
+  std::stringstream aux[8];
+  aux[0] << "Lives:          ";
+  aux[4] << hero.GetLives();
+  aux[1] << "Jump Upgrades:  ";
+  aux[5] << hero.GetJumpUpgrades();
+  aux[2] << "Speed Upgrades: ";
+  aux[6] << hero.GetSpeedUpgrades();
+  aux[3] << "Life Upgrades:  ";
+  aux[7] << hero.GetLifeUpgrades();
+
+  std::string options[3] = { "Continue", "Return to Main Menu", "Exit" };
+
+  float xdif = 500, ydif = 50;
+  float x = cWindowWidth/2 + 10, y = 250 + 100*pauseOption,
+        xf = cWindowWidth/2 + xdif, yf = y + ydif;
+
+  al_draw_rectangle(25, 225, 500, 475, al_map_rgb(0,0,0), 0);
+
+  for (int i = 0; i < 4; i++)
+    al_draw_text(bigFont, fontColor, 50, 250 + 50*i, 
+        ALLEGRO_ALIGN_LEFT, aux[i].str().c_str());
+  for (int i = 0; i < 4; i++)
+    al_draw_text(bigFont, fontColor, 450, 250 + 50*i, 
+        ALLEGRO_ALIGN_LEFT, aux[i+4].str().c_str());
+
+  for (int i = 0; i < 3; i++)
+    al_draw_text(bigFont, fontColor, cWindowWidth/2 + 50, 250 + 100*i, 
+        ALLEGRO_ALIGN_LEFT, options[i].c_str());
+
+  al_draw_rectangle(x, y, xf, yf, al_map_rgb(0,0,0),0);
 }
 
 void GameClass::DrawGame () const {

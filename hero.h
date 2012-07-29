@@ -16,6 +16,9 @@ class Hero : public Entity {
     Seed * Shoot ();
     void AddUpgrade (UpgradeType);
     void Jump ();
+    int GetJumpUpgrades () const { return upgradesJump; }
+    int GetSpeedUpgrades () const { return upgradesSpeed; }
+    int GetLifeUpgrades () const { return upgradesLife; }
   protected:
     int shootCountdown;
     int upgradesJump, upgradesSpeed, upgradesLife;

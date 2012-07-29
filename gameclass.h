@@ -54,7 +54,7 @@ class GameClass {
     ALLEGRO_BITMAP *level;
     
     bool done, paused, inMenu, inIntro, inCredits, inGameEnd, choseOption;
-    int menuOption, introScreen;
+    int menuOption, pauseOption, introScreen;
 };
 
 #endif
