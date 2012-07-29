@@ -1,13 +1,11 @@
 #include "upgrade.h"
 
-Upgrade::Upgrade (UpgradeType ut, float x, float y) {
+Upgrade::Upgrade (UpgradeType ut, float x, float y) : Entity (0.5, 0.5) {
   posX = x;
   posY = y;
   upgradeType = ut;
-  boxWidth = 0.5;
-  boxHeight = 0.5;
-  image = 0;
   visible = true;
+  xSpeed = 0;
 }
 
 Upgrade::~Upgrade () {
@@ -16,6 +14,7 @@ Upgrade::~Upgrade () {
 }
 
 void Upgrade::Update () {
+  Entity::Update();
 }
 
 void Upgrade::Draw () const {
@@ -50,7 +49,7 @@ void Upgrade::Draw () const {
   }
 }
 
-bool Upgrade::CollidesWith (const Hero & hero) const {
+bool Upgrade::CollidesWith (const Entity & hero) const {
   if (!visible || hero.IsDead())
     return false;
   float thisTop    = posY,

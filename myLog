@@ -32,3 +32,5 @@ Sáb Jul 28 21:16:21 BRT 2012
 O jogo está razoavelmente terminado. Falta colocar o começo e o fim pra dizer que é um jogo. Daí é aumentar a fase e colocar mais chefes e super-poderes.
 Sáb Jul 28 23:12:57 BRT 2012
 Acabei de fazer a Intro, e descobri que tenho um bug. Se a aranha morre no alto, o double jump fica lá em cima e não dá pra pegar. Vamos consertar agora
+Sáb Jul 28 23:29:44 BRT 2012
+Consertei. Agora os Upgrades também são Entity. Devia ter feito assim antes.

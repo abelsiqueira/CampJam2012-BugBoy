@@ -101,6 +101,7 @@ void GameClass::Run () {
         if (pSpiderBoss && pSpiderBoss->IsDead()) {
           float x = pSpiderBoss->GetX(), y = pSpiderBoss->GetY();
           upgrades.push_back(new Upgrade(doubleJumpUpgrade, x, y));
+          upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           pSpiderBoss = 0;
         }
         hero.Update();
@@ -449,18 +450,22 @@ void GameClass::ReadGameLevel(const char * lvl) {
           break;
         case cJump:
           upgrades.push_back(new Upgrade(jumpUpgrade, x, y));
+          upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
         case cSpeed:
           upgrades.push_back(new Upgrade(speedUpgrade, x, y));
+          upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
         case cLife:
           upgrades.push_back(new Upgrade(lifeUpgrade, x, y));
+          upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
         case cDoubleJump:
           upgrades.push_back(new Upgrade(doubleJumpUpgrade, x, y));
+          upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
         default:

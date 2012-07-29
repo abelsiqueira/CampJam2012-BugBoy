@@ -1,9 +1,9 @@
 #ifndef upgrades_h
 #define upgrades_h
 
-#include "hero.h"
+#include "entity.h"
 
-class Upgrade {
+class Upgrade : public Entity {
   public:
     Upgrade (UpgradeType, float, float);
     ~Upgrade ();
@@ -11,17 +11,14 @@ class Upgrade {
     void Update ();
     void Draw () const;
 
-    bool CollidesWith (const Hero &) const;
+    bool CollidesWith (const Entity &) const;
     void Take () { visible = false; }
     UpgradeType GetType () { return upgradeType; }
   protected:
     Upgrade ();
-    float posX, posY;
-    float boxWidth, boxHeight;
     UpgradeType upgradeType;
 
     bool visible;
-    ALLEGRO_BITMAP *image;
 };
 
 #endif
