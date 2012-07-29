@@ -19,7 +19,8 @@
 #include <iostream>
 
 Hero::Hero () : Entity(0, 0, 1, 2) {
-  lives = 1;
+  lives = 2;
+  maxLives = lives;
   xSpeed = 2.7;
   jumpSpeed = 6.0;
   shootCountdown = 0;

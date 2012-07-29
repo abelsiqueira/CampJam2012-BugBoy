@@ -71,6 +71,7 @@ GameClass::GameClass () {
   al_attach_audio_stream_to_mixer(music, al_get_default_mixer());
   al_set_audio_stream_gain(music, 0.5);
   al_set_audio_stream_playing(music, true);
+  assert(al_set_audio_stream_playmode(music, ALLEGRO_PLAYMODE_LOOP));
 }
 
 GameClass::~GameClass () {
@@ -382,10 +383,10 @@ void GameClass::DrawHud () const {
   std::stringstream aux;
   aux << "Lives: " << hero.GetLives();
   al_draw_filled_rectangle(VisibleX + 2, VisibleY + 2, 
-      VisibleX + 50, VisibleY + 15, al_map_rgb(0,0,0));
+      VisibleX + 85, VisibleY + 28, al_map_rgb(0,0,0));
   al_draw_rectangle(VisibleX + 2, VisibleY + 2, 
-      VisibleX + 50, VisibleY + 15, al_map_rgb(255,255,255), 1);
-  al_draw_text(smallFont, al_map_rgb(255,255,255), VisibleX + 4, VisibleY + 2, 
+      VisibleX + 85, VisibleY + 28, al_map_rgb(255,255,255), 1);
+  al_draw_text(normalFont, al_map_rgb(255,255,255), VisibleX + 4, VisibleY + 2, 
       ALLEGRO_ALIGN_LEFT, aux.str().c_str());
 }
 
@@ -411,13 +412,13 @@ void GameClass::DrawGameIntro () const {
   if (introScreen == 0) {
     std::string text[12] = {
         "  A boy is walking in a park chasing bugs.",
-        "He goes into a cave, while chasing a firefly, and runs inside it for some time.",
+        "He goes into a cave, while chasing a firefly, and plays inside it for some time.",
         "He trips into a rock and falls in the ground.",
-        "When he get up, he realises that he can't see the entrance.",
+        "When he gets up, he realises that he can't see the entrance.",
         "A little frightened, he walks around looking for an exit, when suddenly",
         "he feels a pressure in his pocket. A bag of sunflower seeds, which he brought",
         "along, was strangely getting bigger and bigger and bigger.",
-        "He looks around and suddenly realize that, actually, he was getting smaller and",
+        "He looks around and suddenly realizes that, actually, he was getting smaller and",
         "smaller and smaller.",
         " - Well, I better find myself an exit, before something worse happens - he says",
         " - thankfully, this cave is naturally illuminated. Otherwise, I would be in",
@@ -480,7 +481,7 @@ void GameClass::DrawCredits () const {
     "        https://github.com/abelsiqueira/CampJam2012-BugBoy.git"
   };
   for (int i = 0; i < 12; i++)
-    al_draw_text(normalFont, fontColor, 100, 150 + i*50, ALLEGRO_ALIGN_LEFT, text[i].c_str());
+    al_draw_text(normalFont, fontColor, 100, 120 + i*50, ALLEGRO_ALIGN_LEFT, text[i].c_str());
 }
 
 void GameClass::DrawGameEnd () const {
@@ -492,7 +493,7 @@ void GameClass::DrawGameEnd () const {
     "tiny body, this was enough to make him feint...",
     "",
     "  When he woke up, he was a regular boy again, devoid of any special",
-    "powers, but with his usual size again.",
+    "powers, but back to his usual size.",
     " - Could I've been dreaming? Is this the real life? Is this just fantasy?",
     " Was my mind playing tr... Oh a dragonfly"
   };
