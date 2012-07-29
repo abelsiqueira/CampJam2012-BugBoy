@@ -70,12 +70,21 @@ GameClass::~GameClass () {
   al_destroy_display(display);
 }
 
+void GameEnd () {
+  std::cout << "Game Over" << std::endl;
+}
+
 void GameClass::Run () {
   bool redraw = false;
   done = false;
   paused = false;
   
   al_start_timer(timer);
+
+  regions.push_back(Region(1*cTileSize, 49*cTileSize, 12, 6));
+  regions.back().SetEventFunction(GameEnd);
+  regions.back().SetTriggerEntity(&hero);
+  regions.back().Show();
 
   while (!done) {
     ALLEGRO_EVENT ev;
@@ -131,6 +140,7 @@ void GameClass::Run () {
             iter++;
           }
         }
+        // Update upgrades
         for (std::list<Upgrade*>::iterator iter = upgrades.begin();
              iter != upgrades.end(); iter++) {
           (*iter)->Update();
@@ -138,6 +148,11 @@ void GameClass::Run () {
             (*iter)->Take();
             hero.AddUpgrade((*iter)->GetType());
           }
+        }
+        // Update regions
+        for (std::list<Region>::iterator iter = regions.begin();
+             iter != regions.end(); iter++) {
+          iter->Update();
         }
         VisibleX = hero.GetX() - cWindowWidth/2;
         VisibleY = hero.GetY() -  cWindowHeight/2;
@@ -397,6 +412,10 @@ void GameClass::DrawGame () const {
   for (std::list<Upgrade*>::const_iterator iter = upgrades.begin();
        iter != upgrades.end(); iter++) {
     (*iter)->Draw();
+  }
+  for (std::list<Region>::const_iterator iter = regions.begin();
+       iter != regions.end(); iter++) {
+    iter->Draw();
   }
   DrawHud();
 }

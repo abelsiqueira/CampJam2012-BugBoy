@@ -29,7 +29,7 @@ class Region {
     void Deactivate () {
       active = false;
     }
-    void View () {
+    void Show () {
       visible = true;
     }
     void Hide () {

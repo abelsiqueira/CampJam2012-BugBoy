@@ -46,5 +46,5 @@ void Region::Draw () const {
 
   al_draw_filled_rectangle(posX, posY,
       posX + boxWidth*cTileSize, posY + boxHeight*cTileSize,
-      al_map_rgba(0, 0, 0, 200));
+      al_map_rgba(150, 150, 150, 150));
 }

@@ -33,12 +33,14 @@ class GameClass {
     std::list <Enemy*> enemies;
     std::list <Seed*>  seeds;
     std::list <Upgrade*> upgrades;
+    std::list <Region> regions;
     void ReadGameLevel(const char *);
     char **gameGrid;
     size_t gridWidth, gridHeight;
     bool keyIsPressed[2];
     SpiderBoss * pSpiderBoss;
     void IntroUpdate ();
+    friend void GameEnd ();
 
     // Allegro
     ALLEGRO_DISPLAY *display;
