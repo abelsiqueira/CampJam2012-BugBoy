@@ -18,8 +18,9 @@ class GameClass {
     ~GameClass ();
 
     void Run ();
+    bool HasFailed () const { return hasFailed; }
   private:
-    void AllegroInitialization ();
+    int AllegroInitialization ();
 
     // Updates
     void Update ();
@@ -51,7 +52,7 @@ class GameClass {
     std::list <Upgrade*> upgrades;
     Upgrade *doubleJump;
     std::list <Region> regions;
-    void ReadGameLevel(const char *);
+    int ReadGameLevel(const char *);
     char **gameGrid;
     size_t gridWidth, gridHeight;
     bool keyIsPressed[2];
@@ -73,6 +74,9 @@ class GameClass {
     bool done, paused, inMenu, inIntro, inCredits, inGameEnd, choseOption;
     int menuOption, pauseOption, introScreen;
     int language;
+
+    bool hasFailed;
+    int errorValue;
 };
 
 #endif

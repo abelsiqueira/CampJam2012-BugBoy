@@ -20,7 +20,32 @@
 GameClass::GameClass () {
   srand(time(0));
 
-  AllegroInitialization();
+  errorValue = (AllegroInitialization() == 0 ? false : true);
+  if (errorValue == 0) {
+    hasFailed = false;
+  } else {
+    hasFailed = true;
+    switch (errorValue) {
+      case 1:
+        std::cout << "Allegro error. Something failed to initialize" << std::endl;
+        break;
+      case 2:
+        std::cout << "Failed to load DejaVuSans.ttf. Verify that you have it on"
+                  << "the current folder." << std::endl;
+        break;
+      case 3:
+        std::cout << "Failed to read game level. Verify that you have the file"
+                  << "level1.map on the current folder." << std::endl;
+        break;
+      case 4:
+        std::cout << "Failed to read music. Verify that you have the foled"
+                  << "Music with background.ogg on the current folder." << std::endl;
+        break;
+      default:
+        break;
+    }
+    return;
+  }
 
   keyIsPressed[0] = false;
   keyIsPressed[1] = false;
@@ -52,22 +77,29 @@ GameClass::GameClass () {
 #endif
 }
 
-void GameClass::AllegroInitialization () {
+int GameClass::AllegroInitialization () {
   al_init();
   display = al_create_display(cWindowWidth, cWindowHeight);
+  if (!display) 
+    return 1;
   al_set_window_title(display, "CampJam 2012 - Bug Boy");
   eventQueue = al_create_event_queue();
+  if (!eventQueue)
+    return 1;
   timer = al_create_timer(1.0/cFps);
+  if (!timer)
+    return 1;
 
   al_init_font_addon();
   al_init_ttf_addon();
   al_init_primitives_addon();
-  al_install_keyboard();
-  al_install_mouse();
-  al_init_image_addon();
-  al_install_audio();
-  al_init_acodec_addon();
-  al_reserve_samples(1);
+  if (!al_install_keyboard() ||
+      !al_install_mouse() ||
+      !al_install_audio() ||
+      !al_init_image_addon() ||
+      !al_init_acodec_addon() ||
+      !al_reserve_samples(1))
+    return 1;
 
   al_register_event_source(eventQueue, al_get_display_event_source(display));
   al_register_event_source(eventQueue, al_get_timer_event_source(timer));
@@ -78,15 +110,22 @@ void GameClass::AllegroInitialization () {
   bigFont = al_load_font("DejaVuSans.ttf", 40, 0);
   normalFont = al_load_font("DejaVuSans.ttf", 20, 0);
   smallFont = al_load_font("DejaVuSans.ttf", 10, 0);
-  ReadGameLevel("level1.map");
+
+  if (!hugeFont || !bigFont || !normalFont || !smallFont)
+    return 2;
+
+  if (ReadGameLevel("level1.map") == 1)
+    return 3;
   
   music = al_load_audio_stream("Music/background.ogg", 4, 1024);
-  assert(music);
+  if (!music)
+    return 4;
   al_attach_audio_stream_to_mixer(music, al_get_default_mixer());
   al_set_audio_stream_gain(music, 0.5);
   al_set_audio_stream_playing(music, true);
-  assert(al_set_audio_stream_playmode(music, ALLEGRO_PLAYMODE_LOOP));
+  al_set_audio_stream_playmode(music, ALLEGRO_PLAYMODE_LOOP);
 
+  return 0;
 }
 
 GameClass::~GameClass () {
@@ -205,9 +244,10 @@ void GameClass::Run () {
 
 
 
-void GameClass::ReadGameLevel(const char * lvl) {
+int GameClass::ReadGameLevel(const char * lvl) {
   std::ifstream file(lvl);
-  assert (!file.fail());
+  if (file.fail())
+    return 1;
   file >> gridWidth >> gridHeight;
 
   gameGrid = new char*[gridHeight];
@@ -273,9 +313,13 @@ void GameClass::ReadGameLevel(const char * lvl) {
   }
 
   level = al_create_bitmap(cTileSize*gridWidth, cTileSize*gridHeight);
+  if (!level)
+    return 1;
   al_set_target_bitmap(level);
   DrawGameGrid();
   al_set_target_bitmap(al_get_backbuffer(display));
 
   hero->SetGameGrid(gameGrid, gridWidth, gridHeight);
+
+  return 0;
 }
