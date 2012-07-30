@@ -1,0 +1,60 @@
+Para criar um executável pro jogo, vc tem que linkar do allegro/lib
+
+allegro-static-mt
+allegro_acodec-static-mt
+allegro_audio-static-mt
+vorbisfile-static-mt
+vorbis-static-mt
+allegro_font-static-mt
+allegro_image-static-mt
+allegro_primitives-static-mt
+allegro_ttf-static-mt
+dumb-static-mt
+flac-static-mt
+freetype-static-mt
+ogg-static-mt
+openal-static-mt
+zlib-static-mt
+
+e do mingw/lib
+
+gdiplus
+uuid
+kernel32
+winmm
+psapi
+opengl32
+glu32
+user32
+comdlg32
+gdi32
+shell32
+ole32
+advapi32
+ws2_32
+shlwapi
+
+e adicionar
+
+-lgcc_eh -static-libgcc -static-libstdc++
+
+também adicionar aos includes:
+
+C:\allegro-mingw\include
+
+e no define:
+
+ALLEGRO_STATICLINK
+
+Depois de compilar o jogo, que vai estar na pasta bin/Release, você tem que 
+adicionar na mesma pasta os arquivos e pastas
+
+DejaVuSans.LICENSE
+DejaVuSans.ttf
+level1.map
+Images/
+Music/
+
+Depois é só rodar.
+
+ENJOY!
