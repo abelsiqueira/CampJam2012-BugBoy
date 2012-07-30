@@ -2,6 +2,11 @@
 #define gameclass_h
 
 #include <list>
+#include <string>
+#include <cassert>
+#include <sstream>
+#include <fstream>
+#include <iostream>
 #include "region.h"
 #include "hero.h"
 #include "upgrade.h"
@@ -14,6 +19,16 @@ class GameClass {
 
     void Run ();
   private:
+    void AllegroInitialization ();
+
+    // Updates
+    void Update ();
+    void MenuUpdate ();
+    void PauseMenuUpdate ();
+    void EnemiesUpdate ();
+    void SeedsUpdate ();
+    void UpgradesUpdate ();
+
     // Handlers
     void KeyboardEventHandler (unsigned int, int);
 
@@ -41,7 +56,6 @@ class GameClass {
     size_t gridWidth, gridHeight;
     bool keyIsPressed[2];
     SpiderBoss * pSpiderBoss;
-    void IntroUpdate ();
     void GameEnd ();
     void Reset ();
 

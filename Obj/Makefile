@@ -6,7 +6,9 @@ LIB = -lallegro_ttf -lallegro_font -lallegro_primitives -lallegro \
 #PRINTLEVEL=-DPRINT_LEVEL
 EXEC = bugboy
 
-OBJS = region.o upgrade.o spider_boss.o spider.o seed.o fly.o ant.o enemy.o hero.o entity.o gameclass.o main.o
+ENEMIES = spider_boss.o spider.o fly.o ant.o enemy.o 
+GAMECLASS = gameclass_update.o gameclass_keyboard.o gameclass_draw.o gameclass.o
+OBJS = region.o upgrade.o seed.o $(ENEMIES) hero.o entity.o $(GAMECLASS) main.o
 
 all: $(OBJS)
 	g++ -o ../$(EXEC) $(OBJS) $(LIB) $(CXXFLAGS) 
@@ -16,4 +18,6 @@ all: $(OBJS)
 
 clean:
 	rm -f *.o
+
+purge: clean
 	rm -f ../$(EXEC)
