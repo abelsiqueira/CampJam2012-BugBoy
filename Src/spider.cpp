@@ -40,12 +40,13 @@ void Spider::Update () {
   count++;
   if (rand()%2000 < count) {
     count = 0;
-    if (xSpeed != 0) {
+    if (rand()%2) {
       xSpeed = 0;
       ySpeed = 0;
     } else {
       xSpeed = rand()%301/100.0;
       ySpeed = 2*(rand()%101/100.0) - 1;
+      facing = (rand()%2 == 0 ? 1 : -1);
     }
   }
 
