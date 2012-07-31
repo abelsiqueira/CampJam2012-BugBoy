@@ -1,6 +1,9 @@
 #ifndef definitions_h
 #define definitions_h
 
+#include <string>
+#include "gametext.h"
+
 enum Keys { key_left = 0, key_right = 1 };
 enum UpgradeType { jumpUpgrade, speedUpgrade, lifeUpgrade,
     doubleJumpUpgrade };
@@ -28,5 +31,6 @@ const char cJump       = 'j';
 const char cSpeed      = 'e';
 const char cLife       = 'v';
 const char cDoubleJump = 'd';
+
 
 #endif
