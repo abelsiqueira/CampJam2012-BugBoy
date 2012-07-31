@@ -105,12 +105,13 @@ void GameClass::Update () {
     SeedsUpdate();
     UpgradesUpdate();
     // Update regions
-    for (std::list<Region>::iterator iter = regions.begin();
-         iter != regions.end(); iter++) {
-      iter->Update();
-      if (iter->IsTriggered()) {
-        GameEnd();
-      }
+    regionExit->Update();
+    if (regionExit->IsTriggered()) {
+      GameEnd();
+    }
+    regionSpiderBoss->Update();
+    if (regionSpiderBoss->IsTriggered()) {
+      pSpiderBoss->Activate();
     }
     VisibleX = hero->GetX() - cWindowWidth/2;
     VisibleY = hero->GetY() -  cWindowHeight/2;

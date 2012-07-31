@@ -24,11 +24,11 @@
 SpiderBoss::SpiderBoss (float x, float y) : Enemy(x, y, 2, 2) {
   keyIsPressed[key_left] = false;
   keyIsPressed[key_right] = true;
-  xSpeed = 2.5;
-  ySpeed = 1.0;
   isAffectedByGravity = false;
-  lives = 4;
-  maxLives = 4;
+  maxLives = 1;
+  lives = maxLives;
+  hero = 0;
+  active = false;
 
   image = al_load_bitmap("Images/white-spider.png");
 }
@@ -37,38 +37,56 @@ SpiderBoss::~SpiderBoss () {
 }
 
 void SpiderBoss::Update () {
-  static float count = 0;
-  count++;
-  if (rand()%2000 < count) {
+  if (!active || dead)
+    return;
+  assert(hero);
+
+  static bool waiting = true, going = false;
+  static int count = 0;
+  int waitingTime = 3*cFps;
+  float goingSpeed = 10.0, returningSpeed = 6.0;
+
+  if (invulnerable) {
+    invCountdown--;
+    if (invCountdown <= 0)
+      invulnerable = false;
+  }
+
+  if (count > waitingTime) {
+    going = true;
     count = 0;
-    if (xSpeed != 0) {
-      xSpeed = 0;
-      ySpeed = 0;
+    waiting = false;
+    targetX = hero->GetX();
+    targetY = hero->GetY();
+  }
+
+  if (waiting)
+    count++;
+  else if (!waiting) {
+    float dx = targetX - posX,
+          dy = targetY - posY;
+    float nd = sqrt(dx*dx + dy*dy);
+    if (nd < 5.0) {
+      if (going) {
+        targetX = startX;
+        targetY = startY;
+        going = false;
+      } else {
+        waiting = true;
+      }
     } else {
-      xSpeed = rand()%301/100.0;
-      ySpeed = 2*(rand()%101/100.0) - 1;
+      if (going) {
+        dx = dx*goingSpeed/nd;
+        dy = dy*goingSpeed/nd;
+      } else {
+        dx = dx*returningSpeed/nd;
+        dy = dy*returningSpeed/nd;
+      }
     }
+    posX += dx;
+    posY += dy;
   }
-
-  Enemy::Update();
-
-  // If hit a wall, go back
-  if (keyIsPressed[key_left] &&
-      (gameGrid[static_cast<int>(posY/cTileSize)]
-               [static_cast<int>((posX-xSpeed)/cTileSize)] == cBlock  ||
-       gameGrid[static_cast<int>((posY-1+boxHeight*cTileSize)/cTileSize)]
-               [static_cast<int>((posX-xSpeed)/cTileSize)] == cBlock) ) {
-    keyIsPressed[key_left]  = false;
-    keyIsPressed[key_right] = true;
-  } else if (keyIsPressed[key_right] &&
-      (gameGrid[static_cast<int>(posY/cTileSize)]
-               [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == cBlock ||
-       gameGrid[static_cast<int>((posY-1+boxHeight*cTileSize)/cTileSize)]
-               [static_cast<int>((posX+xSpeed)/cTileSize+boxWidth)] == cBlock) ) {
-    keyIsPressed[key_left]  = true;
-    keyIsPressed[key_right] = false;
-  }
-
+  
 }
 
 void SpiderBoss::Draw () const {

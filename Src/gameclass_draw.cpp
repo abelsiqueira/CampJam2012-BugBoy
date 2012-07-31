@@ -151,10 +151,10 @@ void GameClass::DrawGame () const {
   }
   if (doubleJump)
     doubleJump->Draw();
-  for (std::list<Region>::const_iterator iter = regions.begin();
-       iter != regions.end(); iter++) {
-    iter->Draw();
-  }
+
+  regionExit->Draw();
+  regionSpiderBoss->Draw();
+
   DrawHud();
 }
 

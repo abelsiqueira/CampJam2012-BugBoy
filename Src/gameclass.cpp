@@ -16,6 +16,7 @@
  * along with CampJam2012-Bugboy.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "gameclass.h"
+#include <algorithm>
 
 GameClass::GameClass () {
   srand(time(0));
@@ -61,20 +62,9 @@ GameClass::GameClass () {
   introScreen = 0;
   doubleJump = 0;
 
-  regions.push_back(Region(1*cTileSize, 31*cTileSize, 12, 4));
-  regions.back().SetTriggerEntity(hero);
 
   language = langEnglish;
 
-#ifdef PRINT_LEVEL
-  ALLEGRO_BITMAP *outImage;
-  outImage = al_create_bitmap(cTileSize*gridWidth, cTileSize*gridHeight);
-  al_set_target_bitmap(outImage);
-  al_clear_to_color(al_map_rgb(0,0,0));
-  DrawGame();
-  al_save_bitmap("Images/level.png", outImage);
-  al_set_target_bitmap(al_get_backbuffer(display));
-#endif
 }
 
 int GameClass::AllegroInitialization () {
@@ -187,9 +177,26 @@ void GameClass::Run () {
   bool redraw = false;
   done = false;
   paused = false;
-  
-  al_start_timer(timer);
 
+  assert(regionExit);
+  assert(regionSpiderBoss);
+  pSpiderBoss->SetHero(hero);
+  regionExit->SetTriggerEntity(hero);
+  regionSpiderBoss->SetTriggerEntity(hero);
+  regionExit->Show();
+  regionSpiderBoss->Show();
+
+#ifdef PRINT_LEVEL
+  ALLEGRO_BITMAP *outImage;
+  outImage = al_create_bitmap(cTileSize*gridWidth, cTileSize*gridHeight);
+  al_set_target_bitmap(outImage);
+  al_clear_to_color(al_map_rgb(0,0,0));
+  DrawGame();
+  al_save_bitmap("Images/level.png", outImage);
+  al_set_target_bitmap(al_get_backbuffer(display));
+#endif
+
+  al_start_timer(timer);
 
   while (!done) {
     ALLEGRO_EVENT ev;
@@ -256,6 +263,7 @@ int GameClass::ReadGameLevel(const char * lvl) {
     for (size_t j = 0; j < gridWidth; j++) {
       float x = j*cTileSize, y = i*cTileSize;
       char aux;
+
       file >> aux;
       switch (aux) {
         case cPlayer:
@@ -304,6 +312,12 @@ int GameClass::ReadGameLevel(const char * lvl) {
           upgrades.push_back(new Upgrade(doubleJumpUpgrade, x, y));
           upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
+          break;
+        case cRegionExit:
+          regionExit = new Region(x, y, 12, 4);
+          break;
+        case cRegionSpiderBoss:
+          regionSpiderBoss = new Region(x, y, 23, 5);
           break;
         default:
           gameGrid[i][j] = aux;

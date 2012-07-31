@@ -51,7 +51,8 @@ class GameClass {
     std::list <Seed*>  seeds;
     std::list <Upgrade*> upgrades;
     Upgrade *doubleJump;
-    std::list <Region> regions;
+    Region *regionExit;
+    Region *regionSpiderBoss;
     int ReadGameLevel(const char *);
     char **gameGrid;
     size_t gridWidth, gridHeight;

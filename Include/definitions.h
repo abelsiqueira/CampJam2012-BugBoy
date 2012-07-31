@@ -19,18 +19,20 @@ const float cGravity = 0.25;
 const int cInvulnerableCountdown = 2*cFps;
 const int cShootCooldown = cFps*2/3;
 
-const char cNone       = '.';
-const char cBlock      = 'x';
-const char cSpike      = '/';
-const char cAnt        = 'a';
-const char cPlayer     = 'p';
-const char cFly        = 'f';
-const char cSpider     = 's';
-const char cSpiderBoss = 'B';
-const char cJump       = 'j';
-const char cSpeed      = 'e';
-const char cLife       = 'v';
-const char cDoubleJump = 'd';
+const char cNone             = '.';
+const char cBlock            = 'x';
+const char cSpike            = '/';
+const char cAnt              = 'a';
+const char cPlayer           = 'p';
+const char cFly              = 'f';
+const char cSpider           = 's';
+const char cSpiderBoss       = 'B';
+const char cJump             = 'j';
+const char cSpeed            = 'e';
+const char cLife             = 'v';
+const char cDoubleJump       = 'd';
+const char cRegionExit       = 'E';
+const char cRegionSpiderBoss = '2';
 
 
 #endif

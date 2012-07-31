@@ -10,8 +10,20 @@ class SpiderBoss : public Enemy {
     
     virtual void Update ();
     virtual void Draw () const;
+
+    void SetHero (Entity *h) {
+      hero = h;
+    }
+    void Activate () {
+      active = true;
+    }
+    void Deactivate () {
+      active = false;
+    }
   protected:
-    
+    Entity *hero;
+    bool active;
+    float targetX, targetY;
 };
 
 #endif
