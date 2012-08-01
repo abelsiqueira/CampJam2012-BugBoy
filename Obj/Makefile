@@ -3,7 +3,7 @@ I = -I../Include
 LIB = -lallegro_ttf -lallegro_font -lallegro_primitives -lallegro \
 			-lallegro_audio -lallegro_acodec -lallegro_image
 
-#PRINTLEVEL=-DPRINT_LEVEL
+PRINTLEVEL=-DPRINT_LEVEL
 EXEC = bugboy
 
 ENEMIES = spider_boss.o spider.o fly.o ant.o enemy.o 

@@ -21,6 +21,10 @@
 GameClass::GameClass () {
   srand(time(0));
 
+  pSpiderBoss = 0;
+  regionExit = 0;
+  regionSpiderBoss = 0;
+
   errorValue = (AllegroInitialization() == 0 ? false : true);
   if (errorValue == 0) {
     hasFailed = false;
@@ -314,10 +318,16 @@ int GameClass::ReadGameLevel(const char * lvl) {
           gameGrid[i][j] = cNone;
           break;
         case cRegionExit:
-          regionExit = new Region(x, y, 12, 4);
+          if (!regionExit)
+            regionExit = new Region(x, y);
+          else
+            regionExit->SetPoint(x, y);
           break;
         case cRegionSpiderBoss:
-          regionSpiderBoss = new Region(x, y, 23, 5);
+          if (!regionSpiderBoss)
+            regionSpiderBoss = new Region(x, y);
+          else
+            regionSpiderBoss->SetPoint(x, y);
           break;
         default:
           gameGrid[i][j] = aux;

@@ -8,9 +8,11 @@
 
 class Region {
   public:
+    Region (float, float);
     Region (float, float, float, float);
     ~Region ();
 
+    void SetPoint (float, float);
     void SetTriggerEntity (Entity *e) {
       triggerEntity = e;
       active = true;

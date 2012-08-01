@@ -17,6 +17,16 @@
  */
 #include "region.h"
 
+Region::Region (float x, float y) {
+  posX = x;
+  posY = y;
+  boxWidth = 0;
+  boxHeight = 0;
+  triggerEntity = 0;
+  visible = false;
+  active = false;
+}
+
 Region::Region (float x, float y, float w, float h) {
   posX = x;
   posY = y;
@@ -29,6 +39,21 @@ Region::Region (float x, float y, float w, float h) {
 
 Region::~Region () {
 
+}
+
+void Region::SetPoint (float x, float y) {
+  if (posX > x) {
+    float aux = x;
+    x = posX;
+    posX = aux;
+  }
+  if (posY > y) {
+     float aux = y;
+     y = posY;
+     posY = aux;
+  }
+  boxWidth = (x - posX)/cTileSize + 1;
+  boxHeight = (y - posY)/cTileSize + 1;
 }
 
 void Region::Update () {
