@@ -168,22 +168,17 @@ void GameClass::DrawGameGrid () const {
           xf = (j+1)*cTileSize, yf = (i+1)*cTileSize;
       switch (gameGrid[i][j]) {
         case cBlock:
-          //Block
-          al_draw_filled_rectangle(x, y, xf, yf, color);
-          al_draw_line(x, y, xf, yf, al_map_rgb(0,0,0),0);
-          al_draw_line(x, yf, xf, y, al_map_rgb(0,0,0),0);
-          al_draw_line(x, (y+yf)/2, (x+xf)/2, y, al_map_rgb(0,0,0),0);
-          al_draw_line(x, (y+yf)/2, (x+xf)/2, yf, al_map_rgb(0,0,0),0);
-          al_draw_line(xf, (y+yf)/2, (x+xf)/2, y, al_map_rgb(0,0,0),0);
-          al_draw_line(xf, (y+yf)/2, (x+xf)/2, yf, al_map_rgb(0,0,0),0);
+          if (i > 0 && gameGrid[i-1][j] == cNone)
+            DrawFloor(x, y, xf, yf);
+          else
+            DrawBlock(x, y, xf, yf);
           break;
         case cSpike:
-          //Spike
-          al_draw_filled_triangle((j+0.5)*cTileSize, i*cTileSize+1,
-              (j+1)*cTileSize-1, (i+1)*cTileSize-1, 
-              j*cTileSize+1, (i+1)*cTileSize-1, al_map_rgb(255,255,255));
+          DrawSpike(x, y, xf, yf);
           break;
         case cNone:
+          if (i < gridHeight-1 && gameGrid[i+1][j] == cBlock)
+            DrawGrass(x, y, xf, yf);
           //Nothing
         default:
           break;
@@ -191,6 +186,47 @@ void GameClass::DrawGameGrid () const {
     }
   }
 
-  al_draw_text(hugeFont, al_map_rgb(255,255,255), 
-      6*cTileSize, 31*cTileSize, ALLEGRO_ALIGN_CENTRE, cExit[language].c_str());
+  float x = (regionExit->GetX() + regionExit->GetWidth())/2;
+  float y = (regionExit->GetY() + regionExit->GetHeight())/2;
+  al_draw_text(hugeFont, al_map_rgb(255,255,255), x, y,
+      ALLEGRO_ALIGN_CENTRE, cExit[language].c_str());
+}
+
+void GameClass::DrawGrass (float, float, float, float) const {
+}
+
+void GameClass::DrawFloor (float x, float y, float xf, float yf) const {
+  al_draw_filled_rectangle(x, y, xf, yf, al_map_rgb(255,255,255));
+  for (int i = 0; i < 5; i++) {
+    float z = y + 2*i;
+    al_draw_line(x, z, xf, z, al_map_rgb(0,0,0), 0);
+  }
+  for (size_t i = 0; i < 20; i++) {
+    float difX = 10 + (cTileSize-10)*(rand()%1001)/1000.0;
+    float difY = 10 + (cTileSize-10)*(rand()%1001)/1000.0;
+    al_draw_pixel(x + difX, y + difY, al_map_rgb(0,0,0));
+  }
+}
+
+void GameClass::DrawBlock (float x, float y, float xf, float yf) const {
+  al_draw_filled_rectangle(x, y, xf, yf, al_map_rgb(255,255,255));
+  for (size_t i = 0; i < 20; i++) {
+    float difX = cTileSize*(rand()%1001)/1000.0;
+    float difY = cTileSize*(rand()%1001)/1000.0;
+    al_draw_pixel(x + difX, y + difY, al_map_rgb(0,0,0));
+  }
+}
+
+void GameClass::DrawSpike (float x, float y, float xf, float yf) const {
+  if ((xf - x < cTileSize/6) || 
+      (rand()%1001 < 0)) {
+    float z = y + 0.2*cTileSize*(rand()%1001)/1000.0;
+    al_draw_filled_triangle((x+xf)/2, z+1, xf, yf, x, yf, al_map_rgb(255,255,255));
+    return;
+  }
+  float xm = x + (xf - x)*(1 + 2*(rand()%1001)/1000.0)/4;
+  DrawSpike( x, y, xm, yf);
+  DrawSpike(xm, y, xf, yf);
+//  al_draw_filled_triangle((x+xm)/2, y+1, xm, yf, x, yf, al_map_rgb(255,255,255));
+//  al_draw_filled_triangle((xf+xm)/2, y+1, xm, yf, xf, yf, al_map_rgb(255,255,255));
 }

@@ -187,8 +187,8 @@ void GameClass::Run () {
   pSpiderBoss->SetHero(hero);
   regionExit->SetTriggerEntity(hero);
   regionSpiderBoss->SetTriggerEntity(hero);
-  regionExit->Show();
-  regionSpiderBoss->Show();
+//  regionExit->Show();
+//  regionSpiderBoss->Show();
 
 #ifdef PRINT_LEVEL
   ALLEGRO_BITMAP *outImage;
@@ -322,12 +322,14 @@ int GameClass::ReadGameLevel(const char * lvl) {
             regionExit = new Region(x, y);
           else
             regionExit->SetPoint(x, y);
+          gameGrid[i][j] = cNone;
           break;
         case cRegionSpiderBoss:
           if (!regionSpiderBoss)
             regionSpiderBoss = new Region(x, y);
           else
             regionSpiderBoss->SetPoint(x, y);
+          gameGrid[i][j] = cNone;
           break;
         default:
           gameGrid[i][j] = aux;

@@ -34,6 +34,10 @@ class GameClass {
     void KeyboardEventHandler (unsigned int, int);
 
     // Draw
+    void DrawBlock (float, float, float, float) const;
+    void DrawFloor (float, float, float, float) const;
+    void DrawGrass (float, float, float, float) const;
+    void DrawSpike (float, float, float, float) const;
     void DrawCredits () const;
     void DrawPauseMenu () const;
     void DrawGameIntro () const;

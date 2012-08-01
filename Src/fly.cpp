@@ -38,7 +38,7 @@ Fly::~Fly () {
 void Fly::Update () {
   static float count = 0;
   ySpeed = ((rand()%101)/100.0)*5*sin(count);
-  count += 0.01*M_PI;
+  count += 0.01*ALLEGRO_PI;
   xSpeed += (2*(rand()%101/100.0) - 1)*0.4;
   float maxSpeed = 4.0;
   if (xSpeed > maxSpeed) xSpeed = maxSpeed;

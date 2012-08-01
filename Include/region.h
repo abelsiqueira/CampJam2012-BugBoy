@@ -32,6 +32,10 @@ class Region {
     void Update ();
     void Draw () const;
     bool IsTriggered () const { return triggered; }
+    float GetX () const { return posX; }
+    float GetY () const { return posY; }
+    float GetWidth () const { return boxWidth; }
+    float GetHeight () const { return boxHeight; }
   private:
     Region();
     float posX, posY;

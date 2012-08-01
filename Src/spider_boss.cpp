@@ -25,7 +25,7 @@ SpiderBoss::SpiderBoss (float x, float y) : Enemy(x, y, 2, 2) {
   keyIsPressed[key_left] = false;
   keyIsPressed[key_right] = true;
   isAffectedByGravity = false;
-  maxLives = 1;
+  maxLives = 4;
   lives = maxLives;
   hero = 0;
   active = false;
