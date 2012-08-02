@@ -231,7 +231,7 @@ void Entity::Draw () const {
       al_draw_bitmap(image, x, y, 0);
     } else {
       al_draw_rectangle(posX, posY, posX + cTileSize*boxWidth, 
-          posY + cTileSize*boxHeight, al_map_rgb(255,255,255), 0);
+          posY + cTileSize*boxHeight, cWhite, 0);
     }
   }
 }

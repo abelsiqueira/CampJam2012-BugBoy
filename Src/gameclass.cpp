@@ -194,7 +194,7 @@ void GameClass::Run () {
   ALLEGRO_BITMAP *outImage;
   outImage = al_create_bitmap(cTileSize*gridWidth, cTileSize*gridHeight);
   al_set_target_bitmap(outImage);
-  al_clear_to_color(al_map_rgb(0,0,0));
+  al_clear_to_color(cBlack);
   DrawGame();
   al_save_bitmap("Images/level.png", outImage);
   al_set_target_bitmap(al_get_backbuffer(display));
@@ -225,7 +225,7 @@ void GameClass::Run () {
 
     if (redraw && al_is_event_queue_empty(eventQueue)) {
       redraw = false;
-      al_clear_to_color(al_map_rgb(0,0,0));
+      al_clear_to_color(cBlack);
 
       if (inMenu) {
         DrawGameMenu();

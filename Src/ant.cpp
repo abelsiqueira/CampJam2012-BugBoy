@@ -70,7 +70,7 @@ void Ant::Draw () const {
       al_draw_bitmap(image, x, y, (facing > 0 ? 0 : ALLEGRO_FLIP_HORIZONTAL));
     } else {
       al_draw_rectangle(posX, posY, posX + cTileSize*boxWidth, 
-          posY + cTileSize*boxHeight, al_map_rgb(255,255,255), 0);
+          posY + cTileSize*boxHeight, cWhite, 0);
     }
   }
 }

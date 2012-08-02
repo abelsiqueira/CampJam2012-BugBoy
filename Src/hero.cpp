@@ -77,13 +77,13 @@ void Hero::Draw () const {
   if (!invulnerable || (invulnerable && invCountdown%3 == 0)) {
     al_draw_rectangle(posX, posY, 
         posX + boxWidth*cTileSize-1, posY + boxHeight*cTileSize-1,
-        al_map_rgb(255,255,255), 1);
+        cWhite, 1);
     float x = posX + boxWidth*cTileSize/2, y = posY + boxHeight*cTileSize/5;
     if (facing > 0)
       x += boxWidth*cTileSize/4;
     else
       x -= boxWidth*cTileSize/4;
-    al_draw_filled_circle(x, y, boxWidth*cTileSize/5, al_map_rgb(255,255,255));
+    al_draw_filled_circle(x, y, boxWidth*cTileSize/5, cWhite);
   }
 }
 

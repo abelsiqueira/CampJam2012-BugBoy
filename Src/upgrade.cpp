@@ -45,26 +45,26 @@ void Upgrade::Draw () const {
   float x = posX, y = posY,
         xm = x + boxWidth*cTileSize/2, ym = y + boxHeight*cTileSize/2,
         xf = x + boxWidth*cTileSize,   yf = y + boxHeight*cTileSize;
-  al_draw_rectangle(x, y, xf, yf, al_map_rgb(255,255,255), 0);
+  al_draw_rectangle(x, y, xf, yf, cWhite, 0);
 
   switch (upgradeType) {
     case jumpUpgrade:
-      al_draw_filled_triangle(x, ym, xf, ym, xm, y, al_map_rgb(255,255,255));
+      al_draw_filled_triangle(x, ym, xf, ym, xm, y, cWhite);
       break;
     case speedUpgrade:
-      al_draw_line(x, ym, xf, ym, al_map_rgb(255,255,255), 0);
-      al_draw_line(x, (y+ym)/2, xf, (y+ym)/2, al_map_rgb(255,255,255), 0);
-      al_draw_line(x, (yf+ym)/2, xf, (yf+ym)/2, al_map_rgb(255,255,255), 0);
+      al_draw_line(x, ym, xf, ym, cWhite, 0);
+      al_draw_line(x, (y+ym)/2, xf, (y+ym)/2, cWhite, 0);
+      al_draw_line(x, (yf+ym)/2, xf, (yf+ym)/2, cWhite, 0);
       break;
     case lifeUpgrade:
-      al_draw_filled_rectangle(x, y, xm, ym, al_map_rgb(255,255,255));
-      al_draw_filled_rectangle(xm, ym, xf, yf, al_map_rgb(255,255,255));
+      al_draw_filled_rectangle(x, y, xm, ym, cWhite);
+      al_draw_filled_rectangle(xm, ym, xf, yf, cWhite);
       break;
     case doubleJumpUpgrade:
-      al_draw_line(x, y, xf, yf, al_map_rgb(255,255,255),0);
-      al_draw_line(x, yf, xf, y, al_map_rgb(255,255,255),0);
-      al_draw_line(xm, y, xm, yf, al_map_rgb(255,255,255),0);
-      al_draw_line(x, ym, xf, ym, al_map_rgb(255,255,255),0);
+      al_draw_line(x, y, xf, yf, cWhite,0);
+      al_draw_line(x, yf, xf, y, cWhite,0);
+      al_draw_line(xm, y, xm, yf, cWhite,0);
+      al_draw_line(x, ym, xf, ym, cWhite,0);
     default:
       break;
   }

@@ -34,8 +34,15 @@ const char cDoubleJump       = 'd';
 const char cRegionExit       = 'E';
 const char cRegionSpiderBoss = '2';
 
-//const ALLEGRO_COLOR cWhite(255, 255, 255, 255);
-//const ALLEGRO_COLOR cBlack(  0,   0,   0, 255);
+const ALLEGRO_COLOR cWhite   = {255, 255, 255, 255};
+const ALLEGRO_COLOR cBlack   = {  0,   0,   0, 255};
+const ALLEGRO_COLOR cRed     = {255,   0,   0, 255};
+const ALLEGRO_COLOR cGreen   = {  0, 255,   0, 255};
+const ALLEGRO_COLOR cBlue    = {  0,   0, 255, 255};
+const ALLEGRO_COLOR cCyan    = {  0, 255, 255, 255};
+const ALLEGRO_COLOR cMagenta = {255,   0, 255, 255};
+const ALLEGRO_COLOR cYellow  = {255, 255,   0, 255};
+const ALLEGRO_COLOR cGray    = {127, 127, 127, 255};
 
 
 #endif
