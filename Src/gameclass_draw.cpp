@@ -186,8 +186,9 @@ void GameClass::DrawGameGrid () const {
     }
   }
 
-  float x = (regionExit->GetX() + regionExit->GetWidth())/2;
-  float y = (regionExit->GetY() + regionExit->GetHeight())/2;
+  float x = regionExit->GetX() + 
+      cTileSize*regionExit->GetWidth()/2;
+  float y = regionExit->GetY();
   al_draw_text(hugeFont, cWhite, x, y,
       ALLEGRO_ALIGN_CENTRE, cExit[language].c_str());
 }
