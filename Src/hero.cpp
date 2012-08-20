@@ -18,7 +18,7 @@
 #include "hero.h"
 #include <iostream>
 
-Hero::Hero (float x, float y) : Entity(x, y, 1, 2) {
+Hero::Hero (float x, float y) : Entity(x, y, 0.95, 1.95) {
   lives = 2;
   maxLives = lives;
   xSpeed = 2.7;

@@ -1,4 +1,4 @@
-CXXFLAGS = -Wall -Wextra -ggdb
+CXXFLAGS = -Wall -Wextra -Werror
 I = -I../Include
 LIB = -lallegro_ttf -lallegro_font -lallegro_primitives -lallegro \
 			-lallegro_audio -lallegro_acodec -lallegro_image
