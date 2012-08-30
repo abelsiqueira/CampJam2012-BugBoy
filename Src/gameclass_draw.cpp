@@ -127,7 +127,8 @@ void GameClass::DrawPauseMenu () const {
 }
 
 void GameClass::DrawGame () const {
-  al_draw_bitmap(level, 0, 0, 0);
+  al_draw_bitmap_region(level, VisibleX, VisibleY,
+      cWindowWidth, cWindowHeight, VisibleX, VisibleY, 0);
   hero->Draw();
   {
     std::list<Enemy*>::const_iterator iter = enemies.begin(),

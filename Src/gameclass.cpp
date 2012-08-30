@@ -111,6 +111,7 @@ int GameClass::AllegroInitialization () {
   if (ReadGameLevel("level1.map") == 1)
     return 3;
   
+#ifndef MUTE
   music = al_load_audio_stream("Music/background.ogg", 4, 1024);
   if (!music)
     return 4;
@@ -118,6 +119,7 @@ int GameClass::AllegroInitialization () {
   al_set_audio_stream_gain(music, 0.5);
   al_set_audio_stream_playing(music, true);
   al_set_audio_stream_playmode(music, ALLEGRO_PLAYMODE_LOOP);
+#endif
 
   return 0;
 }
