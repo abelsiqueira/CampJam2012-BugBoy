@@ -57,11 +57,13 @@ class GameClass {
     Upgrade *doubleJump;
     Region *regionExit;
     Region *regionSpiderBoss;
+    Region *regionCricketBoss;
     int ReadGameLevel(const char *);
     char **gameGrid;
     size_t gridWidth, gridHeight;
     bool keyIsPressed[2];
     SpiderBoss * pSpiderBoss;
+    CricketBoss *pCricketBoss;
     void GameEnd ();
     void Reset ();
 

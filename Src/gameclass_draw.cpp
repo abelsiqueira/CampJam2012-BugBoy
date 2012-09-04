@@ -155,6 +155,7 @@ void GameClass::DrawGame () const {
 
   regionExit->Draw();
   regionSpiderBoss->Draw();
+  regionCricketBoss->Draw();
 
   DrawHud();
 }

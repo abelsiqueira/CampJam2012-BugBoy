@@ -113,6 +113,10 @@ void GameClass::Update () {
     if (regionSpiderBoss->IsTriggered()) {
       pSpiderBoss->Activate();
     }
+    regionCricketBoss->Update();
+    if (regionCricketBoss->IsTriggered()) {
+      pCricketBoss->Activate();
+    }
     VisibleX = hero->GetX() - cWindowWidth/2;
     VisibleY = hero->GetY() -  cWindowHeight/2;
     if (VisibleX < 0) 

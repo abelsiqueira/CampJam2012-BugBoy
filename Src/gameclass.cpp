@@ -24,6 +24,7 @@ GameClass::GameClass () {
   pSpiderBoss = 0;
   regionExit = 0;
   regionSpiderBoss = 0;
+  regionCricketBoss = 0;
 
   errorValue = (AllegroInitialization() == 0 ? false : true);
   if (errorValue == 0) {
@@ -187,10 +188,13 @@ void GameClass::Run () {
   assert(regionExit);
   assert(regionSpiderBoss);
   pSpiderBoss->SetHero(hero);
+  pCricketBoss->SetHero(hero);
   regionExit->SetTriggerEntity(hero);
   regionSpiderBoss->SetTriggerEntity(hero);
+  regionCricketBoss->SetTriggerEntity(hero);
 //  regionExit->Show();
 //  regionSpiderBoss->Show();
+//  regionCricketBoss->Show();
 
 #ifdef PRINT_LEVEL
   ALLEGRO_BITMAP *outImage;
@@ -293,10 +297,21 @@ int GameClass::ReadGameLevel(const char * lvl) {
           enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;
+        case cCricket:
+          enemies.push_back(new Cricket(x, y));
+          enemies.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          gameGrid[i][j] = cNone;
+          break;
         case cSpiderBoss:
           pSpiderBoss = new SpiderBoss(x, y);
           pSpiderBoss->SetGameGrid(gameGrid, gridWidth, gridHeight);
           enemies.push_back(pSpiderBoss);
+          gameGrid[i][j] = cNone;
+          break;
+        case cCricketBoss:
+          pCricketBoss = new CricketBoss(x, y);
+          pCricketBoss->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          enemies.push_back(pCricketBoss);
           gameGrid[i][j] = cNone;
           break;
         case cJump:
@@ -332,6 +347,12 @@ int GameClass::ReadGameLevel(const char * lvl) {
           else
             regionSpiderBoss->SetPoint(x, y);
           gameGrid[i][j] = cNone;
+          break;
+        case cRegionCricketBoss:
+          if (!regionCricketBoss)
+            regionCricketBoss = new Region(x, y);
+          else
+            regionCricketBoss->SetPoint(x, y);
           break;
         default:
           gameGrid[i][j] = aux;

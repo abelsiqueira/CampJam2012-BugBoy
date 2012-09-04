@@ -61,6 +61,8 @@ class Entity {
     int lives, maxLives;
     int invCountdown;
     int facing;
+    bool turnOnWallHit, softFall;
+    bool visibleBox;
 
     ALLEGRO_BITMAP *image;
 };

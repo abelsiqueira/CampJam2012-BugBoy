@@ -2,3 +2,5 @@
 #include "fly.h"
 #include "spider.h"
 #include "spider_boss.h"
+#include "cricket.h"
+#include "cricket_boss.h"

@@ -36,6 +36,9 @@ Entity::Entity (float x, float y, float w, float h) {
   facing = 1;
   isAffectedByGravity = true;
   image = 0;
+  turnOnWallHit = false;
+  softFall = false;
+  visibleBox = false;
 }
 
 Entity::~Entity () {
@@ -88,11 +91,15 @@ void Entity::Update () {
           hitWall = true;
           safe = true;
         } else if (aux == cSpike) {
-          safe = false;
+            safe = false;
         }
       }
       if (!hitWall)
         posX = nextX;
+      else if (turnOnWallHit) {
+        keyIsPressed[key_left] = false;
+        keyIsPressed[key_right] = true;
+      }
       if (!safe)
         Die();
     } else {
@@ -124,6 +131,10 @@ void Entity::Update () {
       }
       if (!hitWall)
         posX = nextX;
+      else if (turnOnWallHit) {
+        keyIsPressed[key_left] = true;
+        keyIsPressed[key_right] = false;
+      }
       if (!safe)
         Die();
     }
@@ -172,7 +183,7 @@ void Entity::Update () {
   if (hitWall && ySpeed > 0) {
     if (isAffectedByGravity)
       ySpeed = 1.0;
-    else
+    else 
       ySpeed = -ySpeed;
     grounded = true;
   } else if (hitWall && ySpeed < 0) {
@@ -228,10 +239,14 @@ void Entity::Draw () const {
     if (image) {
       int x = posX + boxWidth*cTileSize/2 - al_get_bitmap_width(image)/2,
           y = posY + boxHeight*cTileSize/2 - al_get_bitmap_height(image)/2;
-      al_draw_bitmap(image, x, y, 0);
+      al_draw_bitmap(image, x, y, (facing > 0 ? 0 : ALLEGRO_FLIP_HORIZONTAL));
     } else {
       al_draw_rectangle(posX, posY, posX + cTileSize*boxWidth, 
           posY + cTileSize*boxHeight, cWhite, 0);
+    }
+    if (visibleBox) {
+      al_draw_rectangle(posX, posY, posX + cTileSize*boxWidth, 
+          posY + cTileSize*boxHeight, al_map_rgb(255,255,255), 0);
     }
   }
 }
