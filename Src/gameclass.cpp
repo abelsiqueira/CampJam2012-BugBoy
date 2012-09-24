@@ -66,6 +66,7 @@ GameClass::GameClass () {
   choseOption = false;
   introScreen = 0;
   doubleJump = 0;
+  wallJump = 0;
 
 
   language = langEnglish;
@@ -144,6 +145,8 @@ GameClass::~GameClass () {
   delete hero;
   if (doubleJump)
     delete doubleJump;
+  if (wallJump)
+    delete wallJump;
   for (size_t i = 0; i < gridHeight; i++)
     delete []gameGrid[i];
   delete []gameGrid;
@@ -171,8 +174,14 @@ void GameClass::Reset () {
        iter != upgrades.end(); iter++) {
     (*iter)->Reset();
   }
-  if (doubleJump)
+  if (doubleJump) {
     delete doubleJump;
+    doubleJump = 0;
+  }
+  if (wallJump) {
+    delete wallJump;
+    wallJump = 0;
+  }
   hero->Reset();
 }
 
@@ -331,6 +340,11 @@ int GameClass::ReadGameLevel(const char * lvl) {
           break;
         case cDoubleJump:
           upgrades.push_back(new Upgrade(doubleJumpUpgrade, x, y));
+          upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
+          gameGrid[i][j] = cNone;
+          break;
+        case cWallJump:
+          upgrades.push_back(new Upgrade(wallJumpUpgrade, x, y));
           upgrades.back()->SetGameGrid(gameGrid, gridWidth, gridHeight);
           gameGrid[i][j] = cNone;
           break;

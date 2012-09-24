@@ -54,7 +54,7 @@ class GameClass {
     std::list <Enemy*> enemies;
     std::list <Seed*>  seeds;
     std::list <Upgrade*> upgrades;
-    Upgrade *doubleJump;
+    Upgrade *doubleJump, *wallJump;
     Region *regionExit;
     Region *regionSpiderBoss;
     Region *regionCricketBoss;

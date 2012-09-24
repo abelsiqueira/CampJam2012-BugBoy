@@ -57,7 +57,7 @@ class Entity {
     float ySpeed, xSpeed, jumpSpeed;
     float boxWidth, boxHeight;
 
-    bool dead, grounded, invulnerable, isAffectedByGravity;
+    bool dead, grounded, invulnerable, isAffectedByGravity, touchWall;
     int lives, maxLives;
     int invCountdown;
     int facing;

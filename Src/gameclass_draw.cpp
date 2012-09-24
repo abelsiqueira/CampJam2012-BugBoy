@@ -51,12 +51,14 @@ void GameClass::DrawGameIntro () const {
     Upgrade jump      (jumpUpgrade,       200, 180 + 5*45), 
             speed     (speedUpgrade,      200, 180 + 6*45), 
             life      (lifeUpgrade,       200, 180 + 7*45),
-            doubleJump(doubleJumpUpgrade, 200, 180 + 8*45);
+            doubleJump(doubleJumpUpgrade, 200, 180 + 8*45),
+            wallJump  (wallJumpUpgrade,   200, 180 + 9*45);
 
     jump.Draw();
     speed.Draw();
     life.Draw();
     doubleJump.Draw();
+    wallJump.Draw();
 
 
     al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, 
@@ -152,6 +154,8 @@ void GameClass::DrawGame () const {
   }
   if (doubleJump)
     doubleJump->Draw();
+  if (wallJump)
+    wallJump->Draw();
 
   regionExit->Draw();
   regionSpiderBoss->Draw();

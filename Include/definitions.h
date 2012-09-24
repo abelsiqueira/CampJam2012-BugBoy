@@ -6,7 +6,7 @@
 
 enum Keys { key_left = 0, key_right = 1 };
 enum UpgradeType { jumpUpgrade, speedUpgrade, lifeUpgrade,
-    doubleJumpUpgrade };
+    doubleJumpUpgrade, wallJumpUpgrade };
 enum MenuOption { menuStartGame = 0, menuCredits = 1, menuLanguage = 2, menuExit = 3 };
 enum PauseOption { pauseContinue = 0, pauseGoToMenu = 1, pauseExit = 2 };
 enum Language { langEnglish = 0, langPortuguese = 1 };
@@ -33,6 +33,7 @@ const char cJump              = 'j';
 const char cSpeed             = 'e';
 const char cLife              = 'v';
 const char cDoubleJump        = 'd';
+const char cWallJump          = 'w';
 const char cRegionExit        = 'E';
 const char cRegionSpiderBoss  = '2';
 const char cRegionCricketBoss = '3';

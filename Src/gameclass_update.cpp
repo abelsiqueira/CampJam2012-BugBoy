@@ -67,6 +67,13 @@ void GameClass::UpgradesUpdate () {
       hero->AddUpgrade(doubleJump->GetType());
     }
   }
+  if (wallJump) {
+    wallJump->Update();
+    if (wallJump->CollidesWith(*hero)) {
+      wallJump->Take();
+      hero->AddUpgrade(wallJump->GetType());
+    }
+  }
 }
 
 void GameClass::SeedsUpdate () {
@@ -99,6 +106,13 @@ void GameClass::Update () {
       float x = pSpiderBoss->GetX(), y = pSpiderBoss->GetY();
       doubleJump = new Upgrade(doubleJumpUpgrade, x, y);
       doubleJump->SetGameGrid(gameGrid, gridWidth, gridHeight);
+    }
+    if (pCricketBoss &&
+        pCricketBoss->IsDead() &&
+        wallJump == 0) {
+      float x = pCricketBoss->GetX(), y = pCricketBoss->GetY();
+      wallJump = new Upgrade(wallJumpUpgrade, x, y);
+      wallJump->SetGameGrid(gameGrid, gridWidth, gridHeight);
     }
     hero->Update();
     EnemiesUpdate();

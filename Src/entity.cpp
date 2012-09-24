@@ -76,6 +76,7 @@ void Entity::Update () {
 
         if (aux == cBlock) {
           hitWall = true;
+          touchWall = true;
           safe = true;
           break;
         } else if (aux == cSpike) {
@@ -112,6 +113,7 @@ void Entity::Update () {
                       [static_cast<int>((nextX+boxWidth*cTileSize-1)/cTileSize)];
         if (aux == cBlock) {
           hitWall = true;
+          touchWall = true;
           safe = true;
           break;
         } else if (aux == cSpike) {

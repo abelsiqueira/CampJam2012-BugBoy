@@ -23,7 +23,7 @@ class Hero : public Entity {
   protected:
     int shootCountdown;
     int upgradesJump, upgradesSpeed, upgradesLife;
-    bool hasDoubleJump;
+    bool hasDoubleJump, hasWallJump;
     int consecJumps;
 };
 

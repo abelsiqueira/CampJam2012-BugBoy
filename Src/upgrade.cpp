@@ -61,10 +61,14 @@ void Upgrade::Draw () const {
       al_draw_filled_rectangle(xm, ym, xf, yf, cWhite);
       break;
     case doubleJumpUpgrade:
-      al_draw_line(x, y, xf, yf, cWhite,0);
-      al_draw_line(x, yf, xf, y, cWhite,0);
-      al_draw_line(xm, y, xm, yf, cWhite,0);
-      al_draw_line(x, ym, xf, ym, cWhite,0);
+      al_draw_line(x, y, xf, yf, cWhite, 0);
+      al_draw_line(x, yf, xf, y, cWhite, 0);
+      al_draw_line(xm, y, xm, yf, cWhite, 0);
+      al_draw_line(x, ym, xf, ym, cWhite, 0);
+      break;
+    case wallJumpUpgrade:
+      al_draw_line(x, y, xf, yf, cWhite, 0);
+      break;
     default:
       break;
   }

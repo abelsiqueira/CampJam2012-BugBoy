@@ -28,6 +28,7 @@ Hero::Hero (float x, float y) : Entity(x, y, 0.95, 1.95) {
   upgradesSpeed = 0;
   upgradesLife = 0;
   hasDoubleJump = false;
+  hasWallJump = false;
   consecJumps = 0;
 }
 
@@ -46,6 +47,7 @@ void Hero::Reset () {
   upgradesSpeed = 0;
   upgradesJump = 0;
   hasDoubleJump = false;
+  hasWallJump = false;
   consecJumps = 0;
   xSpeed = 2.7;
   jumpSpeed = 6.0;
@@ -57,7 +59,9 @@ Hero::~Hero () {
 }
 
 void Hero::Jump () {
-  if (grounded || (hasDoubleJump && (consecJumps < 1)) ) {
+  if (grounded || 
+      (touchWall && hasWallJump) ||
+      (hasDoubleJump && (consecJumps < 1)) ) {
     consecJumps++;
     ySpeed = -jumpSpeed;
   }
@@ -68,6 +72,7 @@ void Hero::Update () {
     consecJumps = 0;
   if (shootCountdown > 0)
     shootCountdown--;
+  touchWall = false;
   Entity::Update();
 }
 
@@ -116,6 +121,8 @@ void Hero::AddUpgrade (UpgradeType ut) {
     case doubleJumpUpgrade:
       hasDoubleJump = true;
       break;
+    case wallJumpUpgrade:
+      hasWallJump = true;
     default:
       break;
   }
