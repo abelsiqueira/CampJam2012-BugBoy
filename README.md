@@ -1,4 +1,4 @@
-CampJam 2012 - Bug Boy
+﻿CampJam 2012 - Bug Boy
 ======================
 
 Português
@@ -42,6 +42,7 @@ Imagens
 * Aranha: http://openclipart.org/detail/73135/spider-by-redccshirt
 * Mosca: http://openclipart.org/detail/119407/fly-01-by-anonymous
 * Formiga: http://openclipart.org/detail/18532/formiga-by-guseinstein
+* Gafanhoto: http://openclipart.org/detail/104773/grasshopper-by-papapishu
 
 Música
 ------
@@ -90,6 +91,7 @@ Images
 * Spider: http://openclipart.org/detail/73135/spider-by-redccshirt
 * Fly: http://openclipart.org/detail/119407/fly-01-by-anonymous
 * Ant: http://openclipart.org/detail/18532/formiga-by-guseinstein
+* Grasshopper: http://openclipart.org/detail/104773/grasshopper-by-papapishu
 
 Music
 -----

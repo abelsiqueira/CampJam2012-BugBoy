@@ -1,10 +1,10 @@
-const std::string cMenuOptionsText[2][4] = { 
+const std::string cMenuOptionsText[2][4] = {
   { "Start Game", "Credits", "Change Language", "Exit"},
   { "Iniciar o Jogo", "Créditos", "Mudar Idioma", "Sair"} };
 const std::string cPauseInformation[2][4] = {
   { "Lives: ", "Jump Upgrades: ", "Speed Upgrades: ",
     "Life Upgrades: " },
-  { "Vidas: ", "Upgrades de Pulo: ", 
+  { "Vidas: ", "Upgrades de Pulo: ",
     "Upgrades de Velocidade: ", "Upgrades de Vida: " }
 };
 const std::string cPauseMenuOptionsText[2][3] = {
@@ -18,7 +18,7 @@ const std::string cCredits[2] = { "Credits", "Créditos" };
 const std::string cThanks[2] = { "Thanks for Playing", "Obrigado por Jogar" };
 const std::string cPause[2] = { "Pause Menu", "Menu de Pausa" };
 const std::string cExit[2] = { "EXIT", "SAÍDA" };
-  
+
 const size_t cGameIntroLines = 12;
 const std::string cGameIntroText[2][cGameIntroLines] = {
   {
@@ -33,7 +33,7 @@ const std::string cGameIntroText[2][cGameIntroLines] = {
     "smaller and smaller.",
     " - Well, I better find myself an exit, before something worse happens - he says",
     " - thankfully, this cave is naturally illuminated. Otherwise, I would be in",
-    " great trouble." 
+    " great trouble."
   }, {
     "  Um garoto está andando pelo parque caçando insetos.",
     "Ele entra numa caversa, enquanto caçava um vagalume, e brinca lá dentro por",
@@ -76,7 +76,7 @@ const std::string cInstructionsText[2][cInstructionsLines] = {
   }
 };
 
-const size_t cCreditsLines = 13;
+const size_t cCreditsLines = 14;
 const std::string cCreditsText[2][cCreditsLines] = {
   {
     "Game Design: Abel Soares Siqueira",
@@ -85,6 +85,7 @@ const std::string cCreditsText[2][cCreditsLines] = {
     "  Spider: http://openclipart.org/detail/73135/spider-by-redccshirt",
     "  Fly: http://openclipart.org/detail/119407/fly-01-by-anonymous",
     "  Ant: http://openclipart.org/detail/18532/formiga-by-guseinstein",
+    "  Grasshopper: http://openclipart.org/detail/104773/grasshopper-by-papapishu",
     "  Music: Cave by Miguel Herrero: http://www.jamendo.com/en/track/224865/cave",
     "",
     "Game developed for the CampJam'12",
@@ -99,6 +100,7 @@ const std::string cCreditsText[2][cCreditsLines] = {
     "  Aranha: http://openclipart.org/detail/73135/spider-by-redccshirt",
     "  Mosca: http://openclipart.org/detail/119407/fly-01-by-anonymous",
     "  Formiga: http://openclipart.org/detail/18532/formiga-by-guseinstein",
+    "  Gafanhoto: http://openclipart.org/detail/104773/grasshopper-by-papapishu",
     "  Música: Cave by Miguel Herrero: http://www.jamendo.com/en/track/224865/cave",
     "",
     "Jogo desenvolvido para o CampJam'12",

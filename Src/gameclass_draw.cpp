@@ -76,7 +76,7 @@ void GameClass::DrawCredits () const {
       cCredits[language].c_str());
 
   for (size_t i = 0; i < cCreditsLines; i++)
-    al_draw_text(normalFont, fontColor, 100, 50 + i*50, ALLEGRO_ALIGN_LEFT,
+    al_draw_text(normalFont, fontColor, 100, 50 + i*47, ALLEGRO_ALIGN_LEFT,
         cCreditsText[language][i].c_str());
 }
 

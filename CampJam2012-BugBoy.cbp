@@ -15,6 +15,7 @@
 					<Add option="-g" />
 					<Add option="-DALLEGRO_STATICLINK" />
 					<Add directory="C:\allegro-mingw\include" />
+					<Add directory="C:\Users\Abel\Campjam\CampJam2012-BugBoy-v.6\Include" />
 				</Compiler>
 				<Linker>
 					<Add option="-lgcc_eh -static-libgcc -static-libstdc++" />
@@ -58,6 +59,7 @@
 					<Add option="-O2" />
 					<Add option="-DALLEGRO_STATICLINK" />
 					<Add directory="C:\allegro-mingw\include" />
+					<Add directory="C:\Users\Abel\Campjam\CampJam2012-BugBoy-v.6\Include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -101,40 +103,48 @@
 		<Unit filename="COPYING" />
 		<Unit filename="DejaVuSans.LICENSE" />
 		<Unit filename="DejaVuSans.ttf" />
+		<Unit filename="Include\allegro_includes.h" />
+		<Unit filename="Include\ant.h" />
+		<Unit filename="Include\cricket.h" />
+		<Unit filename="Include\cricket_boss.h" />
+		<Unit filename="Include\definitions.h" />
+		<Unit filename="Include\enemy.h" />
+		<Unit filename="Include\entity.h" />
+		<Unit filename="Include\fly.h" />
+		<Unit filename="Include\gameclass.h" />
+		<Unit filename="Include\gametext.h" />
+		<Unit filename="Include\hero.h" />
+		<Unit filename="Include\list_of_enemies.h" />
+		<Unit filename="Include\region.h" />
+		<Unit filename="Include\seed.h" />
+		<Unit filename="Include\spider.h" />
+		<Unit filename="Include\spider_boss.h" />
+		<Unit filename="Include\upgrade.h" />
 		<Unit filename="LICENSE" />
 		<Unit filename="Makefile" />
 		<Unit filename="README" />
 		<Unit filename="README.md" />
-		<Unit filename="allegro_includes.h" />
-		<Unit filename="ant.cpp" />
-		<Unit filename="ant.h" />
-		<Unit filename="definitions.h" />
-		<Unit filename="enemy.cpp" />
-		<Unit filename="enemy.h" />
-		<Unit filename="entity.cpp" />
-		<Unit filename="entity.h" />
-		<Unit filename="fly.cpp" />
-		<Unit filename="fly.h" />
-		<Unit filename="gameclass.cpp" />
-		<Unit filename="gameclass.h" />
+		<Unit filename="Src\ant.cpp" />
+		<Unit filename="Src\cricket.cpp" />
+		<Unit filename="Src\cricket_boss.cpp" />
+		<Unit filename="Src\enemy.cpp" />
+		<Unit filename="Src\entity.cpp" />
+		<Unit filename="Src\fly.cpp" />
+		<Unit filename="Src\gameclass.cpp" />
+		<Unit filename="Src\gameclass_draw.cpp" />
+		<Unit filename="Src\gameclass_keyboard.cpp" />
+		<Unit filename="Src\gameclass_update.cpp" />
+		<Unit filename="Src\hero.cpp" />
+		<Unit filename="Src\main.cpp" />
+		<Unit filename="Src\region.cpp" />
+		<Unit filename="Src\seed.cpp" />
+		<Unit filename="Src\spider.cpp" />
+		<Unit filename="Src\spider_boss.cpp" />
+		<Unit filename="Src\upgrade.cpp" />
 		<Unit filename="gpl.header" />
 		<Unit filename="guarda.log.sh" />
-		<Unit filename="hero.cpp" />
-		<Unit filename="hero.h" />
 		<Unit filename="level1.map" />
-		<Unit filename="list_of_enemies.h" />
-		<Unit filename="main.cpp" />
 		<Unit filename="myLog" />
-		<Unit filename="region.cpp" />
-		<Unit filename="region.h" />
-		<Unit filename="seed.cpp" />
-		<Unit filename="seed.h" />
-		<Unit filename="spider.cpp" />
-		<Unit filename="spider.h" />
-		<Unit filename="spider_boss.cpp" />
-		<Unit filename="spider_boss.h" />
-		<Unit filename="upgrade.cpp" />
-		<Unit filename="upgrade.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
