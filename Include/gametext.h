@@ -49,7 +49,7 @@ const std::string cGameIntroText[2][cGameIntroLines] = {
     " eu estaria em sérios problemas."
   } };
 
-const size_t cInstructionsLines = 9;
+const size_t cInstructionsLines = 10;
 const std::string cInstructionsText[2][cInstructionsLines] = {
   {
     "Move the boy with the arrows left and right",
@@ -60,7 +60,8 @@ const std::string cInstructionsText[2][cInstructionsLines] = {
     "      Increase the jump height",
     "      Increase the movement speed",
     "      Increase the life",
-    "      Enables double jump"
+    "      Enables double jump",
+    "      Enables wall jump"
   }, {
     "Mova o garoto com os direcionais para esquerda e direita",
     "Pule com o direcional para cima",
@@ -70,7 +71,8 @@ const std::string cInstructionsText[2][cInstructionsLines] = {
     "      Aumenta a altura do pulo",
     "      Aumenta a velocidade de movimento",
     "      Aumenta a vida",
-    "      Permite o salto duplo"
+    "      Permite o salto duplo",
+    "      Permite o pulo pela parede"
   }
 };
 
