@@ -108,11 +108,11 @@ void Hero::AddUpgrade (UpgradeType ut) {
   switch (ut) {
     case jumpUpgrade:
       upgradesJump++;
-      jumpSpeed += 1.0;
+      jumpSpeed *= 1.1;
       break;
     case speedUpgrade:
       upgradesSpeed++;
-      xSpeed += 1.0;
+      xSpeed *= 1.1;
       break;
     case lifeUpgrade:
       upgradesLife++;

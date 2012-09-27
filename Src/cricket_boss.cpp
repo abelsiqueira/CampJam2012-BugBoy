@@ -60,13 +60,13 @@ void CricketBoss::Update () {
       keyIsPressed[key_right] = aux;
     }
     count = 0;
-    ySpeed = -(7 + rand()%10);
+    ySpeed = -(4 + rand()%10);
     waitingTime = cFps + rand()%(2*cFps);
   }
   count++;
 
   if (!grounded)
-    xSpeed = 4;
+    xSpeed = 6;
   else
     xSpeed = 0;
 
