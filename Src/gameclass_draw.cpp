@@ -7,18 +7,18 @@ void GameClass::DrawHud () const {
   else
     aux << "Vidas: " << hero->GetLives();
 
-  al_draw_filled_rectangle(VisibleX + 2, VisibleY + 2, 
+  al_draw_filled_rectangle(VisibleX + 2, VisibleY + 2,
       VisibleX + 85, VisibleY + 28, cBlack);
-  al_draw_rectangle(VisibleX + 2, VisibleY + 2, 
+  al_draw_rectangle(VisibleX + 2, VisibleY + 2,
       VisibleX + 85, VisibleY + 28, cWhite, 1);
-  al_draw_text(normalFont, cWhite, VisibleX + 4, VisibleY + 2, 
+  al_draw_text(normalFont, cWhite, VisibleX + 4, VisibleY + 2,
       ALLEGRO_ALIGN_LEFT, aux.str().c_str());
 }
 
 void GameClass::DrawGameMenu () const {
   ALLEGRO_COLOR fontColor = cWhite;
 
-  al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, 
+  al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE,
       "CampJam2012 - Bug Boy");
   for (int i = 0; i < 4; i++) {
     al_draw_text(bigFont, fontColor, cWindowWidth/2, 300 + i*100,
@@ -37,19 +37,19 @@ void GameClass::DrawGameIntro () const {
 
   if (introScreen == 0) {
     for (size_t i = 0; i < cGameIntroLines; i++) {
-      al_draw_text(normalFont, fontColor, cWindowWidth/2, 70 + i*45, 
+      al_draw_text(normalFont, fontColor, cWindowWidth/2, 70 + i*45,
           ALLEGRO_ALIGN_CENTRE, cGameIntroText[language][i].c_str());
     }
-    al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30, 
+    al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30,
         ALLEGRO_ALIGN_RIGHT, cPressAnyKey[language].c_str());
   } else {
     for (size_t i = 0; i < cInstructionsLines; i++) {
-      al_draw_text(normalFont, fontColor, 200, 200 + i*45, ALLEGRO_ALIGN_LEFT, 
+      al_draw_text(normalFont, fontColor, 200, 200 + i*45, ALLEGRO_ALIGN_LEFT,
           cInstructionsText[language][i].c_str());
     }
 
-    Upgrade jump      (jumpUpgrade,       200, 180 + 5*45), 
-            speed     (speedUpgrade,      200, 180 + 6*45), 
+    Upgrade jump      (jumpUpgrade,       200, 180 + 5*45),
+            speed     (speedUpgrade,      200, 180 + 6*45),
             life      (lifeUpgrade,       200, 180 + 7*45),
             doubleJump(doubleJumpUpgrade, 200, 180 + 8*45),
             wallJump  (wallJumpUpgrade,   200, 180 + 9*45);
@@ -61,7 +61,7 @@ void GameClass::DrawGameIntro () const {
     wallJump.Draw();
 
 
-    al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, 
+    al_draw_text(bigFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE,
         cInstructions[language].c_str());
 
     al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30, ALLEGRO_ALIGN_RIGHT,
@@ -72,11 +72,11 @@ void GameClass::DrawGameIntro () const {
 void GameClass::DrawCredits () const {
   ALLEGRO_COLOR fontColor = cWhite;
 
-  al_draw_text(bigFont, fontColor, cWindowWidth/2, 10, ALLEGRO_ALIGN_CENTRE, 
+  al_draw_text(bigFont, fontColor, cWindowWidth/2, 10, ALLEGRO_ALIGN_CENTRE,
       cCredits[language].c_str());
 
   for (size_t i = 0; i < cCreditsLines; i++)
-    al_draw_text(normalFont, fontColor, 100, 50 + i*50, ALLEGRO_ALIGN_LEFT, 
+    al_draw_text(normalFont, fontColor, 100, 50 + i*50, ALLEGRO_ALIGN_LEFT,
         cCreditsText[language][i].c_str());
 }
 
@@ -84,11 +84,11 @@ void GameClass::DrawGameEnd () const {
   ALLEGRO_COLOR fontColor = cWhite;
 
   for (size_t i = 0; i < cGameEndLines; i++)
-    al_draw_text(normalFont, fontColor, cWindowWidth/2, 70 + i*45, 
+    al_draw_text(normalFont, fontColor, cWindowWidth/2, 70 + i*45,
         ALLEGRO_ALIGN_CENTRE, cGameEndText[language][i].c_str());
-  al_draw_text(bigFont, fontColor, cWindowWidth/2, 500, 
+  al_draw_text(bigFont, fontColor, cWindowWidth/2, 500,
       ALLEGRO_ALIGN_CENTRE, cThanks[language].c_str());
-  al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30, 
+  al_draw_text(normalFont, fontColor, cWindowWidth - 20, cWindowHeight - 30,
       ALLEGRO_ALIGN_RIGHT, cPressAnyKey[language].c_str());
 }
 
@@ -96,7 +96,7 @@ void GameClass::DrawPauseMenu () const {
   ALLEGRO_COLOR fontColor = cBlack;
 
   al_draw_filled_rectangle(0, 0, cWindowWidth, cWindowHeight, cWhite);
-  al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE, 
+  al_draw_text(hugeFont, fontColor, cWindowWidth/2, 40, ALLEGRO_ALIGN_CENTRE,
       cPause[language].c_str());
 
   std::stringstream aux[8];
@@ -115,14 +115,14 @@ void GameClass::DrawPauseMenu () const {
   al_draw_rectangle(25, 225, 600, 475, cBlack, 0);
 
   for (int i = 0; i < 4; i++)
-    al_draw_text(bigFont, fontColor, 50, 250 + 50*i, 
+    al_draw_text(bigFont, fontColor, 50, 250 + 50*i,
         ALLEGRO_ALIGN_LEFT, aux[i].str().c_str());
   for (int i = 0; i < 4; i++)
-    al_draw_text(bigFont, fontColor, 550, 250 + 50*i, 
+    al_draw_text(bigFont, fontColor, 550, 250 + 50*i,
         ALLEGRO_ALIGN_LEFT, aux[i+4].str().c_str());
 
   for (int i = 0; i < 3; i++)
-    al_draw_text(bigFont, fontColor, cWindowWidth/2 + 50, 250 + 100*i, 
+    al_draw_text(bigFont, fontColor, cWindowWidth/2 + 50, 250 + 100*i,
         ALLEGRO_ALIGN_LEFT, cPauseMenuOptionsText[language][i].c_str());
 
   al_draw_rectangle(x, y, xf, yf, cBlack,0);
@@ -192,7 +192,7 @@ void GameClass::DrawGameGrid () const {
     }
   }
 
-  float x = regionExit->GetX() + 
+  float x = regionExit->GetX() +
       cTileSize*regionExit->GetWidth()/2;
   float y = regionExit->GetY();
   al_draw_text(hugeFont, cWhite, x, y,
@@ -225,7 +225,7 @@ void GameClass::DrawBlock (float x, float y, float xf, float yf) const {
 }
 
 void GameClass::DrawSpike (float x, float y, float xf, float yf) const {
-  if ((xf - x < cTileSize/6) || 
+  if ((xf - x < cTileSize/6) ||
       (rand()%1001 < 0)) {
     float z = y + 0.2*cTileSize*(rand()%1001)/1000.0;
     al_draw_filled_triangle((x+xf)/2, z+1, xf, yf, x, yf, cWhite);

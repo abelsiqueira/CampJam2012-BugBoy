@@ -1,17 +1,17 @@
 /* Copyright 2012 - Abel Soares Siqueira
- * 
+ *
  * This file is part of CampJam2012-Bugboy.
- * 
+ *
  * CampJam2012-Bugboy is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * CampJam2012-Bugboy is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with CampJam2012-Bugboy.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,6 +25,22 @@ GameClass::GameClass () {
   regionExit = 0;
   regionSpiderBoss = 0;
   regionCricketBoss = 0;
+  language = langEnglish;
+
+  keyIsPressed[0] = false;
+  keyIsPressed[1] = false;
+
+  VisibleX = 0;
+  VisibleY = 0;
+  inMenu = true;
+  inGameEnd = false;
+  inIntro = false;
+  inCredits = false;
+  menuOption = menuStartGame;
+  choseOption = false;
+  introScreen = 0;
+  doubleJump = 0;
+  wallJump = 0;
 
   errorValue = (AllegroInitialization() == 0 ? false : true);
   if (errorValue == 0) {
@@ -53,30 +69,13 @@ GameClass::GameClass () {
     return;
   }
 
-  keyIsPressed[0] = false;
-  keyIsPressed[1] = false;
-
-  VisibleX = 0; 
-  VisibleY = 0;
-  inMenu = true;
-  inGameEnd = false;
-  inIntro = false;
-  inCredits = false;
-  menuOption = menuStartGame;
-  choseOption = false;
-  introScreen = 0;
-  doubleJump = 0;
-  wallJump = 0;
-
-
-  language = langEnglish;
-
 }
 
 int GameClass::AllegroInitialization () {
   al_init();
+  al_set_new_display_flags(ALLEGRO_OPENGL);
   display = al_create_display(cWindowWidth, cWindowHeight);
-  if (!display) 
+  if (!display)
     return 1;
   al_set_window_title(display, "CampJam 2012 - Bug Boy");
   eventQueue = al_create_event_queue();
@@ -102,17 +101,17 @@ int GameClass::AllegroInitialization () {
   al_register_event_source(eventQueue, al_get_keyboard_event_source());
   al_register_event_source(eventQueue, al_get_mouse_event_source());
 
-  hugeFont = al_load_font("DejaVuSans.ttf", 80, 0);
-  bigFont = al_load_font("DejaVuSans.ttf", 40, 0);
-  normalFont = al_load_font("DejaVuSans.ttf", 20, 0);
-  smallFont = al_load_font("DejaVuSans.ttf", 10, 0);
+  hugeFont = al_load_ttf_font("DejaVuSans.ttf", 80, 0);
+  bigFont = al_load_ttf_font("DejaVuSans.ttf", 40, 0);
+  normalFont = al_load_ttf_font("DejaVuSans.ttf", 20, 0);
+  smallFont = al_load_ttf_font("DejaVuSans.ttf", 10, 0);
 
   if (!hugeFont || !bigFont || !normalFont || !smallFont)
     return 2;
 
   if (ReadGameLevel("level1.map") == 1)
     return 3;
-  
+
 #ifndef MUTE
   music = al_load_audio_stream("Music/background.ogg", 4, 1024);
   if (!music)
@@ -158,6 +157,8 @@ GameClass::~GameClass () {
   al_destroy_timer(timer);
   al_destroy_event_queue(eventQueue);
   al_destroy_display(display);
+
+
 }
 
 void GameClass::Reset () {
@@ -241,7 +242,6 @@ void GameClass::Run () {
     if (redraw && al_is_event_queue_empty(eventQueue)) {
       redraw = false;
       al_clear_to_color(cBlack);
-
       if (inMenu) {
         DrawGameMenu();
       } else if (inIntro) {
