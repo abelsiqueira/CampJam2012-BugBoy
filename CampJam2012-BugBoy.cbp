@@ -13,7 +13,41 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DALLEGRO_STATICLINK" />
+					<Add directory="C:\allegro-mingw\include" />
 				</Compiler>
+				<Linker>
+					<Add option="-lgcc_eh -static-libgcc -static-libstdc++" />
+					<Add library="C:\allegro-mingw\lib\liballegro-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_acodec-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_audio-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libvorbisfile-1.3.2-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libvorbis-1.3.2-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_font-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_image-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_primitives-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_ttf-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libdumb-0.9.3-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libFLAC-1.2.1-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libfreetype-2.4.8-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libogg-1.2.1-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libopenal-1.14-static-mt.a" />
+					<Add library="C:\allegro-mingw\all-needed\libgdiplus.a" />
+					<Add library="C:\allegro-mingw\all-needed\libuuid.a" />
+					<Add library="C:\allegro-mingw\all-needed\libkernel32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libwinmm.a" />
+					<Add library="C:\allegro-mingw\all-needed\libpsapi.a" />
+					<Add library="C:\allegro-mingw\all-needed\libopengl32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libglu32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libuser32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libcomdlg32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libgdi32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libshell32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libole32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libadvapi32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libshlwapi.a" />
+					<Add library="C:\allegro-mingw\all-needed\libws2_32.a" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin\Release\CampJam2012-BugBoy" prefix_auto="1" extension_auto="1" />
@@ -22,15 +56,85 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-DALLEGRO_STATICLINK" />
+					<Add directory="C:\allegro-mingw\include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lgcc_eh -static-libgcc -static-libstdc++" />
+					<Add library="C:\allegro-mingw\lib\liballegro-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_acodec-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_audio-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libvorbisfile-1.3.2-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libvorbis-1.3.2-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_font-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_image-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_primitives-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\liballegro_ttf-5.0.7-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libdumb-0.9.3-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libFLAC-1.2.1-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libfreetype-2.4.8-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libogg-1.2.1-static-mt.a" />
+					<Add library="C:\allegro-mingw\lib\libopenal-1.14-static-mt.a" />
+					<Add library="C:\allegro-mingw\all-needed\libgdiplus.a" />
+					<Add library="C:\allegro-mingw\all-needed\libuuid.a" />
+					<Add library="C:\allegro-mingw\all-needed\libkernel32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libwinmm.a" />
+					<Add library="C:\allegro-mingw\all-needed\libpsapi.a" />
+					<Add library="C:\allegro-mingw\all-needed\libopengl32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libglu32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libuser32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libcomdlg32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libgdi32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libshell32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libole32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libadvapi32.a" />
+					<Add library="C:\allegro-mingw\all-needed\libshlwapi.a" />
+					<Add library="C:\allegro-mingw\all-needed\libws2_32.a" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename=".gitignore" />
+		<Unit filename="COPYING" />
+		<Unit filename="DejaVuSans.LICENSE" />
+		<Unit filename="DejaVuSans.ttf" />
+		<Unit filename="LICENSE" />
+		<Unit filename="Makefile" />
+		<Unit filename="README" />
+		<Unit filename="README.md" />
+		<Unit filename="allegro_includes.h" />
+		<Unit filename="ant.cpp" />
+		<Unit filename="ant.h" />
+		<Unit filename="definitions.h" />
+		<Unit filename="enemy.cpp" />
+		<Unit filename="enemy.h" />
+		<Unit filename="entity.cpp" />
+		<Unit filename="entity.h" />
+		<Unit filename="fly.cpp" />
+		<Unit filename="fly.h" />
+		<Unit filename="gameclass.cpp" />
+		<Unit filename="gameclass.h" />
+		<Unit filename="gpl.header" />
+		<Unit filename="guarda.log.sh" />
+		<Unit filename="hero.cpp" />
+		<Unit filename="hero.h" />
+		<Unit filename="level1.map" />
+		<Unit filename="list_of_enemies.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="myLog" />
+		<Unit filename="region.cpp" />
+		<Unit filename="region.h" />
+		<Unit filename="seed.cpp" />
+		<Unit filename="seed.h" />
+		<Unit filename="spider.cpp" />
+		<Unit filename="spider.h" />
+		<Unit filename="spider_boss.cpp" />
+		<Unit filename="spider_boss.h" />
+		<Unit filename="upgrade.cpp" />
+		<Unit filename="upgrade.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
